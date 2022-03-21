@@ -44,6 +44,10 @@ INSTALLED_APPS = [
 
     #APPS
     'fevama.apps.FevamaConfig',
+
+    # BOOTSTRAP TEMPLATE
+    'bootstrap_admin',
+
 ]
 
 MIDDLEWARE = [
