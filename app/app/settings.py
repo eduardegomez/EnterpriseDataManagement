@@ -43,11 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #APPS
+    # APPS
     'fevama.apps.FevamaConfig',
 
     # BOOTSTRAP TEMPLATE
     'bootstrap_admin',
+
+    # ICONS
+    'fontawesome_5',
 
 ]
 
