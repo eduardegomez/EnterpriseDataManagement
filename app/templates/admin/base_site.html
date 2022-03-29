@@ -15,43 +15,26 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style>
+    .dropdown-submenu:hover>.dropdown-menu {
+        display:block;
+    }
+    .menufevama {
+        width:200px;
+        text-align:center;
+    }
+    .dropdown-submenu>.dropdown-menu {
+        left: -100%;
+        border-radius: 6px 0px 6px 6px;
+        text-align: center;
 
- .dropdown-submenu:hover>.dropdown-menu {
-      display:block;
-  }
-  .menuvax {
-      width:200px;
-      text-align:center;
-  }
-  .submenuvax{
-      width: 200px;
-  }
-
-  .outlinenone {
-    outline: none;
-    background-color: #efefef;
-    border: 0;
-  }
-
-  .dropdown-submenu>.dropdown-menu {
-     left: -100%;
-     border-radius: 6px 0px 6px 6px;
-     text-align: center;
-
-   }
-
-  .clock {
-      color: #337AB7;
-      text-shadow:0 0 5px #AAAAAA;
-  }
-
+    }
 </style>
 <body>
 <div class="m-12">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a href="#" class="navbar-brand">
-                <img src="../../../../../media/Fevama.png" height="28" alt="CoolBrand">
+                <img src="../../../../../media/fevama_base_name.png" height="28" alt="CoolBrand">
             </a>
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -62,39 +45,35 @@
                     <a href="#" class="nav-item nav-link">Gráficas</a>
                     <a href="#" class="nav-item nav-link">Tablas</a>
                     <a href="#" class="nav-item nav-link disabled" tabindex="-1">Reportes</a>
-                    <div class="dropdown">
+                    <div class="dropdown" style="position:absolute;right: 40px;">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton"data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {% if user.is_active and user.is_staff %}
                             {% trans 'Welcome ' %}
                             {% firstof user.get_short_name user.get_username %}
                             {% endif %}
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: center;">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;width: 200px;">
                             <li>
-                                <a href="{% url 'admin:password_change' %}"><i class="fa fa-unlock-alt" aria-hidden="true"></i>   {% trans 'Change password' %}</a>
+                                <a href="{% url 'admin:password_change' %}" style="color:black;text-decoration: none;margin-left: 20px;"><i class="fa fa-unlock-alt" aria-hidden="true"></i>   {% trans 'Change password' %}</a>
                             </li>
                             <li class="dropdown-submenu">
-                                <a>
-                                    {% fa5_icon 'comments' 'fas' %} {% trans 'Language' %}
+                                <a style="margin-left: 20px;">
+                                    {% fa5_icon 'comments' 'fas' %} {% trans 'Lenguaje' %}
                                 </a>
-                                <ul class="dropdown-menu pull-left menuvax" style="align-items: center;">
+                                <ul class="dropdown-menu pull-left menufevama" style="align-items: center;">
                                     <input name="next" type="hidden" value="{{ redirect_to }}" />
                                     {% get_current_language as LANGUAGE_CODE %}
                                     {% get_available_languages as LANGUAGES %}
                                     {% for lang in LANGUAGES %}
-                                    {% if lang.0 in LANGUAGE_CODE %}
-                                    <li style="background-color:#ddf6dd;">
-                                        {% else %}
-                                    <li>
-                                        {% endif %}
+                                    <li style="height: 20px;">
                                         <form name="setLang{{ lang.1 }}" action="{% url 'set_language' %}" method="post">
                                             {% csrf_token %}
                                             <input name="next" type="hidden" value="" />
                                             <input type="hidden" name="language" value="{{ lang.0 }}" />
                                             {% if lang.0 in LANGUAGE_CODE %}
-                                            <a href="#" onclick="document.setLang{{lang.1}}.submit(); return false;" style="display:block;"><i class="fa fa-check" aria-hidden="true"></i> {{ lang.1 }}</a>
+                                            <a href="#" onclick="document.setLang{{lang.1}}.submit(); return false;" style="display:block;color:rgb(13, 70, 196);text-decoration: none;"><i class="fa fa-check" aria-hidden="true"></i> {{ lang.1 }}</a>
                                             {% else %}
-                                            <a href="#" onclick="document.setLang{{lang.1}}.submit(); return false;" style="display:block;">{{ lang.1 }}</a>
+                                            <a href="#" onclick="document.setLang{{lang.1}}.submit(); return false;" style="display:block;color:black;text-decoration: none;">{{ lang.1 }}</a>
                                             {% endif %}
                                         </form>
                                     </li>
@@ -102,7 +81,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{% url 'fevama:logout' %}">{% fa5_icon 'power-off' 'fas' %} {% trans 'Log out' %}</a>
+                                <a href="{% url 'fevama:logout' %}" style="color:black;text-decoration: none;margin-left: 20px;">{% fa5_icon 'power-off' 'fas' %} {% trans 'Log out' %}</a>
                             </li>
                         </div>
                       </div>
