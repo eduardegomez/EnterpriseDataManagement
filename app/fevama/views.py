@@ -1,5 +1,9 @@
+from sre_constants import SUCCESS
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
 
 # Create your views here. 
   
@@ -13,7 +17,9 @@ def login_view(request):
         login(request, user)  
         return redirect('/fevama/home') 
     else:
-        pass
+        return render(request, 'admin/login.html', {
+            'code': 404,
+        })
 
 # LOGOUT
 def logout_view(request):
@@ -25,3 +31,12 @@ def logout_view(request):
 def home(request):
 
     return render(request, 'fevama/index.html', {})
+
+# CHANGE PASSWORD
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('fevama:password_success')
+
+# CHANGE PASSWORD SUCCESS
+def password_success(request):
+    return render(request, 'fevama/password_success.html')

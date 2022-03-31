@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-
+{% load i18n %}
 {% block content %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="container">
-	<div class="d-flex justify-content-center h-100">
+	<div class="d-flex justify-content-center">
 		<div class="card" style="margin-top: 40px;">
 			<div class="card-header">
 				<img src="../../../../../media/Fevama.png" height="100px" width="370px">
@@ -33,14 +33,14 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input id="username" type="text" class="form-control" placeholder="username" value="" name="username">
+						<input id="username" type="text" class="form-control" placeholder="usuario" value="" name="username">
 						
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input id="password" type="password" class="form-control" placeholder="password" value="" name="password">
+						<input id="password" type="password" class="form-control" placeholder="contraseña" value="" name="password">
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn float-right login_btn"> Login </button>
@@ -54,7 +54,47 @@
 			</div>
 		</div>
 	</div>
+	<div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="credentialsFail"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Credenciales incorrectas, vuelve a intentarlo' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
 </div>
 </body>
 </html>
+<script>
+function createAutoClosingAlert(selector, delay)
+{
+	if(delay == 0)
+	{
+		$(selector).show();
+	}
+	else if(delay == -1)
+	{
+		$(selector).hide();
+	}
+	else if(delay > 0)
+	{
+		$(selector).fadeIn("slow");
+		window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+	}
+}
+aux = "200"
+{% if code %}
+aux = {{code}}
+if (aux == "404"){
+	createAutoClosingAlert('#credentialsFail', 5000);
+}
+{% endif %}
+</script>
 {% endblock %}
