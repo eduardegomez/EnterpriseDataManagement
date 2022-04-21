@@ -41,12 +41,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
-                    <a href="#" class="nav-item nav-link">Proyectos</a>
-                    <a href="#" class="nav-item nav-link">Ayudas</a>
-                    <a href="#" class="nav-item nav-link">Planificación</a>
-                    <a href="#" class="nav-item nav-link">Notificaciones</a>
-                    <a href="#" class="nav-item nav-link">Base de datos</a>
-                    <a href="#" class="nav-item nav-link">Parámetros</a>
+                    <a href="{% url 'fevama:projects_index' %}" class="nav-item nav-link"> <i class="fas fa-desktop"></i> Proyectos</a>
+                    <a href="{% url 'fevama:ayudas_index' %}" class="nav-item nav-link"> <i class="fas fa-money-check-alt"></i> Ayudas</a>
+                    <a href="{% url 'fevama:planificacion_index' %}" class="nav-item nav-link"> <i class="fas fa-calendar-alt"></i> Planificación</a>
+                    <a href="{% url 'fevama:notificaciones_index' %}" class="nav-item nav-link"><i class="fas fa-bell"></i> Notificaciones</a>
+                    <a href="{% url 'fevama:bd_index' %}" class="nav-item nav-link"><i class="fas fa-database"></i> Base de datos</a>
+                    <a href="{% url 'fevama:parametros_index' %}" class="nav-item nav-link"><i class="fas fa-user-cog"></i> Parámetros</a>
                     <div class="dropdown" style="position:absolute;right: 40px;">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton"data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {% if user.is_active and user.is_staff %}

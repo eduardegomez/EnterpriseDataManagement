@@ -40,3 +40,28 @@ class PasswordsChangeView(PasswordChangeView):
 # CHANGE PASSWORD SUCCESS
 def password_success(request):
     return render(request, 'fevama/password_success.html')
+
+#### PROYECTOS ####
+def projects_index(request):
+    return render(request, 'fevama/projects_index.html')
+
+#### AYUDAS ####
+def ayudas_index(request):
+    return render(request, 'fevama/ayudas_index.html')
+
+#### PLANIFICACIÓN ####
+def planificacion_index(request):
+    return render(request, 'fevama/planificacion_index.html')
+
+#### NOTIFICACIONES ####
+def notificaciones_index(request):
+    return render(request, 'fevama/notificaciones_index.html')
+
+#### BASE DE DATOS ####
+def bd_index(request):
+    return render(request, 'fevama/bd_index.html')
+
+#### PARAMETROS ####
+def parametros_index(request):
+    return render(request, 'fevama/parametros_index.html')
+ 

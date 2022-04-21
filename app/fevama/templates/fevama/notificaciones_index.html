@@ -1,0 +1,52 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+    .index-button
+    {
+        width:95%;
+        border-radius: 25%;
+        background-color:#FFFFFF;
+        border: 2px solid #000000;
+        padding: 30px 30px;
+        margin:5px 5px 5px 5px;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="../../../../../static/admin/css/dashboard.css">
+<body style="background-color: #efefef;">
+    <div id="content" style="margin-left: 20px; margin-right: 20px;">
+        <legend style="margin-top: 20px;">
+            <i class="fas fa-bell"></i> {% trans 'Notificaciones' %}
+        </legend>
+        <hr/>
+        <table class="table-responsive">
+            <tr>
+            </tr>
+            <tr>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Configurar servidor' %}">
+                        <i class="fa fa-3x fa-mail-bulk" aria-hidden="true"></i>
+                    </a>
+                </td>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Notificaciones' %}">
+                        <i class="fa fa-3x fa-envelope" aria-hidden="true"></i>
+                    </a>
+                </td>    
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Alertas' %}">
+                        <i class="fa fa-3x fa-list" aria-hidden="true"></i>
+                    </a>
+                </td>         
+            </tr>
+                <td align="center">{% trans "Configurar servidor" %}</td>
+                <td align="center">{% trans "Notificaciones" %}</td>
+                <td align="center">{% trans "Alertas" %}</td>
+            <tr>
+        </table>
+    </div>
+</body>
+{% endblock %}

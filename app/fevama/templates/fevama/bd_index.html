@@ -1,0 +1,46 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+    .index-button
+    {
+        width:95%;
+        border-radius: 25%;
+        background-color:#FFFFFF;
+        border: 2px solid #000000;
+        padding: 30px 30px;
+        margin:5px 5px 5px 5px;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="../../../../../static/admin/css/dashboard.css">
+<body style="background-color: #efefef;">
+    <div id="content" style="margin-left: 20px; margin-right: 20px;">
+        <legend style="margin-top: 20px;">
+            <i class="fas fa-database"></i> {% trans 'Configuración Base de Datos' %}
+        </legend>
+        <hr/>
+        <table class="table-responsive">
+            <tr>
+            </tr>
+            <tr>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Copias de seguridad' %}">
+                        {% fa5_icon 'database' 'fas fa-3x' %}
+                    </a>
+                </td>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Limpieza' %}">
+                        {% fa5_icon 'eraser' 'fas fa-3x' %}
+                    </a>
+                </td>           
+            </tr>
+                <td align="center">{% trans "Copias de seguridad" %}</td>
+                <td align="center">{% trans "Limpieza" %}</td>
+            <tr>
+        </table>
+    </div>
+</body>
+{% endblock %}
