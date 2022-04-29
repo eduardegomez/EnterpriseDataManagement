@@ -1,0 +1,64 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-coins"></i> {% trans 'Datos Económicos' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:projects_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+        <div class="col-md-2">
+            <a id="btn-back" class="btn btn-outline-secondary" href="">
+                {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nuevo registro' %}
+            </a>
+        </div>
+    </div>
+    <table class="table table-striped table-hover" style="margin-top: 20px;text-align: center;">
+        <thead>
+            <tr style="background-color: rgb(133, 172, 172);">
+                <td>ID</td>
+                <td>EMPRESA</td>
+                <td>AÑO</td>
+                <td>TRABAJADORES</td>
+                <td>CIFRA NEGOCIO</td>
+                <td>ACCIONES</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% if object_list %}
+                {% for economic_data in object_list %}
+                <tr>
+                    <td>{{economic_data.id}}</td>
+                    <td>{{economic_data.empresa.name}}</td>
+                    <td>{{economic_data.year}}</td>
+                    <td>{{economic_data.workers}}</td>
+                    <td>{{economic_data.data}}€</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href=""> EDITAR </a>
+                        <a class="btn btn-danger btn-sm" href=""> ELIMINAR </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+</body>
+{% endblock %}

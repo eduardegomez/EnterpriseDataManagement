@@ -12,8 +12,13 @@ urlpatterns = [
     path('password/', PasswordsChangeView.as_view(template_name="fevama/change-password.html"), name="password"),
     path('password_success/', views.password_success, name="password_success"),
 
-    ## PROYECTOS ##
+    ## EMPRESAS ##
     path('projects_index/', views.projects_index, name="projects_index"),
+    path('empresas_index/', views.empresas_index, name="empresas_index"),
+    path('contact/', views.contact_index, name="contact_index"),
+    path('typeofcontact_index/', views.typeofcontact_index, name="typeofcontact_index"),
+    path('economicdata_index/', views.economicdata_index, name="economicdata_index"),
+    
 
     ## AYUDAS ##
     path('ayudas_index/', views.ayudas_index, name="ayudas_index"),

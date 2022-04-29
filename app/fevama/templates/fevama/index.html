@@ -1,5 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
+{% load static %}
 {% load fontawesome_5 %}
 {% fontawesome_5_static %}
 
@@ -15,11 +16,11 @@
         margin:5px 5px 5px 5px;
     }
 </style>
-<link rel="stylesheet" type="text/css" href="../../../../../static/admin/css/dashboard.css">
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/dashboard.css' %}">
 <body style="background-color: #efefef;">
     <div id="content" style="margin-left: 20px; margin-right: 20px;">
         <legend style="margin-top: 20px;">
-            <i class="fas fa-desktop"></i> {% trans 'Proyectos' %}
+            <i class="fas fa-building"></i> {% trans 'Empresas' %}
         </legend>
         <hr/>
         <table class="table-responsive">
@@ -27,8 +28,23 @@
             </tr>
             <tr>
                 <td height="75" width="140">
-                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Gestión' %}">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:empresas_index' %}" title="{% trans 'Empresas' %}">
                         {% fa5_icon 'file-alt' 'fas fa-3x' %}
+                    </a>
+                </td>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:contact_index' %}" title="{% trans 'Contactos' %}">
+                        {% fa5_icon 'address-book' 'fas fa-3x' %}
+                    </a>
+                </td>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:typeofcontact_index' %}" title="{% trans 'Tipos de Contactos' %}">
+                        {% fa5_icon 'users' 'fas fa-3x' %}
+                    </a>
+                </td>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:economicdata_index' %}" title="{% trans 'Datos económicos' %}">
+                        {% fa5_icon 'coins' 'fas fa-3x' %}
                     </a>
                 </td>
                 <td height="75" width="140">
@@ -37,7 +53,10 @@
                     </a>
                 </td>           
             </tr>
-                <td align="center">{% trans "Gestión" %}</td>
+                <td align="center">{% trans "Empresas" %}</td>
+                <td align="center">{% trans "Contactos" %}</td>
+                <td align="center">{% trans "Tipos de Contacto" %}</td>
+                <td align="center">{% trans "Datos económicos" %}</td>
                 <td align="center">{% trans "Gráficos" %}</td>
             <tr>
         </table>

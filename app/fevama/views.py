@@ -3,13 +3,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
+
 from django.urls import reverse_lazy
+from .models import *
 
 # Create your views here. 
-  
+
 # LOGIN                       
 def login_view(request):
-
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
@@ -23,14 +24,12 @@ def login_view(request):
 
 # LOGOUT
 def logout_view(request):
-
     logout(request)
     return redirect('/admin/app/login/')
 
 # HOME  
 def home(request):
-
-    return render(request, 'fevama/index.html', {})
+    return render(request, 'fevama/index.html')
 
 # CHANGE PASSWORD
 class PasswordsChangeView(PasswordChangeView):
@@ -41,9 +40,33 @@ class PasswordsChangeView(PasswordChangeView):
 def password_success(request):
     return render(request, 'fevama/password_success.html')
 
-#### PROYECTOS ####
+#### EMPRESAS ####
 def projects_index(request):
     return render(request, 'fevama/projects_index.html')
+
+def empresas_index(request):
+    object_list = Empresa.objects.all()
+    return render(request, 'fevama/empresas_list.html', {
+        'object_list': object_list
+    })
+
+def contact_index(request):
+    object_list = Contact.objects.all()
+    return render(request, 'fevama/contact_list.html', {
+        'object_list': object_list
+    })
+
+def typeofcontact_index(request):
+    object_list = TypeOfContact.objects.all()
+    return render(request, 'fevama/typeofcontact_list.html', {
+        'object_list': object_list
+    })
+
+def economicdata_index(request):
+    object_list = EconomicData.objects.all()
+    return render(request, 'fevama/economicdata_list.html', {
+        'object_list': object_list
+    })
 
 #### AYUDAS ####
 def ayudas_index(request):
