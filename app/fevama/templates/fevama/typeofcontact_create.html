@@ -1,0 +1,148 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-users"></i> {% trans 'Tipos de Contacto' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:typeofcontact_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+    <div class="col-md-12" style="display: flex; margin-top: 20px;align-items: center;">
+        <div class="col-md-3"></div>
+        <div class="col-md-2" style="text-align: center;">
+            <label> {% trans 'Tipo:'%}</label>
+        </div>
+        <div class="col-md-2">
+                <input type="text" id="type" name="type" value="" placeholder="Escribe un nuevo tipo">
+        </div>
+        <div class="col-md-2">
+            <a id="btn-create" class="btn btn-success btn btn-block btnBootstrapping" onclick="create()"> {% trans 'CREAR' %}</a>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Este tipo ya existe, no puedes volver a crearlo' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'No puedes crear un tipo vacío' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Registro creado correctamente' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+
+</div>
+</body>
+<script>
+    function createAutoClosingAlert(selector, delay)
+    {
+        if(delay == 0)
+        {
+            $(selector).show();
+        }
+        else if(delay == -1)
+        {
+            $(selector).hide();
+        }
+        else if(delay > 0)
+        {
+            $(selector).fadeIn("slow");
+            window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+        }
+    }
+
+    function create()
+    {      
+        if(confirm('{% trans "Estás seguro de crear este tipo de contacto?" %}'))
+        {
+            document.getElementById("btn-create").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-create").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'CREANDO' %}";
+            var type = document.getElementById("type").value;
+            if (type == ""){
+                document.getElementById("btn-create").className = "btn btn-success btn btn-block btnBootstrapping";
+                document.getElementById("btn-create").innerHTML="{% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else {
+                $.ajax({
+                    url: '{% url "fevama:typeofcontact_createItem" %}',
+                    data:  {
+                        'data': type,
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data['code'] == 200){
+                            document.getElementById("btn-create").className = "btn btn-success btn btn-block btnBootstrapping";
+                            document.getElementById("btn-create").innerHTML="CREAR";
+                            document.getElementById("type").value = "";
+                            createAutoClosingAlert('#created', 5000);
+                        }
+                        if(data['code'] == 404){
+                            document.getElementById("btn-create").className = "btn btn-success btn btn-block btnBootstrapping";
+                            document.getElementById("btn-create").innerHTML="{% trans 'CREAR' %}";
+                            document.getElementById("type").value = "";
+                            createAutoClosingAlert('#exists', 5000);   
+                        } 
+                    },
+                    error: function (data) {
+                        document.getElementById("btn-create").className = "btn btn-danger btn btn-block btnBootstrapping";
+                        document.getElementById("btn-create").innerHTML="ERROR"; 
+                        document.getElementById("type").value = "";
+                    },
+                });
+            }
+        }
+    }
+</script>
+{% endblock %}

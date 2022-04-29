@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
+from django.http import JsonResponse
 
 from django.urls import reverse_lazy
 from .models import *
@@ -61,6 +62,59 @@ def typeofcontact_index(request):
     return render(request, 'fevama/typeofcontact_list.html', {
         'object_list': object_list
     })
+
+def typeofcontact_create(request):
+    return render(request, 'fevama/typeofcontact_create.html')
+
+def typeofcontact_createItem(request):
+    type = request.GET['data']
+    types = TypeOfContact.objects.all()
+    checked = True
+    for t in types:
+        if type.upper() == t.name.upper():
+            checked = False
+            response = { 'code': 404 }
+        else:
+            response = { 'code': 200}
+    
+    if checked:
+        TypeOfContact.objects.create_typeofcontact(type.upper())
+
+    return JsonResponse(response)
+
+def typeofcontact_deleteItem(request):
+    id = request.GET['data']
+    check = TypeOfContact.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def typeofcontact_modify(request, id):
+    contact = TypeOfContact.objects.filter(id=id).first()
+    return render(request, 'fevama/typeofcontact_modify.html', {
+        'contact': contact
+    })
+
+def typeofcontact_modifyItem(request):
+    id = request.GET['id']
+    type = request.GET['data']
+
+    types = TypeOfContact.objects.all()
+    for t in types:
+        if type.upper() == t.name.upper():
+            response = { 'code': 404 }
+            return JsonResponse(response)
+
+    check = TypeOfContact.objects.filter(id=id).first()
+    if check:
+        check.name = type
+        check.save()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
 
 def economicdata_index(request):
     object_list = EconomicData.objects.all()
