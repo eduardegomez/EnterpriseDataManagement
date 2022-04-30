@@ -35,6 +35,8 @@ urlpatterns = [
     path('economicdata_createItem/', views.economicdata_createItem, name="economicdata_createItem"),
     path('economicdata_modify/<id>', views.economicdata_modify, name="economicdata_modify"),
     path('economicdata_modifyItem/', views.economicdata_modifyItem, name="economicdata_modifyItem"),
+    path('economicdata_deleteItem/', views.economicdata_deleteItem, name="economicdata_deleteItem"),
+
 
 
     # -------- AYUDAS -------- #

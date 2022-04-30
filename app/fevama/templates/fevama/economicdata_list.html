@@ -52,7 +52,7 @@
                     <td>{{economic_data.data}}€</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="{% url 'fevama:economicdata_modify' economic_data.id %}"> EDITAR </a>
-                        <a class="btn btn-danger btn-sm" onclick="borrar({{economic_data.id}})"> ELIMINAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="borrar({{economic_data.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -65,11 +65,12 @@
         function borrar(id){
         if(confirm('{% trans "Estás seguro de eliminar este registro?" %}'))
         {
-            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
-            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
+            document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
             $.ajax({
-                url: '',
+                url: '{% url "fevama:economicdata_deleteItem" %}',
                 data:  {
+                    'data': id
                 },
                 dataType: 'json',
                 success: function (data) {
