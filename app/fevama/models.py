@@ -60,7 +60,7 @@ class EconomicData(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
     year = models.IntegerField(default=0)
     workers = models.IntegerField(default=0)
-    data = models.FloatField(default=0.0, blank=True, null=True)
+    data = models.IntegerField(default=0)
 
     objects = EconomicDataManager()
 # ---------- END ECONOMIC DATA ----------------- # 

@@ -25,7 +25,7 @@
             </a>
         </div>
         <div class="col-md-2">
-            <a id="btn-back" class="btn btn-outline-secondary" href="">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:economicdata_create' %}">
                 {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nuevo registro' %}
             </a>
         </div>
@@ -51,8 +51,8 @@
                     <td>{{economic_data.workers}}</td>
                     <td>{{economic_data.data}}€</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href=""> EDITAR </a>
-                        <a class="btn btn-danger btn-sm" href=""> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:economicdata_modify' economic_data.id %}"> EDITAR </a>
+                        <a class="btn btn-danger btn-sm" onclick="borrar({{economic_data.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -61,4 +61,27 @@
     </table>
 </div>
 </body>
+<script>
+        function borrar(id){
+        if(confirm('{% trans "Estás seguro de eliminar este registro?" %}'))
+        {
+            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
+            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
+            $.ajax({
+                url: '',
+                data:  {
+                },
+                dataType: 'json',
+                success: function (data) {
+                    location.reload(true)
+                },
+                error: function (data) {
+                    document.getElementById("btn-delete").className = "btn btn-danger btn btn-block btnBootstrapping";
+                    document.getElementById("btn-delete").innerHTML="ERROR"; 
+                    location.reload(true)
+                },
+            });
+        }
+    }
+</script>
 {% endblock %}

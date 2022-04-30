@@ -31,7 +31,11 @@ urlpatterns = [
     
     # ECONOMIC DATA
     path('economicdata_index/', views.economicdata_index, name="economicdata_index"),
-    
+    path('economicdata_create/', views.economicdata_create, name="economicdata_create"),
+    path('economicdata_createItem/', views.economicdata_createItem, name="economicdata_createItem"),
+    path('economicdata_modify/<id>', views.economicdata_modify, name="economicdata_modify"),
+    path('economicdata_modifyItem/', views.economicdata_modifyItem, name="economicdata_modifyItem"),
+
 
     # -------- AYUDAS -------- #
     path('ayudas_index/', views.ayudas_index, name="ayudas_index"),

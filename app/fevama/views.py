@@ -122,6 +122,66 @@ def economicdata_index(request):
         'object_list': object_list
     })
 
+def economicdata_create(request):
+    empresas_list = Empresa.objects.all()
+    return render(request, 'fevama/economicdata_create.html', {
+        'empresas_list': empresas_list
+    })
+
+def economicdata_createItem(request):
+    id = request.GET['empresa']
+    empresa = request.GET['empresa']
+    year = request.GET['year']
+    workers = request.GET['workers']
+    money = request.GET['money']
+    empresa = Empresa.objects.filter(id=empresa).first()
+
+    economic_data = EconomicData.objects.filter(empresa_id=empresa, year=year).first()
+    if economic_data:
+        response = { 'code' : 404 }
+        return JsonResponse(response)
+    else:    
+        economic_data = EconomicData.objects.filter(id=id).first()
+        if economic_data:
+            economic_data.empresa = empresa
+            economic_data.year = year
+            economic_data.workers = workers
+            economic_data.data = money
+            economic_data.save()
+
+    response = { 'code' : 200 }
+    return JsonResponse(response)
+
+def economicdata_modify(request, id):
+    economic_data = EconomicData.objects.filter(id=id).first()
+    empresas_list = Empresa.objects.all()
+    print(economic_data.data)
+    return render(request, 'fevama/economicdata_modify.html', {
+        'economic_data': economic_data,
+        'empresas_list': empresas_list
+    })
+
+def economicdata_modifyItem(request):
+    empresa = request.GET['empresa']
+    year = request.GET['year']
+    workers = request.GET['workers']
+    money = request.GET['money']
+
+    types = TypeOfContact.objects.all()
+    for t in types:
+        if type.upper() == t.name.upper():
+            response = { 'code': 404 }
+            return JsonResponse(response)
+
+    check = TypeOfContact.objects.filter(id=id).first()
+    if check:
+        check.name = type
+        check.save()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+
 #### AYUDAS ####
 def ayudas_index(request):
     return render(request, 'fevama/ayudas_index.html')

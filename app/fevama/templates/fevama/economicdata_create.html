@@ -1,0 +1,205 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-coins"></i> {% trans 'Datos Económicos' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:economicdata_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+    <div class="centrado" style="margin-top: 40px;width: 50%;margin: 0 auto;">
+            <table class="table table-hover table-condensed" style="background-color: #d7dadd; border-radius: 15px; table-layout: fixed;">
+                <thead style="background-color: rgb(133, 172, 172);">
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;" colspan="2">
+                            <label> {% trans 'Crear un nuevo registro económico'%}</label>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Empresa:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="empresa" class="form-control text-center" name="empresa" style="text-align: center;">
+                                {% for e in empresas_list %}
+                                <option value="{{ e.id }}">{{ e.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Año:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="year" type="number" min="1900" max="2099" step="1" placeholder="2022" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Trabajadores:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="workers" type="number" min="1" max="2099" step="1" placeholder="1" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Cifra negocio (€):'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="money" type="number" min="1" step="1" placeholder="0€" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;" colspan="2">
+                                <a id="btn-create" class="btn btn-outline-success" onclick="create()"> {% fa5_icon 'plus' 'fas' %} {% trans 'CREAR' %}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Ya existe un registro para esta empresa en el año especificado' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'No puedes dejar sin rellenar ningún campo' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Registro creado correctamente' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+
+</div>
+</body>
+<script>
+    function createAutoClosingAlert(selector, delay)
+    {
+        if(delay == 0)
+        {
+            $(selector).show();
+        }
+        else if(delay == -1)
+        {
+            $(selector).hide();
+        }
+        else if(delay > 0)
+        {
+            $(selector).fadeIn("slow");
+            window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+        }
+    }
+
+    function create()
+    {      
+        if(confirm('{% trans "Estás seguro de crear este registro económico?" %}'))
+        {
+            document.getElementById("btn-create").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-create").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'CREANDO' %}";
+            var empresa = document.getElementById("empresa").value;
+            var year = document.getElementById("year").value;
+            var workers = document.getElementById("workers").value;
+            var money = document.getElementById("money").value;
+            if (empresa == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (year == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (workers == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (money == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-successs";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else {
+                $.ajax({
+                    url: '{% url "fevama:economicdata_createItem" %}',
+                    data:  {
+                        'empresa': empresa,
+                        'year': year,
+                        'workers': workers,
+                        'money': money
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data['code'] == 200){
+                            document.getElementById("btn-create").className = "btn btn-outline-success";
+                            document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                            createAutoClosingAlert('#created', 5000);
+                        }
+                        if(data['code'] == 404){
+                            document.getElementById("btn-create").className = "btn btn-outline-success";
+                            document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                            createAutoClosingAlert('#exists', 5000);   
+                        } 
+                    },
+                    error: function (data) {
+                        document.getElementById("btn-create").className = "btn btn-danger btn btn-block btnBootstrapping";
+                        document.getElementById("btn-create").innerHTML="ERROR"; 
+                    },
+                });
+            }
+        }
+    }
+</script>
+{% endblock %}
