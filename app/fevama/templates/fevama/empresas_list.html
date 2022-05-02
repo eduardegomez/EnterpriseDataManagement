@@ -25,7 +25,7 @@
             </a>
         </div>
         <div class="col-md-2">
-            <a id="btn-back" class="btn btn-outline-secondary" href="">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:empresa_create' %}">
                 {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nueva Empresa' %}
             </a>
         </div>
@@ -36,6 +36,9 @@
                 <td>ID</td>
                 <td>NOMBRE</td>
                 <td>CIF</td>
+                <td>CNAE</td>
+                <td>TELEFONO</td>
+                <td>OBSERVACIONES</td>
                 <td>ACCIONES</td>
             </tr>
         </thead>
@@ -46,9 +49,12 @@
                     <td>{{empresa.id}}</td>
                     <td>{{empresa.name}}</td>
                     <td>{{empresa.cif}}</td>
+                    <td>{{empresa.cnae}}</td>
+                    <td>{{empresa.phone}}</td>
+                    <td>{{empresa.aux}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href=""> EDITAR </a>
-                        <a class="btn btn-danger btn-sm" href=""> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:empresa_modify' empresa.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{empresa.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -57,4 +63,28 @@
     </table>
 </div>
 </body>
+<script>
+        function create(id){
+        if(confirm('{% trans "Estás seguro de eliminar esta empresa?" %}'))
+        {
+            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
+            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
+            $.ajax({
+                url: '{% url "fevama:empresa_deleteItem" %}',
+                data:  {
+                    'data': id,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    location.reload(true)
+                },
+                error: function (data) {
+                    document.getElementById("btn-delete").className = "btn btn-danger btn btn-block btnBootstrapping";
+                    document.getElementById("btn-delete").innerHTML="ERROR"; 
+                    location.reload(true)
+                },
+            });
+        }
+    }
+</script>
 {% endblock %}

@@ -45,11 +45,75 @@ def password_success(request):
 def projects_index(request):
     return render(request, 'fevama/projects_index.html')
 
+# ----------- START EMPRESA ---------------------#
 def empresas_index(request):
     object_list = Empresa.objects.all()
     return render(request, 'fevama/empresas_list.html', {
         'object_list': object_list
     })
+
+def empresa_create(request):
+    return render(request, 'fevama/empresa_create.html',{})
+
+def empresa_createItem(request):
+    name = request.GET['name']
+    cif = request.GET['cif']
+    cnae = request.GET['cnae']
+    phone = request.GET['phone']
+    aux = request.GET['aux']
+    empresa = Empresa.objects.filter(name=name, cif=cif).first()
+    if empresa:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Empresa.objects.create_empresa(name, cif, cnae, phone, aux)
+        response = { 'code': 200 }
+
+    return JsonResponse(response)
+
+def empresa_deleteItem(request):
+    id = request.GET['data']
+    check = Empresa.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def empresa_modify(request, id):
+    empresa = Empresa.objects.filter(id=id).first()
+    return render(request, 'fevama/empresa_modify.html', {
+        'empresa': empresa,
+    })
+
+def empresa_modifyItem(request):
+    id = request.GET['id']
+    name = request.GET['name']
+    cif = request.GET['cif']
+    cnae = request.GET['cnae']
+    phone = request.GET['phone']
+    aux = request.GET['aux']
+    empresas = Empresa.objects.all()
+    for e in empresas:
+        if str(e.name) == str(name) and str(e.cif) == str(cif) and str(e.id) != str(id):
+            print(e.id)
+            print(id)
+            response = { 'code': 404 }
+            return JsonResponse(response)
+
+    check = Empresa.objects.filter(id=id).first()
+    if check:
+        check.name = name
+        check.cif = cif
+        check.cnae = cnae
+        check.phone = phone
+        check.aux = aux
+        check.save()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+# ----------- END EMPRESA ---------------------#
+
 
 # ----------- START CONTACT --------------------- #
 def contact_index(request):
@@ -110,9 +174,9 @@ def contact_modifyItem(request):
     type = request.GET['type']
     empresa = Empresa.objects.filter(id=empresa).first()
     type = TypeOfContact.objects.filter(id=type).first()
-    contacts = TypeOfContact.objects.all()
+    contacts = Contact.objects.all()
     for c in contacts:
-        if c.name == name and c.email == email and c.empresa == empresa and c.type == type:
+        if c.name == name and c.email == email and c.empresa == empresa and c.type == type and str(c.id) != str(id):
             response = { 'code': 404 }
             return JsonResponse(response)
 
@@ -128,6 +192,7 @@ def contact_modifyItem(request):
     return JsonResponse(response)
 
 # ----------- END CONTACT --------------------- #
+
 
 # ----------- START TYPE OF CONTACT --------------------- #
 def typeofcontact_index(request):
@@ -189,6 +254,7 @@ def typeofcontact_modifyItem(request):
     return JsonResponse(response)
 
 # ----------- END TYPE OF CONTACT --------------------- #
+
 
 # ----------- START ECONOMIC DATA --------------------- #
 def economicdata_index(request):

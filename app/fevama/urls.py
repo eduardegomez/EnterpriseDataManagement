@@ -17,7 +17,12 @@ urlpatterns = [
 
     # EMPRESA
     path('empresas_index/', views.empresas_index, name="empresas_index"),
-
+    path('empresa_create/', views.empresa_create, name="empresa_create"),
+    path('empresa_createItem/', views.empresa_createItem, name="empresa_createItem"),
+    path('empresa_deleteItem/', views.empresa_deleteItem, name="empresa_deleteItem"),
+    path('empresa_modify/<id>', views.empresa_modify, name="empresa_modify"),
+    path('empresa_modifyItem/', views.empresa_modifyItem, name="empresa_modifyItem"),
+    
     # CONTACT
     path('contact/', views.contact_index, name="contact_index"),
     path('contact_create/', views.contact_create, name="contact_create"),

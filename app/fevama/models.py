@@ -5,14 +5,17 @@ from django.db import models
 # ---------- START EMPRESA ----------------- # 
 # Empresa Manager
 class EmpresaManager(models.Manager):
-    def create_empresa(self, name, CIF):
-        empresa = self.create(name=name, CIF=CIF)
+    def create_empresa(self, name, cif, cnae, phone, aux):
+        empresa = self.create(name=name, cif=cif, cnae=cnae, phone=phone, aux=aux)
         return empresa
 
 # Empresa Model
 class Empresa(models.Model):
     name = models.CharField(max_length=200)
     cif = models.CharField(max_length=200)
+    cnae = models.CharField(max_length=200, default="-")
+    phone = models.IntegerField(default=0)
+    aux = models.CharField(max_length=2000, default="-")
 
     objects = EmpresaManager()
 # ---------- END EMPRESA ----------------- # 
