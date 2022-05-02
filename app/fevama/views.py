@@ -207,17 +207,14 @@ def typeofcontact_create(request):
 def typeofcontact_createItem(request):
     type = request.GET['data']
     types = TypeOfContact.objects.all()
-    checked = True
+
     for t in types:
         if type.upper() == t.name.upper():
-            checked = False
             response = { 'code': 404 }
-        else:
-            response = { 'code': 200}
-    
-    if checked:
-        TypeOfContact.objects.create_typeofcontact(type.upper())
-
+            return JsonResponse(response)
+        
+    TypeOfContact.objects.create_typeofcontact(type.upper())
+    response = { 'code': 200}
     return JsonResponse(response)
 
 def typeofcontact_deleteItem(request):
