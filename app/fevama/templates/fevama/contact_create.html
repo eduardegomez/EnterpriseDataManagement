@@ -14,13 +14,13 @@
 <body style="background-color: #efefef;">
 <div class="centrado">
     <legend style="margin-top: 20px; text-align: center;">
-        <i class="fas fa-users"></i> {% trans 'Tipos de Contacto' %}
+        <i class="fas fa-address-book"></i> {% trans 'Contactos' %}
     </legend>
     <hr/>
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-1"></div>
         <div class="col-md-1">
-            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:typeofcontact_index' %}">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:contact_index' %}">
                 {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
             </a>
         </div>
@@ -30,17 +30,49 @@
                 <thead style="background-color: rgb(133, 172, 172);">
                     <tr>
                         <td style="text-align:center; vertical-align: middle;" colspan="2">
-                            <label> {% trans 'Crear un nuevo tipo'%}</label>
+                            <label> {% trans 'Crear un nuevo contacto'%}</label>
                         </td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Nombre:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="name" type="text" placeholder="Nombre del contacto" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Email:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="email" type="text" placeholder="Dirección de correo" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Empresa:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="empresa" class="form-control text-center" name="empresa" style="text-align: center;">
+                                {% for e in empresas_list %}
+                                <option value="{{ e.id }}">{{ e.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
                                 <label> {% trans 'Tipo:'%}</label>
                         </td>
                         <td style="text-align:center; vertical-align: middle;">
-                            <input id="type" type="text" placeholder="Escribe un tipo" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                            <select id="type" class="form-control text-center" name="empresa" style="text-align: center;">
+                                {% for t in type_list %}
+                                <option value="{{ t.id }}">{{ t.name }}</option>
+                                {% endfor %}
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -58,7 +90,7 @@
 		<div class="col-md-6">
 			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
 				<p>
-					{% trans 'Ya existeeste tipo de contacto' %}
+					{% trans 'Ya existe un contacto con los mismos datos' %}
 				</p>
 			</div>
         </div>
@@ -73,7 +105,7 @@
 		<div class="col-md-6">
 			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
 				<p>
-					{% trans 'No puedes dejar el tipo vacio' %}
+					{% trans 'No puedes dejar sin rellenar ningún campo' %}
 				</p>
 			</div>
         </div>
@@ -88,7 +120,7 @@
 		<div class="col-md-6">
 			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
 				<p>
-					{% trans 'Registro creado correctamente' %}
+					{% trans 'Contacto creado correctamente' %}
 				</p>
 			</div>
         </div>
@@ -119,20 +151,38 @@
 
     function create()
     {      
-        if(confirm('{% trans "Estás seguro de crear este tipo de contacto?" %}'))
+        if(confirm('{% trans "Estás seguro de crear este contacto?" %}'))
         {
             document.getElementById("btn-create").className = "btn btn-warning btn btn-block btnBootstrapping";
             document.getElementById("btn-create").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'CREANDO' %}";
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var empresa = document.getElementById("empresa").value;
             var type = document.getElementById("type").value;
-            if (type == ""){
+            if (empresa == ""){
                 document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (name == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (email == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (type == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-successs";
                 document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                 createAutoClosingAlert('#valueKO', 5000);
             } else {
                 $.ajax({
-                    url: '{% url "fevama:typeofcontact_createItem" %}',
+                    url: '{% url "fevama:contact_createItem" %}',
                     data:  {
-                        'data': type,
+                        'name': name,
+                        'email': email,
+                        'empresa': empresa,
+                        'type': type
                     },
                     dataType: 'json',
                     success: function (data) {

@@ -33,8 +33,8 @@ class TypeOfContact(models.Model):
 
 # Contact Manager
 class ContactManager(models.Manager):
-    def create_contact(self, name, email):
-        contact = self.create(name=name, email=email)
+    def create_contact(self, name, email, type, empresa):
+        contact = self.create(name=name, email=email, type=type, empresa=empresa)
         return contact
 
 # Contacto Model

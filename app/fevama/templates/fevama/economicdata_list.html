@@ -65,8 +65,8 @@
         function borrar(id){
         if(confirm('{% trans "Estás seguro de eliminar este registro?" %}'))
         {
-            document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
-            document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
+            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
+            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
             $.ajax({
                 url: '{% url "fevama:economicdata_deleteItem" %}',
                 data:  {

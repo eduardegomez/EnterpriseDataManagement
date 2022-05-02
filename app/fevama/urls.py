@@ -20,6 +20,11 @@ urlpatterns = [
 
     # CONTACT
     path('contact/', views.contact_index, name="contact_index"),
+    path('contact_create/', views.contact_create, name="contact_create"),
+    path('contact_createItem/', views.contact_createItem, name="contact_createItem"),
+    path('contact_deleteItem/', views.contact_deleteItem, name="contact_deleteItem"),
+    path('contact_modify/<id>', views.contact_modify, name="contact_modify"),
+    path('contact_modifyItem/', views.contact_modifyItem, name="contact_modifyItem"),
 
     # TYPE OF CONTACT
     path('typeofcontact_index/', views.typeofcontact_index, name="typeofcontact_index"),

@@ -51,12 +51,85 @@ def empresas_index(request):
         'object_list': object_list
     })
 
+# ----------- START CONTACT --------------------- #
 def contact_index(request):
     object_list = Contact.objects.all()
     return render(request, 'fevama/contact_list.html', {
         'object_list': object_list
     })
 
+def contact_create(request):
+    empresas_list = Empresa.objects.all()
+    type_list = TypeOfContact.objects.all()
+    return render(request, 'fevama/contact_create.html',{
+        'empresas_list': empresas_list,
+        'type_list': type_list
+    })
+
+def contact_createItem(request):
+    name = request.GET['name']
+    email = request.GET['email']
+    empresa = request.GET['empresa']
+    type = request.GET['type']
+    empresa = Empresa.objects.filter(id=empresa).first()
+    type = TypeOfContact.objects.filter(id=type).first()
+    contact = Contact.objects.filter(name=name, email=email, empresa=empresa, type=type).first()
+    if contact:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Contact.objects.create_contact(name, email, type, empresa)
+        response = { 'code': 200 }
+
+    return JsonResponse(response)
+
+def contact_deleteItem(request):
+    id = request.GET['data']
+    check = Contact.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def contact_modify(request, id):
+    contact = Contact.objects.filter(id=id).first()
+    empresas_list = Empresa.objects.all()
+    type_list = TypeOfContact.objects.all()
+    return render(request, 'fevama/contact_modify.html', {
+        'contact': contact,
+        'empresas_list': empresas_list,
+        'type_list': type_list
+    })
+
+def contact_modifyItem(request):
+    id = request.GET['id']
+    name = request.GET['name']
+    email = request.GET['email']
+    empresa = request.GET['empresa']
+    type = request.GET['type']
+    empresa = Empresa.objects.filter(id=empresa).first()
+    type = TypeOfContact.objects.filter(id=type).first()
+    contacts = TypeOfContact.objects.all()
+    for c in contacts:
+        if c.name == name and c.email == email and c.empresa == empresa and c.type == type:
+            response = { 'code': 404 }
+            return JsonResponse(response)
+
+    check = Contact.objects.filter(id=id).first()
+    if check:
+        check.name = name
+        check.email = email
+        check.empresa = empresa
+        check.type = type
+        check.save()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+# ----------- END CONTACT --------------------- #
+
+# ----------- START TYPE OF CONTACT --------------------- #
 def typeofcontact_index(request):
     object_list = TypeOfContact.objects.all()
     return render(request, 'fevama/typeofcontact_list.html', {
@@ -115,7 +188,9 @@ def typeofcontact_modifyItem(request):
     response = { 'code': 200}
     return JsonResponse(response)
 
+# ----------- END TYPE OF CONTACT --------------------- #
 
+# ----------- START ECONOMIC DATA --------------------- #
 def economicdata_index(request):
     object_list = EconomicData.objects.all()
     return render(request, 'fevama/economicdata_list.html', {
@@ -179,6 +254,9 @@ def economicdata_deleteItem(request):
     
     response = { 'code': 200}
     return JsonResponse(response)
+
+# ----------- END ECONOMIC DATA --------------------- #
+
 
 #### AYUDAS ####
 def ayudas_index(request):
