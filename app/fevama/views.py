@@ -196,10 +196,24 @@ def contact_modifyItem(request):
 
 # ----------- START TYPE OF CONTACT --------------------- #
 def typeofcontact_index(request):
-    object_list = TypeOfContact.objects.all()
+    object_list = TypeOfContact.objects.all()[:2]
     return render(request, 'fevama/typeofcontact_list.html', {
         'object_list': object_list
     })
+
+
+def typeofcontact_showAll(request):
+    object_list = TypeOfContact.objects.all()[2:]
+    data = []
+
+    for o in object_list:
+        data_aux = dict()
+        data_aux["id"] = o.id
+        data_aux["type"] = o.name
+        data.append(data_aux)
+
+    response = { 'code': 200, 'data': data}
+    return JsonResponse(response)
 
 def typeofcontact_create(request):
     return render(request, 'fevama/typeofcontact_create.html')

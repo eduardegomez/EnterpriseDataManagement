@@ -33,6 +33,7 @@ urlpatterns = [
 
     # TYPE OF CONTACT
     path('typeofcontact_index/', views.typeofcontact_index, name="typeofcontact_index"),
+    path('typeofcontact_showAll/', views.typeofcontact_showAll, name="typeofcontact_showAll"),
     path('typeofcontact_create/', views.typeofcontact_create, name="typeofcontact_create"),
     path('typeofcontact_createItem/', views.typeofcontact_createItem, name="typeofcontact_createItem"),
     path('typeofcontact_deleteItem/', views.typeofcontact_deleteItem, name="typeofcontact_deleteItem"),
