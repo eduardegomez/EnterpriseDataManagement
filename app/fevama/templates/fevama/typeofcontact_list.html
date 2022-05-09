@@ -53,14 +53,17 @@
             {% endif %}
         </tbody>
     </table>
+    {% if lenght >= 20 %}
     <div class="centrado" style="display: flex; justify-content: center;">
         <a id="btn-all" class="btn btn-outline-secondary" onclick="showmore()">
             {% fa5_icon 'plus' 'fas' %} {% trans 'Mostrar más' %}
         </a>
     </div>
+    {% endif %}
 </div>
 </body>
 <script>
+    console.log({{length}})
     function create(id){
         if(confirm('{% trans "Estás seguro de eliminar este tipo de contacto? Se eliminarán todos los contactos que tengan este tipo" %}'))
         {
@@ -94,18 +97,39 @@
                     for (var i=0; i< data.length; i++){
                         var button = "<a id=edit"+ i + "> EDITAR </a>";
                         var button2 = "<a id=eliminar"+ i + "> ELIMINAR </a>";
-                        console.log(button)
                         $('#tbody').append("<tr><td>" + data[i].id + "</td><td>" + data[i].type +"</td><td>" + 
                             button + " " + button2
                             );
                         check= "edit"+i;
                         check1= "eliminar"+i;
+                        id = data[i].id;
                         var edit_button = document.getElementById(check);
                         edit_button.classList.add("btn", "btn-primary", "btn-sm");
+                        //Revisar para no poner path absoluta
+                        href = "http://192.168.1.116:8001/fevama/typeofcontact_modify/" + id;
+                        edit_button.href = href
                         delete_button = document.getElementById(check1);
                         delete_button.classList.add("btn", "btn-danger", "btn-sm");
-                        //delete_button.onclick = create(data[i].id);
-
+                        delete_button.onclick = function() {
+                            if(confirm('{% trans "Estás seguro de eliminar este tipo de contacto? Se eliminarán todos los contactos que tengan este tipo" %}'))
+                                {
+                                    $.ajax({
+                                        url: '{% url "fevama:typeofcontact_deleteItem" %}',
+                                        data:  {
+                                            'data': id,
+                                        },
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            location.reload(true);
+                                        },
+                                        error: function (data) {
+                                            document.getElementById("btn-delete").className = "btn btn-danger btn btn-block btnBootstrapping";
+                                            document.getElementById("btn-delete").innerHTML="ERROR"; 
+                                            location.reload(true);
+                                        },
+                                    });
+                                }
+                        }
                     }
                     document.getElementById("btn-all").style = "display:none"
                     
