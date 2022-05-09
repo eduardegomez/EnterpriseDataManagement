@@ -180,6 +180,11 @@
                             document.getElementById("btn-create").className = "btn btn-outline-success";
                             document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                             createAutoClosingAlert('#created', 5000);
+                            document.getElementById("name").value = "";
+                            document.getElementById("cif").value = "";
+                            document.getElementById("cnae").value = "";
+                            document.getElementById("phone").value = "";
+                            document.getElementById("aux").value = "";
                         }
                         if(data['code'] == 404){
                             document.getElementById("btn-create").className = "btn btn-outline-success";

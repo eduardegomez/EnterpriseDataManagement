@@ -58,7 +58,7 @@
 		<div class="col-md-6">
 			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
 				<p>
-					{% trans 'Ya existeeste tipo de contacto' %}
+					{% trans 'Ya existe este tipo de contacto' %}
 				</p>
 			</div>
         </div>
@@ -140,6 +140,7 @@
                             document.getElementById("btn-create").className = "btn btn-outline-success";
                             document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                             createAutoClosingAlert('#created', 5000);
+                            document.getElementById("type").value = "";
                         }
                         if(data['code'] == 404){
                             document.getElementById("btn-create").className = "btn btn-outline-success";

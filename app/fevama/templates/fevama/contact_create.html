@@ -190,6 +190,10 @@
                             document.getElementById("btn-create").className = "btn btn-outline-success";
                             document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                             createAutoClosingAlert('#created', 5000);
+                            document.getElementById("name").value = "";
+                            document.getElementById("email").value = "";
+                            document.getElementById("empresa").value = "";
+                            document.getElementById("type").value = "";
                         }
                         if(data['code'] == 404){
                             document.getElementById("btn-create").className = "btn btn-outline-success";

@@ -186,6 +186,11 @@
                             document.getElementById("btn-create").className = "btn btn-outline-success";
                             document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                             createAutoClosingAlert('#created', 5000);
+                            document.getElementById("empresa").value = "";
+                            document.getElementById("year").value = "";
+                            document.getElementById("workers").value = "";
+                            document.getElementById("money").value = "";
+                            
                         }
                         if(data['code'] == 404){
                             document.getElementById("btn-create").className = "btn btn-outline-success";
