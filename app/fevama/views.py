@@ -1,9 +1,11 @@
 from sre_constants import SUCCESS
+from typing import final
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+import json
 
 from django.urls import reverse_lazy
 from .models import *
@@ -335,6 +337,31 @@ def economicdata_deleteItem(request):
 
 # ----------- END ECONOMIC DATA --------------------- #
 
+# ----------- EMPRESA GRAPHS ------------------------ #
+def graphs_index(request):
+    object_list = Empresa.objects.all()
+    return render(request, 'fevama/graphs_index.html', {
+        'object_list': object_list
+    })
+
+def empresa_getdatagraph(request):
+    data = dict()
+    final_data = {}
+    year = []
+    value = []
+    id = request.GET["identifier"]
+    all_data = EconomicData.objects.filter(empresa_id=id).order_by('year')
+    if all_data:
+        for d in all_data:
+            year.append(d.year)
+            value.append(d.data)
+
+    final_data['chart_data'] = [{'year': year}, {'value': value}]
+    data = final_data
+    return HttpResponse(json.dumps(data), content_type='aplication/json')
+
+
+# ----------- END GRAPHS----------------------------- #
 
 #### AYUDAS ####
 def ayudas_index(request):

@@ -49,6 +49,10 @@ urlpatterns = [
     path('economicdata_deleteItem/', views.economicdata_deleteItem, name="economicdata_deleteItem"),
 
 
+    # GRAPHS
+    path('graphs_index/', views.graphs_index, name="graphs_index"),
+    path('empresa_getdatagraph/', views.empresa_getdatagraph, name="empresa_getdatagraph"),
+
 
     # -------- AYUDAS -------- #
     path('ayudas_index/', views.ayudas_index, name="ayudas_index"),

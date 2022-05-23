@@ -1,0 +1,269 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 360px;
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+</style>
+<body style="background-color: #efefef;">
+    <div class="centrado">
+        <legend style="margin-top: 20px; text-align: center;">
+            <i class="fas fa-chart-bar"></i> {% trans 'Gráficos' %}
+        </legend>
+        <hr/>
+    </div> 
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1" style="margin-top: 5px;">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:projects_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+    <div class="centrado" style="display: flex; justify-content: center; text-align: center;">
+        <div class="col-md-2">
+            <label style="margin-top: 5px;"><b>{% trans 'Selecciona una empresa:'%}</b></label>
+        </div>
+        <div class="col-md-2" style="text-align: center;">
+            <select id="empresa" class="form-control text-center" name="empresa" style="width: auto;">
+                {% for e in object_list %}
+                <option value="{{ e.id }}">{{ e.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <a id="btn-modify" class="btn btn-outline-success" onclick="loadData()">{% trans 'Cargar gráficas' %}</a>
+        </div>
+        
+    </div>
+    <figure class="highcharts-figure">
+        <div id="container3" style="display: none;"></div>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="container2"></div>
+    </figure>
+    
+</body>
+<script>
+Highcharts.chart('container', {
+    title: {
+        text: 'Número de emplados anuales registrados por empresa'
+    },
+    yAxis: {
+        title: {
+            text: 'Numero de empleados'
+        }
+    },
+    xAxis: {
+        accessibility: {
+            rangeDescription: 'Range: 2010 to 2017'
+        }
+    },
+    credits: {
+        enabled: false
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+            pointStart: 2015
+        }
+    },
+    series: [{
+        name: 'FEVAMA',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    }, {
+        name: 'UVAX',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    }, {
+        name: 'Código Comunicación y Diseño',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    }],
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }      
+});
+Highcharts.chart('container2', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Valores anuales de facturación'
+    },
+    xAxis: {
+        categories: [
+            '2013',
+            '2014',
+            '2015',
+            '2016',
+            '2017',
+            '2018',
+            '2019',
+            '2020',
+            '2021',
+            '2022',
+            '2021',
+            '2022'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Valores anuales (€)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} €</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'UVAX',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'Código Comunicación y Diseño',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'FEVAMA',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }]
+});
+
+function loadData(){
+
+    var anualData = {
+        chart: { renderTo: 'container3', type: 'column' },
+        legend: {enabled: true},
+        title: {text: '{% trans "Valor anual facturación" %}'},
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [],
+            crosshair: true 
+        },
+        yAxis: { 
+            min: 0,
+            title: {
+                text: 'Cantidad (€)'
+            } 
+        },
+        rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+        scrollbar: { enabled: false },
+        series: [{}],
+        colors: ['#32cd32'],
+        plotOptions: { series: { dataGrouping: { enabled: false } } }
+    };
+
+    real_id = document.getElementById("empresa").value;
+    var request = $.ajax({
+            type: "GET",
+            url: "{% url "fevama:empresa_getdatagraph" %}",
+            data: {
+                'identifier': real_id
+            },
+            async: true
+        }).done(function(data){
+            console.log(data);
+
+            document.getElementById("container3").style.display = "block";
+            anualData.series[0].name = '{% trans "Valor anual" %} (€)';
+            anualData.series[0].data = data['chart_data'][1]['value'];
+            var chart = new Highcharts.Chart(anualData);
+            console.log(data['chart_data'][0]['year']);
+            chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+
+        }).fail(function(jqXHR, textStatus) {
+            console.log( "Request failed: " + textStatus );
+        });
+
+}
+</script>
+{% endblock %}
