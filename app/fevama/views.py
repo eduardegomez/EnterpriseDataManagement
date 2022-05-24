@@ -349,14 +349,16 @@ def empresa_getdatagraph(request):
     final_data = {}
     year = []
     value = []
+    workers = []
     id = request.GET["identifier"]
     all_data = EconomicData.objects.filter(empresa_id=id).order_by('year')
     if all_data:
         for d in all_data:
             year.append(d.year)
             value.append(d.data)
+            workers.append(d.workers)
 
-    final_data['chart_data'] = [{'year': year}, {'value': value}]
+    final_data['chart_data'] = [{'year': year}, {'value': value}, {'workers': workers}]
     data = final_data
     return HttpResponse(json.dumps(data), content_type='aplication/json')
 

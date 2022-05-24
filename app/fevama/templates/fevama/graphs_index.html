@@ -94,6 +94,9 @@
         <div id="container3" style="display: none;"></div>
     </figure>
     <figure class="highcharts-figure">
+        <div id="container4" style="display: none;"></div>
+    </figure>
+    <figure class="highcharts-figure">
         <div id="container"></div>
     </figure>
     <figure class="highcharts-figure">
@@ -242,6 +245,30 @@ function loadData(){
         plotOptions: { series: { dataGrouping: { enabled: false } } }
     };
 
+    var workersData = {
+        chart: { renderTo: 'container4'},
+        legend: {enabled: true},
+        title: {text: '{% trans "Número de empleados anuales registrados por empresa" %}'},
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [],
+            crosshair: true 
+        },
+        yAxis: { 
+            min: 0,
+            title: {
+                text: 'Número de empleados'
+            } 
+        },
+        rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+        scrollbar: { enabled: false },
+        series: [{}],
+        colors: ['#32cd32'],
+        plotOptions: { series: { dataGrouping: { enabled: false } } }
+    };
+
     real_id = document.getElementById("empresa").value;
     var request = $.ajax({
             type: "GET",
@@ -253,12 +280,19 @@ function loadData(){
         }).done(function(data){
             console.log(data);
 
+            // Anual data
             document.getElementById("container3").style.display = "block";
             anualData.series[0].name = '{% trans "Valor anual" %} (€)';
             anualData.series[0].data = data['chart_data'][1]['value'];
             var chart = new Highcharts.Chart(anualData);
-            console.log(data['chart_data'][0]['year']);
             chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+
+            // Persons data
+            document.getElementById("container4").style.display = "block";
+            workersData.series[0].name = '{% trans "Número de empleados" %}';
+            workersData.series[0].data = data['chart_data'][2]['workers'];
+            var chart2 = new Highcharts.Chart(workersData);
+            chart2.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
 
         }).fail(function(jqXHR, textStatus) {
             console.log( "Request failed: " + textStatus );
