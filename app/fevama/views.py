@@ -362,6 +362,34 @@ def empresa_getdatagraph(request):
     data = final_data
     return HttpResponse(json.dumps(data), content_type='aplication/json')
 
+def empresa_compare(request):
+    data = dict()
+    final_data1_list = []
+    final_data2_list = []
+    id1 = request.GET["identifier1"]
+    id2 = request.GET["identifier2"]
+
+    all_data1 = EconomicData.objects.filter(empresa_id=id1).order_by('year')
+    if all_data1:
+        for d in all_data1:
+            final_data1 = dict()
+            final_data1["year"] = d.year
+            final_data1["value"] = d.data
+            final_data1["workers"] = d.workers
+            final_data1_list.append(final_data1)
+
+    all_data2 = EconomicData.objects.filter(empresa_id=id2).order_by('year')
+    if all_data2:
+        for d in all_data2:
+            final_data2 = dict()
+            final_data2["year"] = d.year
+            final_data2["value"] = d.data
+            final_data2["workers"] = d.workers
+            final_data2_list.append(final_data2)
+
+    data = ""
+    return HttpResponse(json.dumps(data), content_type='aplication/json')
+
 
 # ----------- END GRAPHS----------------------------- #
 

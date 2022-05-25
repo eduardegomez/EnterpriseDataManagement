@@ -52,6 +52,7 @@ urlpatterns = [
     # GRAPHS
     path('graphs_index/', views.graphs_index, name="graphs_index"),
     path('empresa_getdatagraph/', views.empresa_getdatagraph, name="empresa_getdatagraph"),
+    path('empresa_compare/', views.empresa_compare, name="empresa_compare"),
 
 
     # -------- AYUDAS -------- #
