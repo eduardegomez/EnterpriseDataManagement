@@ -200,12 +200,12 @@
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-4"></div>
         <div id="btn-csv3" class="col-md-2" style="text-align: center; display: none;">
-            <a class="btn btn-outline-secondary" onclick="getCSV1()">
+            <a class="btn btn-outline-secondary" onclick="getCSV2()">
                 {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
             </a>
         </div>
         <div id="btn-png3" class="col-md-2" style="text-align: center; display: none;">
-            <a class="btn btn-outline-secondary" onclick="getPNG1()">
+            <a class="btn btn-outline-secondary" onclick="getPNG2()">
                 {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
             </a>
         </div>
@@ -220,12 +220,12 @@
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-4"></div>
         <div id="btn-csv4" class="col-md-2" style="text-align: center; display: none;">
-            <a class="btn btn-outline-secondary" onclick="getCSV1()">
+            <a class="btn btn-outline-secondary" onclick="getCSV3()">
                 {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
             </a>
         </div>
         <div id="btn-png4" class="col-md-2" style="text-align: center; display: none;">
-            <a class="btn btn-outline-secondary" onclick="getPNG1()">
+            <a class="btn btn-outline-secondary" onclick="getPNG3()">
                 {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
             </a>
         </div>
@@ -462,6 +462,30 @@ function compare(){
         plotOptions: { series: { dataGrouping: { enabled: false } } }
     };
 
+    var workersDataCompare = {
+        chart: { renderTo: 'container2'},
+        legend: {enabled: true},
+        title: {text: '{% trans "Número de empleados anuales registrados por empresa" %}'},
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [],
+            crosshair: true 
+        },
+        yAxis: { 
+            min: 0,
+            title: {
+                text: 'Número de empleados'
+            } 
+        },
+        rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+        scrollbar: { enabled: false },
+        series: [{},{}],
+        //colors: ['rgb(133, 172, 172)'],
+        plotOptions: { series: { dataGrouping: { enabled: false } } }
+    };
+
     real_id1 = document.getElementById("empresa1").value;
     real_id2 = document.getElementById("empresa2").value;
     year_start = document.getElementById("yearStart").value;
@@ -496,12 +520,19 @@ function compare(){
                 // Anual data compare
                 anualDataCompare.series[0].name = data['first'][3]['name'];
                 anualDataCompare.series[1].name = data['second'][3]['name'];
-                console.log(data)
-                console.log(data["first"])
                 anualDataCompare.series[0].data = data['first'][1]['value'];
                 anualDataCompare.series[1].data = data['second'][1]['value'];
                 var chart = new Highcharts.Chart(anualDataCompare);
                 chart.xAxis[0].setCategories(data['first'][0]['year'], true);
+
+                // Workers data compare
+                workersDataCompare.series[0].name = data['first'][3]['name'];
+                workersDataCompare.series[1].name = data['second'][3]['name'];
+                workersDataCompare.series[0].data = data['first'][2]['workers'];
+                workersDataCompare.series[1].data = data['second'][2]['workers'];
+                var chart2 = new Highcharts.Chart(workersDataCompare);
+                chart2.xAxis[0].setCategories(data['first'][0]['year'], true);
+
             }
         }).fail(function(jqXHR, textStatus) {
             console.log( "Request failed: " + textStatus );
@@ -519,6 +550,16 @@ function getCSV1(){
     chart.downloadCSV();
 }
 
+function getCSV2(){
+    var chart = $('#container').highcharts();
+    chart.downloadCSV();
+}
+
+function getCSV3(){
+    var chart = $('#container2').highcharts();
+    chart.downloadCSV();
+}
+
 function getPNG(){
     var chart = $('#container3').highcharts();
     chart.exportChart();
@@ -526,6 +567,16 @@ function getPNG(){
 
 function getPNG1(){
     var chart = $('#container4').highcharts();
+    chart.exportChart();
+}
+
+function getPNG2(){
+    var chart = $('#container').highcharts();
+    chart.exportChart();
+}
+
+function getPNG3(){
+    var chart = $('#container2').highcharts();
     chart.exportChart();
 }
 
