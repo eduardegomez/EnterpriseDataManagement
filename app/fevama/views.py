@@ -351,7 +351,20 @@ def empresa_getdatagraph(request):
     value = []
     workers = []
     id = request.GET["identifier"]
-    all_data = EconomicData.objects.filter(empresa_id=id).order_by('year')
+    start = request.GET["start"]
+    end = request.GET["end"]
+
+    if start == "" or end == "":
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    elif start > end:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        start = int(start)
+        end = int(end)
+
+    all_data = EconomicData.objects.filter(empresa_id=id).filter(year__range=[start,end]).order_by('year')
     if all_data:
         for d in all_data:
             year.append(d.year)
@@ -363,31 +376,75 @@ def empresa_getdatagraph(request):
     return HttpResponse(json.dumps(data), content_type='aplication/json')
 
 def empresa_compare(request):
+    print("EMPRESA COMPARE")
     data = dict()
     final_data1_list = []
     final_data2_list = []
     id1 = request.GET["identifier1"]
     id2 = request.GET["identifier2"]
+    start = request.GET["start"]
+    end = request.GET["end"]
 
-    all_data1 = EconomicData.objects.filter(empresa_id=id1).order_by('year')
+    if start == "" or end == "":
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    elif start > end:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        start = int(start)
+        end = int(end)
+
+    year = []
+    start_aux = start
+    while start_aux <= end:
+        year.append(start_aux)
+        start_aux += 1
+
+    year1 = []
+    value1 = []
+    workers1 = []
+    empresa = Empresa.objects.filter(id=id1).first()
+    name1 = empresa.name
+    all_data1 = EconomicData.objects.filter(empresa_id=id1).filter(year__range=[start,end]).order_by('year')
+    start1 = start
     if all_data1:
         for d in all_data1:
-            final_data1 = dict()
-            final_data1["year"] = d.year
-            final_data1["value"] = d.data
-            final_data1["workers"] = d.workers
-            final_data1_list.append(final_data1)
+            while d.year != start1:
+                year1.append(start1)
+                value1.append(0)
+                workers1.append(0)
+                start1 += 1
 
-    all_data2 = EconomicData.objects.filter(empresa_id=id2).order_by('year')
+            year1.append(d.year)
+            value1.append(d.data)
+            workers1.append(d.workers)
+            start1 += 1
+
+    year2 = []
+    value2 = []
+    workers2 = []
+    empresa = Empresa.objects.filter(id=id2).first()
+    name2 = empresa.name
+    all_data2 = EconomicData.objects.filter(empresa_id=id2).filter(year__range=[start,end]).order_by('year')
+    start2 = start
     if all_data2:
         for d in all_data2:
-            final_data2 = dict()
-            final_data2["year"] = d.year
-            final_data2["value"] = d.data
-            final_data2["workers"] = d.workers
-            final_data2_list.append(final_data2)
+            while d.year != start2:
+                year2.append(start2)
+                value2.append(0)
+                workers2.append(0)
+                start2 += 1
 
-    data = ""
+            year2.append(d.year)
+            value2.append(d.data)
+            workers2.append(d.workers)
+            start2 += 1
+
+    data = dict()
+    data["first"] = [{'year': year1}, {'value': value1}, {'workers': workers1}, {'name': name1}]
+    data["second"] = [{'year': year2}, {'value': value2}, {'workers': workers2}, {'name': name2}]
+
     return HttpResponse(json.dumps(data), content_type='aplication/json')
 
 

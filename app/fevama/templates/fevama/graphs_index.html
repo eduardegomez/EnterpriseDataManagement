@@ -102,30 +102,55 @@
             <thead style="background-color: rgb(133, 172, 172);">
                 <tr>
                     <td style="text-align:center; vertical-align: middle;" colspan="2">
-                        <label><b>{% trans 'Selecciona una empresa:'%}</b></label>
+                        <label><b>{% trans 'Selecciona una empresa'%}</b></label>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td style="text-align:center; vertical-align: middle; align-items: center;" align="center">
+                    <td style="text-align:center; vertical-align: middle; align-items: center;" align="center" colspan="2">
                         <select id="empresa" class="form-control text-center" name="empresa">
                             {% for e in object_list %}
                             <option value="{{ e.id }}">{{ e.name }}</option>
                             {% endfor %}
                         </select>
                     </td>
-                    <td style="text-align:center; vertical-align: middle;">
-                        <a id="btn-modify" class="btn btn-outline-success" onclick="loadData()">{% trans 'Cargar gráficas' %}</a>
+                </tr>
+                <tr>
+                    <td style="text-align:center; vertical-align: middle; align-items: center;" align="center">
+                        <p>{% trans 'Fecha inicio'%}</p>
+                        <input id="yearStart" type="number" min="1900" max="2099" step="1" placeholder="2018" style="width: 70%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                    </td>
+                    <td style="text-align:center; vertical-align: middle; align-items: center;" align="center">
+                        <p>{% trans 'Fecha fin'%}</p>
+                        <input id="yearEnd" type="number" min="1900" max="2099" step="1" placeholder="2022" style="width: 70%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align:center; vertical-align: middle;" colspan="2">
+                    <td style="text-align:center; vertical-align: middle;">
+                        <a id="btn-modify" class="btn btn-outline-success" onclick="loadData()">{% trans 'Cargar gráficas' %}</a>
+                    </td>
+                    <td style="text-align:center; vertical-align: middle;">
                         <button id="myBtn" class="btn btn-outline-secondary">{% trans 'Comparar' %}</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+            <div class="col-md-2">
+                <div class="help-block"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="error"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                    <p>
+                        {% trans 'Revisa el rango de fechas especificado' %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="help-block"></div>
+            </div>
+        </div>
     </div>
     <figure class="highcharts-figure">
         <div id="container3" style="display: none;"></div>
@@ -209,7 +234,6 @@
    <div id="four" class="centrado" style="display: none;">
        <hr/>
    </div>
-
 <!-- The Modal -->
 <div class="centrado">
     <div id="myModal" class="modal">
@@ -256,6 +280,23 @@
   
 </body>
 <script>
+    function createAutoClosingAlert(selector, delay)
+    {
+        if(delay == 0)
+        {
+            $(selector).show();
+        }
+        else if(delay == -1)
+        {
+            $(selector).hide();
+        }
+        else if(delay > 0)
+        {
+            $(selector).fadeIn("slow");
+            window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+        }
+    }
+
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("myBtn");
     var span = document.getElementsByClassName("close")[0];
@@ -270,121 +311,6 @@
         modal.style.display = "none";
     }
     }
-
-
-Highcharts.chart('container', {
-    title: {
-        text: 'Número de emplados anuales registrados por empresa'
-    },
-    yAxis: {
-        title: {
-            text: 'Numero de empleados'
-        }
-    },
-    xAxis: {
-        accessibility: {
-            rangeDescription: 'Range: 2010 to 2017'
-        }
-    },
-    credits: {
-        enabled: false
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            pointStart: 2015
-        }
-    },
-    series: [{
-        name: 'FEVAMA',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-    }, {
-        name: 'UVAX',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-    }, {
-        name: 'Código Comunicación y Diseño',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-    }],
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    }      
-});
-Highcharts.chart('container2', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Valores anuales de facturación'
-    },
-    xAxis: {
-        categories: [
-            '2013',
-            '2014',
-            '2015',
-            '2016',
-            '2017',
-            '2018',
-            '2019',
-            '2020',
-            '2021',
-            '2022',
-            '2021',
-            '2022'
-        ],
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Valores anuales (€)'
-        }
-    },
-    tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} €</b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-    },
-    plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-        }
-    },
-    series: [{
-        name: 'UVAX',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-    }, {
-        name: 'Código Comunicación y Diseño',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-    }, {
-        name: 'FEVAMA',
-        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-    }]
-});
 
 function loadData(){
 
@@ -447,39 +373,49 @@ function loadData(){
     };
 
     real_id = document.getElementById("empresa").value;
+    year_start = document.getElementById("yearStart").value;
+    year_end = document.getElementById("yearEnd").value;
     var request = $.ajax({
             type: "GET",
             url: "{% url "fevama:empresa_getdatagraph" %}",
             data: {
-                'identifier': real_id
+                'identifier': real_id,
+                'start' : year_start,
+                'end' : year_end
             },
             async: true
         }).done(function(data){
-            console.log(data);
+            console.log(data)
+            if(data['code'] == 404){
+                console.log("ERROR")
+                createAutoClosingAlert('#error', 5000);
+            }
+            else{
+                // Anual data
+                document.getElementById("container3").style.display = "block";
+                anualData.series[0].name = '{% trans "Valor anual" %} (€)';
+                anualData.series[0].data = data['chart_data'][1]['value'];
+                var chart = new Highcharts.Chart(anualData);
+                chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
 
-            // Anual data
-            document.getElementById("container3").style.display = "block";
-            anualData.series[0].name = '{% trans "Valor anual" %} (€)';
-            anualData.series[0].data = data['chart_data'][1]['value'];
-            var chart = new Highcharts.Chart(anualData);
-            chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+                // Buttons anual data
+                document.getElementById("btn-csv").style.display = "block";
+                document.getElementById("btn-png").style.display = "block";
+                document.getElementById("first").style.display = "block";
 
-            // Buttons anual data
-            document.getElementById("btn-csv").style.display = "block";
-            document.getElementById("btn-png").style.display = "block";
-            document.getElementById("first").style.display = "block";
+                // Workers data
+                document.getElementById("container4").style.display = "block";
+                workersData.series[0].name = '{% trans "Número de empleados" %}';
+                workersData.series[0].data = data['chart_data'][2]['workers'];
+                var chart2 = new Highcharts.Chart(workersData);
+                chart2.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
 
-            // Workers data
-            document.getElementById("container4").style.display = "block";
-            workersData.series[0].name = '{% trans "Número de empleados" %}';
-            workersData.series[0].data = data['chart_data'][2]['workers'];
-            var chart2 = new Highcharts.Chart(workersData);
-            chart2.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+                // Buttons workers data
+                document.getElementById("btn-csv1").style.display = "block";
+                document.getElementById("btn-png1").style.display = "block";
+                document.getElementById("second").style.display = "block";
+            }
 
-            // Buttons workers data
-            document.getElementById("btn-csv1").style.display = "block";
-            document.getElementById("btn-png1").style.display = "block";
-            document.getElementById("second").style.display = "block";
 
         }).fail(function(jqXHR, textStatus) {
             console.log( "Request failed: " + textStatus );
@@ -502,29 +438,71 @@ function compare(){
     document.getElementById("first").style.display = "none";
     document.getElementById("container3").style.display = "none";
 
-    // Mostrar las suyas
-    document.getElementById("container").style.display = "block";
-    document.getElementById("container2").style.display = "block";
-    document.getElementById("btn-csv3").style.display = "block";
-    document.getElementById("btn-png3").style.display = "block";
-    document.getElementById("third").style.display = "block";
-    document.getElementById("btn-csv4").style.display = "block";
-    document.getElementById("btn-png4").style.display = "block";
-    document.getElementById("four").style.display = "block";
-
+    var anualDataCompare = {
+        chart: { renderTo: 'container', type: 'column' },
+        legend: {enabled: true},
+        title: {text: '{% trans "Valor anual facturación" %}'},
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [],
+            crosshair: true 
+        },
+        yAxis: { 
+            min: 0,
+            title: {
+                text: 'Cantidad (€)'
+            } 
+        },
+        rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+        scrollbar: { enabled: false },
+        series: [{},{}],
+        //colors: ['rgb(133, 172, 172)'],
+        plotOptions: { series: { dataGrouping: { enabled: false } } }
+    };
 
     real_id1 = document.getElementById("empresa1").value;
     real_id2 = document.getElementById("empresa2").value;
+    year_start = document.getElementById("yearStart").value;
+    year_end = document.getElementById("yearEnd").value;
     var request = $.ajax({
             type: "GET",
             url: "{% url "fevama:empresa_compare" %}",
             data: {
                 'identifier1': real_id1,
-                'identifier2': real_id2
+                'identifier2': real_id2,
+                'start' : year_start,
+                'end' : year_end
             },
             async: true
         }).done(function(data){
             console.log(data);
+            if(data['code'] == 404){
+                console.log("ERROR")
+                createAutoClosingAlert('#error', 5000);
+            }
+            else{
+                // Mostrar las suyas
+                document.getElementById("container").style.display = "block";
+                document.getElementById("container2").style.display = "block";
+                document.getElementById("btn-csv3").style.display = "block";
+                document.getElementById("btn-png3").style.display = "block";
+                document.getElementById("third").style.display = "block";
+                document.getElementById("btn-csv4").style.display = "block";
+                document.getElementById("btn-png4").style.display = "block";
+                document.getElementById("four").style.display = "block";
+
+                // Anual data compare
+                anualDataCompare.series[0].name = data['first'][3]['name'];
+                anualDataCompare.series[1].name = data['second'][3]['name'];
+                console.log(data)
+                console.log(data["first"])
+                anualDataCompare.series[0].data = data['first'][1]['value'];
+                anualDataCompare.series[1].data = data['second'][1]['value'];
+                var chart = new Highcharts.Chart(anualDataCompare);
+                chart.xAxis[0].setCategories(data['first'][0]['year'], true);
+            }
         }).fail(function(jqXHR, textStatus) {
             console.log( "Request failed: " + textStatus );
         });
