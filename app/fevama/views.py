@@ -376,10 +376,7 @@ def empresa_getdatagraph(request):
     return HttpResponse(json.dumps(data), content_type='aplication/json')
 
 def empresa_compare(request):
-    print("EMPRESA COMPARE")
     data = dict()
-    final_data1_list = []
-    final_data2_list = []
     id1 = request.GET["identifier1"]
     id2 = request.GET["identifier2"]
     start = request.GET["start"]
@@ -450,9 +447,51 @@ def empresa_compare(request):
 
 # ----------- END GRAPHS----------------------------- #
 
-#### AYUDAS ####
+#### SUBVENCIONES ####
 def ayudas_index(request):
     return render(request, 'fevama/ayudas_index.html')
+
+# ----------- START PROJECTS ----------------------------- #
+def project_index(request):
+    return render(request, 'fevama/project_list.html', {
+    })
+# ----------- END PROJECTS ----------------------------- #
+
+# ----------- START INVOICE ----------------------------- #
+def invoice_index(request):
+    return render(request, 'fevama/invoice_list.html', {
+    })
+# ----------- END INVOICE ----------------------------- #
+
+# ----------- START ASSISTANCE ----------------------------- #
+def assistance_index(request):
+    return render(request, 'fevama/assistance_list.html', {
+    })
+# ----------- END ASSISTANCE ----------------------------- #
+
+# ----------- START LINE ----------------------------- #
+def line_index(request):
+    return render(request, 'fevama/line_list.html', {
+    })
+# ----------- END LINE ----------------------------- #
+
+# ----------- START ACT ----------------------------- #
+def act_index(request):
+    return render(request, 'fevama/act_list.html', {
+    })
+# ----------- END ACT ----------------------------- #
+
+# ----------- START SITUATION ----------------------------- #
+def situation_index(request):
+    return render(request, 'fevama/situation_list.html', {
+    })
+# ----------- END SITUATION ----------------------------- #
+
+# ----------- START ANNOUNCEMENT ----------------------------- #
+def announcement_index(request):
+    return render(request, 'fevama/announcement_list.html', {
+    })
+# ----------- END ANNOUNCEMENT ----------------------------- #
 
 #### PLANIFICACIÓN ####
 def planificacion_index(request):

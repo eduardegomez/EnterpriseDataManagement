@@ -69,19 +69,19 @@
 <body style="background-color: #efefef;">
 <div class="centrado">
     <legend style="margin-top: 20px; text-align: center;">
-        <i class="fas fa-address-book"></i> {% trans 'Contactos' %}
+        <i class="fas fa-gavel"></i> {% trans 'SITUACIÓN' %}
     </legend>
     <hr/>
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-1"></div>
         <div class="col-md-1" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:projects_index' %}">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:ayudas_index' %}">
                 {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
             </a>
         </div>
         <div class="col-md-2" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:contact_create' %}">
-                {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nuevo contacto' %}
+            <a id="btn-back" class="btn btn-outline-secondary" href="">
+                {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nueva Situación' %}
             </a>
         </div>
         <div class="col-md-5"></div>
@@ -92,30 +92,25 @@
                 <input type="text" class="input-search" placeholder="Buscar en la tabla..." id="search">
             </div>
         </div>
-</div>
-    <table class="table table-striped table-hover" style="margin-top: 20px; text-align: center;" id="mytable">
+    </div>
+    <table class="table table-striped table-hover" style="margin-top: 20px;text-align: center;" id="mytable">
         <thead>
             <tr style="background-color: rgb(133, 172, 172);">
                 <td><b>ID</b></td>
-                <td><b>NOMBRE</b></td>
-                <td><b>EMAIL</b></td>
-                <td><b>EMPRESA</b></td>
-                <td><b>TIPO</b></td>
-                <td><b>ACCIÓN</b></td>
+                <td><b>SITUACIÓN</b></td>
             </tr>
         </thead>
         <tbody>
             {% if object_list %}
-                {% for contact in object_list %}
+                {% for empresa in object_list %}
                 <tr>
-                    <td>{{contact.id}}</td>
-                    <td>{{contact.name}}</td>
-                    <td>{{contact.email}}</td>
-                    <td>{{contact.empresa.name}}</td>
-                    <td>{{contact.type.name}}</td>
+                    <td>{{empresa.id}}</td>
+                    <td>{{empresa.name}}</td>
+                    <td>{{empresa.cif}}</td>
+                    <td>{{empresa.cnae}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:contact_modify' contact.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{contact.id}})"> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:empresa_modify' empresa.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{empresa.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -139,12 +134,12 @@
         });
     });
     function create(id){
-        if(confirm('{% trans "Estás seguro de eliminar este contacto?" %}'))
+        if(confirm('{% trans "Estás seguro de eliminar esta empresa?" %}'))
         {
             //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
             //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
             $.ajax({
-                url: '{% url "fevama:contact_deleteItem" %}',
+                url: '{% url "fevama:empresa_deleteItem" %}',
                 data:  {
                     'data': id,
                 },

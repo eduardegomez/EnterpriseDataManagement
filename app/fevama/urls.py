@@ -55,8 +55,29 @@ urlpatterns = [
     path('empresa_compare/', views.empresa_compare, name="empresa_compare"),
 
 
-    # -------- AYUDAS -------- #
+    # -------- SUBVENCIONES -------- #
     path('ayudas_index/', views.ayudas_index, name="ayudas_index"),
+
+    # PROYECTOS
+    path('project_index/', views.project_index, name="project_index"),
+
+    # FACTURAS
+    path('invoice_index/', views.invoice_index, name="invoice_index"),
+
+    # AYUDAS
+    path('assistance_index/', views.assistance_index, name="assistance_index"),
+
+    # LINEA DE AYUDAS
+    path('line_index/', views.line_index, name="line_index"),
+    
+    # ACTUACIÓN
+    path('act_index/', views.act_index, name="act_index"),
+
+    # SITUACIÓN
+    path('situation_index/', views.situation_index, name="situation_index"),
+
+    # CONVOCATORIA
+    path('announcement_index/', views.announcement_index, name="announcement_index"),
 
     # -------- PLANIFICACIÓN -------- #
     path('planificacion_index/', views.planificacion_index, name="planificacion_index"),
