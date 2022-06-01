@@ -1,3 +1,4 @@
+from ast import Or
 from sre_constants import SUCCESS
 from typing import final
 from django.shortcuts import render, redirect
@@ -30,7 +31,7 @@ def logout_view(request):
     logout(request)
     return redirect('/admin/app/login/')
 
-# HOME  
+# HOME
 def home(request):
     return render(request, 'fevama/index.html')
 
@@ -481,21 +482,235 @@ def act_index(request):
     })
 # ----------- END ACT ----------------------------- #
 
+#### RECURSOS HUMANOS ####
+def planificacion_index(request):
+    return render(request, 'fevama/planificacion_index.html')
+
+# ----------- START APPLICANT ----------------------------- #
+def applicant_index(request):
+    object_list = Applicant.objects.all()
+    return render(request, 'fevama/applicant_list.html', {
+        'object_list': object_list
+    })
+
+def applicant_create(request):
+    return render(request, 'fevama/applicant_create.html', {
+    })
+
+def applicant_deleteItem(request):
+    id = request.GET['data']
+    check = Applicant.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def applicant_createItem(request):
+    name = request.GET['data']
+    check = Applicant.objects.filter(name=name).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Applicant.objects.create_applicant(name)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def applicant_modify(request, id):
+    applicant = Applicant.objects.filter(id=id).first()
+    return render(request, 'fevama/applicant_modify.html', {
+        'applicant': applicant
+    })
+
+def applicant_modifyItem(request):
+    id = request.GET['id']
+    applicant = request.GET['applicant']
+    applicants = Applicant.objects.all()
+    for a in applicants:
+        if applicant.upper() == a.name.upper():
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Applicant.objects.filter(id=id).first()
+    if check:
+        check.name = applicant
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+# ----------- END APPLICANT ----------------------------- #
+
+# ----------- START ORGANISM ----------------------------- #
+def organism_index(request):
+    object_list = Organism.objects.all()
+    return render(request, 'fevama/organism_list.html', {
+        'object_list': object_list
+    })
+
+def organism_deleteItem(request):
+    id = request.GET['data']
+    check = Organism.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def organism_create(request):
+    return render(request, 'fevama/organism_create.html', {
+    })
+
+def organism_createItem(request):
+    name = request.GET['data']
+    check = Organism.objects.filter(name=name).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Organism.objects.create_organism(name)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def organism_modify(request, id):
+    organism = Organism.objects.filter(id=id).first()
+    return render(request, 'fevama/organism_modify.html', {
+        'organism': organism
+    })
+
+def organism_modifyItem(request):
+    id = request.GET['id']
+    organism = request.GET['organism']
+    organisms = Organism.objects.all()
+    for o in organisms:
+        if organism.upper() == o.name.upper():
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Organism.objects.filter(id=id).first()
+    if check:
+        check.name = organism
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+# ----------- END ORGANISM ----------------------------- #
+
 # ----------- START SITUATION ----------------------------- #
 def situation_index(request):
+    object_list = Situation.objects.all()
     return render(request, 'fevama/situation_list.html', {
+        'object_list': object_list
     })
+
+def situation_deleteItem(request):
+    id = request.GET['data']
+    check = Situation.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def situation_create(request):
+    return render(request, 'fevama/situation_create.html', {
+    })
+
+def situation_createItem(request):
+    name = request.GET['data']
+    check = Situation.objects.filter(situation=name).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Situation.objects.create_situation(name)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def situation_modify(request, id):
+    situation = Situation.objects.filter(id=id).first()
+    return render(request, 'fevama/situation_modify.html', {
+        'situation': situation
+    })
+
+def situation_modifyItem(request):
+    id = request.GET['id']
+    situation = request.GET['situation']
+    situations = Situation.objects.all()
+    for s in situations:
+        if situation.upper() == s.situation.upper():
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Situation.objects.filter(id=id).first()
+    if check:
+        check.situation = situation
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
 # ----------- END SITUATION ----------------------------- #
 
 # ----------- START ANNOUNCEMENT ----------------------------- #
 def announcement_index(request):
+    object_list = Announcement.objects.all()
     return render(request, 'fevama/announcement_list.html', {
+        'object_list': object_list
     })
-# ----------- END ANNOUNCEMENT ----------------------------- #
 
-#### PLANIFICACIÓN ####
-def planificacion_index(request):
-    return render(request, 'fevama/planificacion_index.html')
+def announcement_deleteItem(request):
+    id = request.GET['data']
+    check = Announcement.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def announcement_create(request):
+    return render(request, 'fevama/announcement_create.html', {
+    })
+
+def announcement_createItem(request):
+    year = request.GET['data']
+    check = Announcement.objects.filter(year=year).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Announcement.objects.create_announcement(year)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def announcement_modify(request, id):
+    announcement = Announcement.objects.filter(id=id).first()
+    return render(request, 'fevama/announcement_modify.html', {
+        'announcement': announcement
+    })
+
+def announcement_modifyItem(request):
+    id = request.GET['id']
+    year = request.GET['year']
+    announcements = Announcement.objects.all()
+    for a in announcements:
+        if int(year) == int(a.year):
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Announcement.objects.filter(id=id).first()
+    if check:
+        check.year = year
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
+# ----------- END ANNOUNCEMENT ----------------------------- #
 
 #### NOTIFICACIONES ####
 def notificaciones_index(request):

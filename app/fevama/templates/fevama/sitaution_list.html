@@ -69,24 +69,23 @@
 <body style="background-color: #efefef;">
 <div class="centrado">
     <legend style="margin-top: 20px; text-align: center;">
-        <i class="fas fa-gavel"></i> {% trans 'SITUACIÓN' %}
+        <i class="fas fa-gavel"></i> {% trans 'Situación' %}
     </legend>
     <hr/>
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-1"></div>
         <div class="col-md-1" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:ayudas_index' %}">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:planificacion_index' %}">
                 {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
             </a>
         </div>
         <div class="col-md-2" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:situation_create' %}">
                 {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nueva Situación' %}
             </a>
         </div>
         <div class="col-md-5"></div>
         <div class="col-md-2">
-        <!-- <input type="text" class="form-control pull-right" style="width:auto" id="search" placeholder="Buscar en la tabla..."> -->
             <div class="search-box pull-left">
                 <button class="btn-search"><i class="fas fa-search"></i></button>
                 <input type="text" class="input-search" placeholder="Buscar en la tabla..." id="search">
@@ -98,19 +97,18 @@
             <tr style="background-color: rgb(133, 172, 172);">
                 <td><b>ID</b></td>
                 <td><b>SITUACIÓN</b></td>
+                <td><b>ACCIÓN</b></td>
             </tr>
         </thead>
         <tbody>
             {% if object_list %}
-                {% for empresa in object_list %}
+                {% for s in object_list %}
                 <tr>
-                    <td>{{empresa.id}}</td>
-                    <td>{{empresa.name}}</td>
-                    <td>{{empresa.cif}}</td>
-                    <td>{{empresa.cnae}}</td>
+                    <td>{{s.id}}</td>
+                    <td>{{s.situation}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:empresa_modify' empresa.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{empresa.id}})"> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:situation_modify' s.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{s.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -133,13 +131,11 @@
         });
         });
     });
-    function create(id){
-        if(confirm('{% trans "Estás seguro de eliminar esta empresa?" %}'))
+    function deleteItem(id){
+        if(confirm('{% trans "Estás seguro de eliminar esta situación?" %}'))
         {
-            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
-            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
             $.ajax({
-                url: '{% url "fevama:empresa_deleteItem" %}',
+                url: '{% url "fevama:situation_deleteItem" %}',
                 data:  {
                     'data': id,
                 },

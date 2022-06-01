@@ -73,14 +73,41 @@ urlpatterns = [
     # ACTUACIÓN
     path('act_index/', views.act_index, name="act_index"),
 
+    # -------- RECURSOS HUMANOS -------- #
+    path('planificacion_index/', views.planificacion_index, name="planificacion_index"),
+
+    # SOLICITANTES
+    path('applicant_index/', views.applicant_index, name="applicant_index"),
+    path('applicant_deleteItem/', views.applicant_deleteItem, name="applicant_deleteItem"),
+    path('applicant_create/', views.applicant_create, name="applicant_create"),
+    path('applicant_createItem/', views.applicant_createItem, name="applicant_createItem"),
+    path('applicant_modify/<id>', views.applicant_modify, name="applicant_modify"),
+    path('applicant_modifyItem/', views.applicant_modifyItem, name="applicant_modifyItem"),
+
+    # ORGANISMO
+    path('organism_index/', views.organism_index, name="organism_index"),
+    path('organism_deleteItem/', views.organism_deleteItem, name="organism_deleteItem"),
+    path('organism_create/', views.organism_create, name="organism_create"), 
+    path('organism_createItem/', views.organism_createItem, name="organism_createItem"),
+    path('organism_modify/<id>', views.organism_modify, name="organism_modify"),
+    path('organism_modifyItem/', views.organism_modifyItem, name="organism_modifyItem"),
+
     # SITUACIÓN
     path('situation_index/', views.situation_index, name="situation_index"),
+    path('situation_deleteItem/', views.situation_deleteItem, name="situation_deleteItem"),
+    path('situation_create/', views.situation_create, name="situation_create"), 
+    path('situation_createItem/', views.situation_createItem, name="situation_createItem"),
+    path('situation_modify/<id>', views.situation_modify, name="situation_modify"),
+    path('situation_modifyItem/', views.situation_modifyItem, name="situation_modifyItem"),
 
     # CONVOCATORIA
     path('announcement_index/', views.announcement_index, name="announcement_index"),
+    path('announcement_deleteItem/', views.announcement_deleteItem, name="announcement_deleteItem"),
+    path('announcement_create/', views.announcement_create, name="announcement_create"),
+    path('announcement_createItem/', views.announcement_createItem, name="announcement_createItem"),
+    path('announcement_modify/<id>', views.announcement_modify, name="announcement_modify"),
+    path('announcement_modifyItem/', views.announcement_modifyItem, name="announcement_modifyItem"),
 
-    # -------- PLANIFICACIÓN -------- #
-    path('planificacion_index/', views.planificacion_index, name="planificacion_index"),
 
     # -------- NOTIFICACIONES -------- #
     path('notificaciones_index/', views.notificaciones_index, name="notificaciones_index"),

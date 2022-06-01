@@ -69,7 +69,7 @@
 <body style="background-color: #efefef;">
 <div class="centrado">
     <legend style="margin-top: 20px; text-align: center;">
-        <i class="fas fa-calendar-alt"></i> {% trans 'Convocatorias' %}
+        <i class="fas fa-home"></i> {% trans 'Organismos' %}
     </legend>
     <hr/>
     <div class="col-md-12" style="display: flex;">
@@ -80,8 +80,8 @@
             </a>
         </div>
         <div class="col-md-2" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:announcement_create' %}">
-                {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nueva Convocatoria' %}
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:organism_create' %}">
+                {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nuevo Organismo' %}
             </a>
         </div>
         <div class="col-md-5"></div>
@@ -96,19 +96,19 @@
         <thead>
             <tr style="background-color: rgb(133, 172, 172);">
                 <td><b>ID</b></td>
-                <td><b>AÑO</b></td>
+                <td><b>ORGANISMO</b></td>
                 <td><b>ACCIÓN</b></td>
             </tr>
         </thead>
         <tbody>
             {% if object_list %}
-                {% for a in object_list %}
+                {% for o in object_list %}
                 <tr>
-                    <td>{{a.id}}</td>
-                    <td>{{a.year}}</td>
+                    <td>{{o.id}}</td>
+                    <td>{{o.name}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:announcement_modify' a.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{a.id}})"> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:organism_modify' o.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{o.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -131,11 +131,11 @@
         });
         });
     });
-    function create(id){
-        if(confirm('{% trans "Estás seguro de eliminar esta convocatoria?" %}'))
+    function deleteItem(id){
+        if(confirm('{% trans "Estás seguro de eliminar este organismo?" %}'))
         {
             $.ajax({
-                url: '{% url "fevama:announcement_deleteItem" %}',
+                url: '{% url "fevama:organism_deleteItem" %}',
                 data:  {
                     'data': id,
                 },
