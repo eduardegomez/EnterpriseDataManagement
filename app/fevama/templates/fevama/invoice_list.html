@@ -80,7 +80,7 @@
             </a>
         </div>
         <div class="col-md-2" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:invoice_create' %}">
                 {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nueva Factura' %}
             </a>
         </div>
@@ -107,15 +107,17 @@
         </thead>
         <tbody>
             {% if object_list %}
-                {% for empresa in object_list %}
+                {% for inv in object_list %}
                 <tr>
-                    <td>{{empresa.id}}</td>
-                    <td>{{empresa.name}}</td>
-                    <td>{{empresa.cif}}</td>
-                    <td>{{empresa.cnae}}</td>
+                    <td>{{inv.id}}</td>
+                    <td>{{inv.number}}</td>
+                    <td>{{inv.invoice}}</td>
+                    <td>{{inv.year}}</td>
+                    <td>{{inv.amount}}</td>
+                    <td>{{inv.date}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:empresa_modify' empresa.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{empresa.id}})"> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:invoice_modify' inv.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{inv.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -138,13 +140,11 @@
         });
         });
     });
-    function create(id){
-        if(confirm('{% trans "Estás seguro de eliminar esta empresa?" %}'))
+    function deleteItem(id){
+        if(confirm('{% trans "Estás seguro de eliminar esta factura?" %}'))
         {
-            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
-            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
             $.ajax({
-                url: '{% url "fevama:empresa_deleteItem" %}',
+                url: '{% url "fevama:invoice_deleteItem" %}',
                 data:  {
                     'data': id,
                 },

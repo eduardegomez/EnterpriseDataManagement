@@ -63,12 +63,22 @@ urlpatterns = [
 
     # FACTURAS
     path('invoice_index/', views.invoice_index, name="invoice_index"),
+    path('invoice_deleteItem/', views.invoice_deleteItem, name="invoice_deleteItem"),
+    path('invoice_create/', views.invoice_create, name="invoice_create"),
+    path('invoice_createItem/', views.invoice_createItem, name="invoice_createItem"),
+    path('invoice_modify/<id>', views.invoice_modify, name="invoice_modify"),
+    path('invoice_modifyItem/', views.invoice_modifyItem, name="invoice_modifyItem"),
 
     # AYUDAS
     path('assistance_index/', views.assistance_index, name="assistance_index"),
 
     # LINEA DE AYUDAS
     path('line_index/', views.line_index, name="line_index"),
+    path('line_deleteItem/', views.line_deleteItem, name="line_deleteItem"),
+    path('line_create/', views.line_create, name="line_create"),
+    path('line_createItem/', views.line_createItem, name="line_createItem"),
+    path('line_modify/<id>', views.line_modify, name="line_modify"),
+    path('line_modifyItem/', views.line_modifyItem, name="line_modifyItem"),
     
     # ACTUACIÓN
     path('act_index/', views.act_index, name="act_index"),

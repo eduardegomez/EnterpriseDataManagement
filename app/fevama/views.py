@@ -460,8 +460,72 @@ def project_index(request):
 
 # ----------- START INVOICE ----------------------------- #
 def invoice_index(request):
+    object_list = Invoice.objects.all()
     return render(request, 'fevama/invoice_list.html', {
+        'object_list': object_list
     })
+
+def invoice_create(request):
+    return render(request, 'fevama/invoice_create.html', {
+    })
+
+def invoice_deleteItem(request):
+    id = request.GET['data']
+    check = Invoice.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def invoice_createItem(request):
+    number = request.GET['number']
+    invoice = request.GET['invoice']
+    year = request.GET['year']
+    amount = request.GET['amount']
+    date = request.GET['date']
+    
+    check = Invoice.objects.filter(number=number).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Invoice.objects.create_invoice(number, invoice, year, amount, date)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def invoice_modify(request, id):
+    invoice = Invoice.objects.filter(id=id).first()
+    return render(request, 'fevama/invoice_modify.html', {
+        'invoice': invoice
+    })
+
+def invoice_modifyItem(request):
+    number = request.GET['number']
+    invoice = request.GET['invoice']
+    year = request.GET['year']
+    amount = request.GET['amount']
+    date = request.GET['date']
+    id = request.GET['id']
+    invoices = Invoice.objects.all()
+    for i in invoices:
+        if str(i.number) == str(invoice):
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Invoice.objects.filter(id=id).first()
+    if check:
+        check.number = number
+        check.invoice = invoice
+        check.year = year
+        check.amount = amount
+        check.date = date
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
+
 # ----------- END INVOICE ----------------------------- #
 
 # ----------- START ASSISTANCE ----------------------------- #
@@ -472,8 +536,58 @@ def assistance_index(request):
 
 # ----------- START LINE ----------------------------- #
 def line_index(request):
+    object_list = Line.objects.all()
     return render(request, 'fevama/line_list.html', {
+        'object_list': object_list
     })
+
+def line_create(request):
+    return render(request, 'fevama/line_create.html', {
+    })
+
+def line_deleteItem(request):
+    id = request.GET['data']
+    check = Line.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def line_createItem(request):
+    line = request.GET['line']
+    check = Line.objects.filter(line=line).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Line.objects.create_line(line)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def line_modify(request, id):
+    line = Line.objects.filter(id=id).first()
+    return render(request, 'fevama/line_modify.html', {
+        'line': line
+    })
+
+def line_modifyItem(request):
+    id = request.GET['id']
+    line = request.GET['line']
+    lines = Line.objects.all()
+    for l in lines:
+        if str(l.line) == str(line):
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Line.objects.filter(id=id).first()
+    if check:
+        check.line = line
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
 # ----------- END LINE ----------------------------- #
 
 # ----------- START ACT ----------------------------- #

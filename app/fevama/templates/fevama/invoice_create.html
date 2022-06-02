@@ -1,0 +1,205 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-book"></i> {% trans 'Facturas' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:invoice_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+    <div class="centrado" style="margin-top: 40px;width: 50%;margin: 0 auto;">
+            <table class="table table-hover table-condensed" style="background-color: #d7dadd; border-radius: 15px; table-layout: fixed;">
+                <thead style="background-color: rgb(133, 172, 172);">
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;" colspan="2">
+                            <label><b>{% trans 'CREAR FACTURA'%}</b></label>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Número factura:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="n_invoice" type="number" step="1" placeholder="0" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <label> {% trans 'Factura:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="invoice" type="text" placeholder="Factura" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <label> {% trans 'Año:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="year" type="number" step="1" placeholder="2022" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Importe:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="amount" type="number" min="1" step="1" placeholder="0€" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <label> {% trans 'Fecha cobro:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="date" type="text" placeholder="Fecha de cobro" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;" colspan="2">
+                                <a id="btn-create" class="btn btn-outline-success" onclick="create()"> {% fa5_icon 'plus' 'fas' %} {% trans 'CREAR' %}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Ya existe una factura con estos datos' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Debes rellenar los campos' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Factura creada correctamente' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+    </div>
+
+
+</div>
+</body>
+<script>
+    function createAutoClosingAlert(selector, delay)
+    {
+        if(delay == 0)
+        {
+            $(selector).show();
+        }
+        else if(delay == -1)
+        {
+            $(selector).hide();
+        }
+        else if(delay > 0)
+        {
+            $(selector).fadeIn("slow");
+            window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+        }
+    }
+
+    function create()
+    {      
+        if(confirm('{% trans "Estás seguro de crear esta factura?" %}'))
+        {
+            document.getElementById("btn-create").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-create").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'CREANDO' %}";
+            var number = document.getElementById("n_invoice").value;
+            var invoice = document.getElementById("invoice").value;
+            var year = document.getElementById("year").value;
+            var amount = document.getElementById("amount").value;
+            var date = document.getElementById("date").value;
+            if (number == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else {
+                $.ajax({
+                    url: '{% url "fevama:invoice_createItem" %}',
+                    data:  {
+                        'number': number,
+                        'invoice': invoice,
+                        'year': year,
+                        'amount': amount,
+                        'date' : date
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data['code'] == 200){
+                            document.getElementById("btn-create").className = "btn btn-outline-success";
+                            document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                            createAutoClosingAlert('#created', 5000);
+                            document.getElementById("n_invoice").value = "";
+                            document.getElementById("invoice").value = "";
+                            document.getElementById("year").value = "";
+                            document.getElementById("amount").value = "";
+                            document.getElementById("date").value = "";
+                        }
+                        if(data['code'] == 404){
+                            document.getElementById("btn-create").className = "btn btn-outline-success";
+                            document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                            createAutoClosingAlert('#exists', 5000);   
+                        } 
+                    },
+                    error: function (data) {
+                        document.getElementById("btn-create").className = "btn btn-danger btn btn-block btnBootstrapping";
+                        document.getElementById("btn-create").innerHTML="ERROR"; 
+                    },
+                });
+            }
+        }
+    }
+</script>
+{% endblock %}
