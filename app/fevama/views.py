@@ -455,8 +455,83 @@ def ayudas_index(request):
 
 # ----------- START PROJECTS ----------------------------- #
 def project_index(request):
+    object_list = Project.objects.all()
     return render(request, 'fevama/project_list.html', {
+        'object_list' : object_list
     })
+
+def project_create(request):
+    empresas_list = Empresa.objects.all()
+    invoice_list = Invoice.objects.all()
+    assistance_list = Assistance.objects.all()
+    return render(request, 'fevama/project_create.html', {
+        'empresas_list': empresas_list,
+        'invoice_list': invoice_list,
+        'assistance_list': assistance_list
+    })
+
+def project_createItem(request):
+    assistance = request.GET['assistance']
+    empresa = request.GET['empresa']
+    invoice = request.GET['invoice']
+    
+    check = Project.objects.filter(assistance_id=assistance, empresa_id=empresa, invoice_id=invoice).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        empresa = Empresa.objects.filter(id=empresa).first()
+        assistance = Assistance.objects.filter(id=assistance).first()
+        invoice = Invoice.objects.filter(id=invoice).first()
+        Project.objects.create_project(empresa, assistance, invoice)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def project_deleteItem(request):
+    id = request.GET['data']
+    check = Project.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def project_modify(request, id):
+    project = Project.objects.filter(id=id).first()
+    empresas_list = Empresa.objects.all()
+    invoice_list = Invoice.objects.all()
+    assistance_list = Assistance.objects.all()
+    return render(request, 'fevama/project_modify.html', {
+        'project': project,
+        'empresas_list': empresas_list,
+        'invoice_list': invoice_list,
+        'assistance_list': assistance_list
+    })
+
+def project_modifyItem(request):
+    id = request.GET['id']
+    assistance = request.GET['assistance']
+    invoice = request.GET['invoice']
+    empresa = request.GET['empresa']
+    empresa = Empresa.objects.filter(id=empresa).first()
+    invoice = Invoice.objects.filter(id=invoice).first()
+    assistance = Assistance.objects.filter(id=assistance).first()
+    projects = Project.objects.all()
+    for p in projects:
+        if p.assistance == assistance and p.empresa == empresa and p.invoice == invoice:
+            response = { 'code': 404 }
+            return JsonResponse(response)
+
+    check = Project.objects.filter(id=id).first()
+    if check:
+        check.assistance = assistance
+        check.invoice = invoice
+        check.empresa = empresa
+        check.save()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
 # ----------- END PROJECTS ----------------------------- #
 
 # ----------- START INVOICE ----------------------------- #

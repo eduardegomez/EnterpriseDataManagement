@@ -60,6 +60,11 @@ urlpatterns = [
 
     # PROYECTOS
     path('project_index/', views.project_index, name="project_index"),
+    path('project_deleteItem/', views.project_deleteItem, name="project_deleteItem"),
+    path('project_create/', views.project_create, name="project_create"),
+    path('project_createItem/', views.project_createItem, name="project_createItem"),
+    path('project_modify/<id>', views.project_modify, name="project_modify"),
+    path('project_modifyItem/', views.project_modifyItem, name="project_modifyItem"),
 
     # FACTURAS
     path('invoice_index/', views.invoice_index, name="invoice_index"),
