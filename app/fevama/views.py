@@ -1,6 +1,7 @@
 from ast import Or
 from sre_constants import SUCCESS
 from typing import final
+from unicodedata import name
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import PasswordChangeView
@@ -592,8 +593,58 @@ def line_modifyItem(request):
 
 # ----------- START ACT ----------------------------- #
 def act_index(request):
+    object_list = Act.objects.all()
     return render(request, 'fevama/act_list.html', {
+        'object_list': object_list
     })
+
+def act_deleteItem(request):
+    id = request.GET['data']
+    check = Act.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def act_create(request):
+    return render(request, 'fevama/act_create.html', {
+    })
+
+def act_createItem(request):
+    act = request.GET['act']
+    check = Act.objects.filter(name=act).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Act.objects.create_act(act)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def act_modify(request, id):
+    act = Act.objects.filter(id=id).first()
+    return render(request, 'fevama/act_modify.html', {
+        'act': act
+    })
+
+def act_modifyItem(request):
+    id = request.GET['id']
+    act = request.GET['act']
+    acts = Act.objects.all()
+    for a in acts:
+        if str(a.name) == str(act):
+            response = { 'code': 404 }
+            return JsonResponse(response)
+    
+    check = Act.objects.filter(id=id).first()
+    if check:
+        check.name = act
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
 # ----------- END ACT ----------------------------- #
 
 #### RECURSOS HUMANOS ####

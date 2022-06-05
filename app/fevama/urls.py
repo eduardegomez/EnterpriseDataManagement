@@ -82,6 +82,11 @@ urlpatterns = [
     
     # ACTUACIÓN
     path('act_index/', views.act_index, name="act_index"),
+    path('act_deleteItem/', views.act_deleteItem, name="act_deleteItem"),
+    path('act_create/', views.act_create, name="act_create"),
+    path('act_createItem/', views.act_createItem, name="act_createItem"),
+    path('act_modify/<id>', views.act_modify, name="act_modify"),
+    path('act_modifyItem/', views.act_modifyItem, name="act_modifyItem"),
 
     # -------- RECURSOS HUMANOS -------- #
     path('planificacion_index/', views.planificacion_index, name="planificacion_index"),

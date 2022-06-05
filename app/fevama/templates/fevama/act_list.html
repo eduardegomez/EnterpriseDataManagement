@@ -80,13 +80,12 @@
             </a>
         </div>
         <div class="col-md-2" style="margin-top: 5px;">
-            <a id="btn-back" class="btn btn-outline-secondary" href="">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:act_create' %}">
                 {% fa5_icon 'plus' 'fas' %} {% trans 'Crear nueva Actuación' %}
             </a>
         </div>
         <div class="col-md-5"></div>
         <div class="col-md-2">
-        <!-- <input type="text" class="form-control pull-right" style="width:auto" id="search" placeholder="Buscar en la tabla..."> -->
             <div class="search-box pull-left">
                 <button class="btn-search"><i class="fas fa-search"></i></button>
                 <input type="text" class="input-search" placeholder="Buscar en la tabla..." id="search">
@@ -98,19 +97,18 @@
             <tr style="background-color: rgb(133, 172, 172);">
                 <td><b>ID</b></td>
                 <td><b>ACTUACIÓN</b></td>
+                <td><b>ACCIONES</b></td>
             </tr>
         </thead>
         <tbody>
             {% if object_list %}
-                {% for empresa in object_list %}
+                {% for act in object_list %}
                 <tr>
-                    <td>{{empresa.id}}</td>
-                    <td>{{empresa.name}}</td>
-                    <td>{{empresa.cif}}</td>
-                    <td>{{empresa.cnae}}</td>
+                    <td>{{act.id}}</td>
+                    <td>{{act.name}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:empresa_modify' empresa.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{empresa.id}})"> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:act_modify' act.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{act.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -133,13 +131,11 @@
         });
         });
     });
-    function create(id){
-        if(confirm('{% trans "Estás seguro de eliminar esta empresa?" %}'))
+    function deleteItem(id){
+        if(confirm('{% trans "Estás seguro de eliminar esta actuación?" %}'))
         {
-            //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";
-            //document.getElementById("btn-delete").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'ELIMINANDO' %}";
             $.ajax({
-                url: '{% url "fevama:empresa_deleteItem" %}',
+                url: '{% url "fevama:act_deleteItem" %}',
                 data:  {
                     'data': id,
                 },
