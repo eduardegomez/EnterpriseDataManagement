@@ -156,7 +156,7 @@ class Applicant(models.Model):
 # ---------- START ASSISTANCE ----------------- # 
 # Assistance Manager
 class AssistanceManager(models.Manager):
-    def create_invoice(self, line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment):
+    def create_assistance(self, line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment):
         assistance = self.create(line=line, act=act, organism=organism, announcement=announcement, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment)
         return assistance
 
@@ -166,7 +166,7 @@ class Assistance(models.Model):
     act = models.ForeignKey(Act, on_delete=models.CASCADE, default=0)
     organism = models.ForeignKey(Organism, on_delete=models.CASCADE, default=0)
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, default=0)
-    sitaution = models.ForeignKey(Situation, on_delete=models.CASCADE, default=0)
+    situation = models.ForeignKey(Situation, on_delete=models.CASCADE, default=0)
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, default=0)
     management = models.CharField(max_length=200)
     requested = models.IntegerField(default=0)

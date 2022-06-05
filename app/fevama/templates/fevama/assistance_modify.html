@@ -1,0 +1,302 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-money-check-alt"></i> {% trans 'Ayudas' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:assistance_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+    <div class="centrado" style="margin-top: 40px;width: 50%;margin: 0 auto;">
+            <table class="table table-hover table-condensed" style="background-color: #d7dadd; border-radius: 15px; table-layout: fixed;">
+                <thead style="background-color: rgb(133, 172, 172);">
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;" colspan="2">
+                            <label><b>{% trans 'MODIFICAR AYUDA'%}</b></label>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Linea de ayuda:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="line" class="form-control text-center" name="line" style="text-align: center;">
+                                {% for l in line_list %}
+                                <option value="{{ l.id }}" {% if l.id == assistance.line.id %} selected {% endif %}>{{ l.line }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Actuación:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="act" class="form-control text-center" name="act" style="text-align: center;">
+                                {% for a in act_list %}
+                                <option value="{{ a.id }}" {% if a.id == assistance.act.id %} selected {% endif %}>{{ a.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Organismo:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="organism" class="form-control text-center" name="organism" style="text-align: center;">
+                                {% for o in organism_list %}
+                                <option value="{{ o.id }}" {% if o.id == assistance.organism.id %} selected {% endif %}>{{ o.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Situación:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="situation" class="form-control text-center" name="situation" style="text-align: center;">
+                                {% for s in situation_list %}
+                                <option value="{{ s.id }}" {% if s.id == assistance.situation.id %} selected {% endif %}>{{ s.situation }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Solicitante:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="applicant" class="form-control text-center" name="applicant" style="text-align: center;">
+                                {% for a in applicant_list %}
+                                <option value="{{ a.id }}" {% if a.id == assistance.applicant.id %} selected {% endif %}>{{ a.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Gestionado por:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="management" class="form-control text-center" name="management" style="text-align: center;">
+                                <option value="FEVAMA" {% if "FEVAMA" == assistance.management %} selected {% endif %}>{% trans 'FEVAMA' %}</option>
+                                <option value="ELLOS" {% if "ELLOS" == assistance.management %} selected {% endif %}>{% trans 'ELLOS' %}</option>
+                                <option value="A MEDIAS" {% if "A MEDIAS" == assistance.management %} selected {% endif %}>{% trans 'A MEDIAS' %}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Convocatoria:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="announcement" class="form-control text-center" name="announcement" style="text-align: center;">
+                                {% for a in announcement_list %}
+                                <option value="{{ a.id }}" {% if a.id == assistance.announcement.id %} selected {% endif %}>{{ a.year }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Subvención solicitada:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="requested" type="number" min="1" step="1" value="{{assistance.requested}}" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Subvención aplicada:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="applied" type="number" min="1" step="1" value="{{assistance.applied}}" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Fecha de resolución:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="date" type="number" value="{{assistance.date}}"min="1" step="1" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Fecha de cobro subvención:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <input id="payment" type="number" value="{{assistance.payment}}" min="1" step="1" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;" colspan="2">
+                                <a id="btn-modify" class="btn btn-outline-success" onclick="modify()"> {% fa5_icon 'arrow-rotate-right' 'fas' %} {% trans 'MODIFICAR' %}</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Ya existe esta ayuda' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'No puedes dejar este campo vacio' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+		<div class="col-md-6">
+			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+				<p>
+					{% trans 'Ayuda modificada correctamente' %}
+				</p>
+			</div>
+        </div>
+		<div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+	</div>
+
+</div>
+</body>
+<script>
+    function createAutoClosingAlert(selector, delay)
+    {
+        if(delay == 0)
+        {
+            $(selector).show();
+        }
+        else if(delay == -1)
+        {
+            $(selector).hide();
+        }
+        else if(delay > 0)
+        {
+            $(selector).fadeIn("slow");
+            window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+        }
+    }
+
+    function modify()
+    {      
+        if(confirm('{% trans "Estás seguro de modificar esta ayuda?" %}'))
+        {
+            document.getElementById("btn-modify").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-modify").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'MODIFICANDO' %}";
+            var line = document.getElementById("line").value;
+            var act = document.getElementById("act").value;
+            var organism = document.getElementById("organism").value;
+            var situation = document.getElementById("situation").value;
+            var applicant = document.getElementById("applicant").value;
+            var management = document.getElementById("management").value;
+            var requested = document.getElementById("requested").value;
+            var applied = document.getElementById("applied").value;
+            var date = document.getElementById("date").value;
+            var payment = document.getElementById("payment").value;
+            var announcement = document.getElementById("announcement").value;
+            var id = {{ assistance.id}}
+            if (line == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (act == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (organism == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-success";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else if (applicant == ""){
+                document.getElementById("btn-create").className = "btn btn-outline-successs";
+                document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
+                createAutoClosingAlert('#valueKO', 5000);
+            } else {
+                $.ajax({
+                    url: '{% url "fevama:assistance_modifyItem" %}',
+                    data:  {
+                        'id': id,
+                        'line': line,
+                        'act': act,
+                        'organism': organism,
+                        'situation': situation,
+                        'applicant': applicant,
+                        'management': management,
+                        'requested': requested,
+                        'applied': applied,
+                        'date': date,
+                        'payment': payment,
+                        'announcement': announcement
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data)
+                        if(data['code'] == 200){
+                            document.getElementById("btn-modify").className = "btn btn-outline-success";
+                            document.getElementById("btn-modify").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'MODIFICAR' %}";
+                            createAutoClosingAlert('#created', 5000);
+                        }
+                        if(data['code'] == 404){
+                            document.getElementById("btn-modify").className = "btn btn-outline-success";
+                            document.getElementById("btn-modify").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'MODIFICAR' %}";
+                            createAutoClosingAlert('#exists', 5000);   
+                        } 
+                    },
+                    error: function (data) {
+                        document.getElementById("btn-modify").className = "btn btn-danger btn btn-block btnBootstrapping";
+                        document.getElementById("btn-modify").innerHTML="ERROR"; 
+                    },
+                });
+            }
+        }
+    }
+</script>
+{% endblock %}

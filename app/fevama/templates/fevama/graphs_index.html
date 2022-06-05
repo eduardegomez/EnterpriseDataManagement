@@ -518,16 +518,16 @@ function compare(){
                 document.getElementById("four").style.display = "block";
 
                 // Anual data compare
-                anualDataCompare.series[0].name = data['first'][3]['name'];
-                anualDataCompare.series[1].name = data['second'][3]['name'];
+                anualDataCompare.series[0].name = data['first'][3]['name'] + " (€)";
+                anualDataCompare.series[1].name = data['second'][3]['name'] + " (€)";
                 anualDataCompare.series[0].data = data['first'][1]['value'];
                 anualDataCompare.series[1].data = data['second'][1]['value'];
                 var chart = new Highcharts.Chart(anualDataCompare);
                 chart.xAxis[0].setCategories(data['first'][0]['year'], true);
 
                 // Workers data compare
-                workersDataCompare.series[0].name = data['first'][3]['name'];
-                workersDataCompare.series[1].name = data['second'][3]['name'];
+                workersDataCompare.series[0].name = "Empleados " + data['first'][3]['name'];
+                workersDataCompare.series[1].name = "Empleados " + data['second'][3]['name'];
                 workersDataCompare.series[0].data = data['first'][2]['workers'];
                 workersDataCompare.series[1].data = data['second'][2]['workers'];
                 var chart2 = new Highcharts.Chart(workersDataCompare);

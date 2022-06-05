@@ -606,8 +606,122 @@ def invoice_modifyItem(request):
 
 # ----------- START ASSISTANCE ----------------------------- #
 def assistance_index(request):
+    object_list = Assistance.objects.all()
     return render(request, 'fevama/assistance_list.html', {
+        'object_list': object_list
     })
+
+def assistance_deleteItem(request):
+    id = request.GET['data']
+    check = Assistance.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def assistance_create(request):
+    line_list = Line.objects.all()
+    act_list = Act.objects.all()
+    organism_list = Organism.objects.all()
+    situation_list = Situation.objects.all()
+    applicant_list = Applicant.objects.all()
+    announcement_list = Announcement.objects.all()
+    return render(request, 'fevama/assistance_create.html', {
+        'line_list': line_list,
+        'act_list': act_list,
+        'organism_list': organism_list,
+        'situation_list': situation_list,
+        'applicant_list': applicant_list,
+        'announcement_list': announcement_list
+    })
+
+def assistance_createItem(request):
+    line = request.GET['line']
+    line = Line.objects.filter(id=line).first()
+    act = request.GET['act']
+    act = Act.objects.filter(id=act).first()
+    organism = request.GET['organism']
+    organism = Organism.objects.filter(id=organism).first()
+    situation = request.GET['situation']
+    situation = Situation.objects.filter(id=situation).first()
+    applicant = request.GET['applicant']
+    applicant = Applicant.objects.filter(id=applicant).first()
+    announcement = request.GET['announcement']
+    announcement = Announcement.objects.filter(id=announcement).first()
+    management = request.GET['management']
+    requested = request.GET['requested']
+    applied = request.GET['applied']
+    date = request.GET['date']
+    payment = request.GET['payment']
+    check = Assistance.objects.filter(line=line, act=act, organism=organism, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    else:
+        Assistance.objects.create_assistance(line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def assistance_modify(request, id):
+    assistance = Assistance.objects.filter(id=id).first()
+    line_list = Line.objects.all()
+    act_list = Act.objects.all()
+    organism_list = Organism.objects.all()
+    situation_list = Situation.objects.all()
+    applicant_list = Applicant.objects.all()
+    announcement_list = Announcement.objects.all()
+    return render(request, 'fevama/assistance_modify.html', {
+        'assistance': assistance,
+        'line_list': line_list,
+        'act_list': act_list,
+        'organism_list': organism_list,
+        'situation_list': situation_list,
+        'applicant_list': applicant_list,
+        'announcement_list': announcement_list
+    })
+
+def assistance_modifyItem(request):
+    id = request.GET['id']
+    line = request.GET['line']
+    line = Line.objects.filter(id=line).first()
+    act = request.GET['act']
+    act = Act.objects.filter(id=act).first()
+    organism = request.GET['organism']
+    organism = Organism.objects.filter(id=organism).first()
+    situation = request.GET['situation']
+    situation = Situation.objects.filter(id=situation).first()
+    applicant = request.GET['applicant']
+    applicant = Applicant.objects.filter(id=applicant).first()
+    announcement = request.GET['announcement']
+    announcement = Announcement.objects.filter(id=announcement).first()
+    management = request.GET['management']
+    requested = request.GET['requested']
+    applied = request.GET['applied']
+    date = request.GET['date']
+    payment = request.GET['payment']
+    check = Assistance.objects.filter(line=line, act=act, organism=organism, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment).first()
+    if check:
+        response = { 'code': 404 }
+        return JsonResponse(response)
+    
+    check = Assistance.objects.filter(id=id).first()
+    if check:
+        check.line = line
+        check.act = act
+        check.organism = organism
+        check.situation = situation
+        check.applicant = applicant
+        check.management = management
+        check.requested = requested
+        check.applied = applied
+        check.date = date
+        check.payment = payment
+        check.save()
+
+    response = { 'code': 200}
+    return JsonResponse(response)
 # ----------- END ASSISTANCE ----------------------------- #
 
 # ----------- START LINE ----------------------------- #

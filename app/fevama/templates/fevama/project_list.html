@@ -107,12 +107,12 @@
                 {% for pro in object_list %}
                 <tr>
                     <td>{{pro.id}}</td>
-                    <td>{{pro.assistance}}</td>
-                    <td>{{pro.empresa}}</td>
-                    <td>{{pro.invoice}}</td>
+                    <td>{{pro.assistance.management}}</td>
+                    <td>{{pro.empresa.name}}</td>
+                    <td>{{pro.invoice.number}}</td>
                     <td>
-                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:project_modify' project.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{project.id}})"> ELIMINAR </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:project_modify' pro.id %}"> EDITAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{pro.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}

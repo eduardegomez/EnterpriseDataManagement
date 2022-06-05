@@ -76,6 +76,11 @@ urlpatterns = [
 
     # AYUDAS
     path('assistance_index/', views.assistance_index, name="assistance_index"),
+    path('assistance_deleteItem/', views.assistance_deleteItem, name="assistance_deleteItem"),
+    path('assistance_create/', views.assistance_create, name="assistance_create"),
+    path('assistance_createItem/', views.assistance_createItem, name="assistance_createItem"),
+    path('assistance_modify/<id>', views.assistance_modify, name="assistance_modify"),
+    path('assistance_modifyItem/', views.assistance_modifyItem, name="assistance_modifyItem"),
 
     # LINEA DE AYUDAS
     path('line_index/', views.line_index, name="line_index"),
