@@ -115,7 +115,7 @@
                     <td>{{contact.type.name}}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="{% url 'fevama:contact_modify' contact.id %}"> EDITAR </a>
-                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="create({{contact.id}})"> ELIMINAR </a>
+                        <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{contact.id}})"> ELIMINAR </a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -138,7 +138,7 @@
         });
         });
     });
-    function create(id){
+    function deleteItem(id){
         if(confirm('{% trans "Estás seguro de eliminar este contacto?" %}'))
         {
             //document.getElementById("btn-delete").className = "btn btn-warning btn btn-block btnBootstrapping";

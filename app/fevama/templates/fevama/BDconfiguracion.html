@@ -1,0 +1,216 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+.search-box{
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+.input-search{
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color:  #d7dadd;
+  padding-right: 40px;
+  color:rgb(12, 12, 12);
+}
+.input-search::placeholder{
+  color:rgb(7, 7, 7);
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+.btn-search{
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color:#070707 ;
+  background-color:transparent;
+  pointer-events: painted;  
+}
+.btn-search:focus ~ .input-search{
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid rgba(0, 0, 0, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+.input-search:focus{
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid rgba(88, 87, 87, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-database"></i> {% trans 'Copias de seguridad' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1" style="margin-top: 5px;">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:bd_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+        <div class="col-md-2" style="margin-top: 5px;">
+            <a id="btn-update" class="btn btn-outline-success" href="">
+                {% fa5_icon 'update' 'fas' %} {% trans 'Actualizar configuración' %}
+            </a>
+        </div>
+    </div>
+
+    
+    <div class="col-md-12" style="display: flex; margin-top: 20px;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'background-color: rgb(133, 172, 172); padding: 20px;'>
+            <h4 align="center">{% trans 'Configuración automática' %} </h4>
+        </div>
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+    </div>
+
+    <div class="col-md-12" style="display: flex;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'background-color: #e3e3e3; padding: 20px; display: flex;'>
+            <div class="col-md-4">
+                <label style="margin-top: 5px;">{% trans 'Tiempo para la próxima copia de seguridad:' %} </label>
+            </div>
+            <div class="col-md-8">
+                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center;">
+                    <option value="">1 Mes</option>
+                    <option value="">3 Meses</option>
+                    <option value="">6 Meses</option>
+                    <option value="">9 Meses</option>
+                    <option value="">12 Meses</option>
+                </select>
+            </div>  
+        </div>
+    </div>
+
+    <div class="col-md-12" style="display: flex;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'background-color: #e3e3e3; padding: 20px; display: flex;'>
+            <div class="col-md-4">
+                <label style="margin-top: 5px;">{% trans 'Fecha próxima copia de seguridad :' %} </label>
+            </div>
+            <div class="col-md-8">
+                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center;" disabled>
+                    <option value="">8 de Junio de 2023</option>
+                </select>
+            </div>  
+        </div>
+    </div>
+
+    <div class="col-md-12" style="display: flex;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'background-color: #e3e3e3; padding: 20px; display: flex;'>
+            <div class="col-md-4" style="text-align: center;">
+                <label style="margin-top: 5px;">{% trans 'Últimas copias de seguridad:' %} </label>
+                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center; margin-left: -10px;margin-top: 10px;">
+                    <option value="">Esperando la primera copia de seguridad...</option>
+                    <option value="">Copia de seguridad 1</option>
+                </select>
+                <a id="btn-export_node" class="btn btn-outline-success" href='' style="margin-top: 5px;margin-left: -10px;" >
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Download (.gz)' %}
+                </a>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <label style="margin-top: 5px;">{% trans 'Últimos datos económicos:' %} </label>
+                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center;margin-top: 10px;">
+                    <option value="">Esperando la primera copia de seguridad...</option>
+                    <option value="">Datos 1</option>
+                </select>
+                <a id="btn-export_node" class="btn btn-outline-success" href='' style="margin-top: 5px;">
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Download (.csv)' %}
+                </a>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <label style="margin-top: 5px;">{% trans 'Últimos contactos:' %} </label>
+                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center; margin-left: 10px;margin-top: 10px;">
+                    <option value="">Esperando la primera copia de seguridad...</option>
+                    <option value="">Contactos 1</option>
+                </select>
+                <a id="btn-export_node" class="btn btn-outline-success" href='' style="margin-top: 5px;margin-left: 10px;">
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Download (.csv)' %}
+                </a>
+            </div>  
+        </div>
+    </div>
+
+    <div class="col-md-12" style="display: flex;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'padding: 20px;'>
+        </div>
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+    </div>
+
+    <div class="col-md-12" style="display: flex;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'background-color: rgb(133, 172, 172); padding: 20px;'>
+            <h4 align="center">{% trans 'Configuración manual' %} </h4>
+        </div>
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+    </div>
+
+    <div class="col-md-12" style="display: flex;" >
+        <div class="col-md-2" style= 'padding: 40px;'>
+        </div>
+        <div class="col-md-8" style= 'background-color: #e3e3e3; padding: 20px; display: flex;'>
+            <div class="col-md-4" style="text-align: center;">
+                <a id="btn-back" class="btn btn-outline-secondary" href="">
+                    {% fa5_icon 'play' 'fas' %} {% trans 'Ejecutar copia de seguridad'%}
+                </a>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <a id="btn-back" class="btn btn-outline-secondary" href="">
+                    {% fa5_icon 'upload' 'fas' %} {% trans 'Importar copia de seguridad'%}
+                </a>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <a id="btn-back" class="btn btn-outline-secondary" href="">
+                    {% fa5_icon 'retweet' 'fas' %} {% trans 'Restablecer base de datos'%}
+                </a>
+            </div>  
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+</script>
+{% endblock %}

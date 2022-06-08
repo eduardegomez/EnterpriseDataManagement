@@ -1074,6 +1074,9 @@ def notificaciones_index(request):
 def bd_index(request):
     return render(request, 'fevama/bd_index.html')
 
+def BDconfiguration_index(request):
+    return render(request, 'fevama/BDconfiguration.html')
+
 #### PARAMETROS ####
 def parametros_index(request):
     return render(request, 'fevama/parametros_index.html')

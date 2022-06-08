@@ -139,6 +139,7 @@ urlpatterns = [
 
     # -------- BASE DE DATOS -------- #
     path('bd_index/', views.bd_index, name="bd_index"),
+    path('BDconfiguration_index/', views.BDconfiguration_index, name="BDconfiguration_index"),
 
     # -------- PARAMETROS -------- #
     path('parametros_index/', views.parametros_index, name="parametros_index"),
