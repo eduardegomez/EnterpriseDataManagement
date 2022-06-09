@@ -65,6 +65,14 @@
   border-bottom:1px solid rgba(88, 87, 87, 0.5);
   transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
 }
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
 </style>
 <body style="background-color: #efefef;">
 <div class="centrado">
@@ -192,17 +200,19 @@
         </div>
         <div class="col-md-8" style= 'background-color: #e3e3e3; padding: 20px; display: flex;'>
             <div class="col-md-4" style="text-align: center;">
-                <a id="btn-back" class="btn btn-outline-secondary" href="">
+                <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:execute_backup' %}">
                     {% fa5_icon 'play' 'fas' %} {% trans 'Ejecutar copia de seguridad'%}
                 </a>
             </div>
             <div class="col-md-4" style="text-align: center;">
-                <a id="btn-back" class="btn btn-outline-secondary" href="">
-                    {% fa5_icon 'upload' 'fas' %} {% trans 'Importar copia de seguridad'%}
-                </a>
+                <form id="btn-import" method="post" enctype="multipart/form-data" action="{% url 'fevama:backup_upload' %}" >
+                    {% csrf_token %}
+                    <input type="file" name="backupFile" id="backupFile" class="inputfile"/>
+                    <label for="backupFile" class="btn btn-outline-secondary" style="text-align: center;">{% fa5_icon 'upload' 'fas' %} {% trans 'Importar copia de seguridad' %}</label>
+                </form>
             </div>
             <div class="col-md-4" style="text-align: center;">
-                <a id="btn-back" class="btn btn-outline-secondary" href="">
+                <a id="btn-reset" class="btn btn-outline-secondary" onclick="restoreBD()">
                     {% fa5_icon 'retweet' 'fas' %} {% trans 'Restablecer base de datos'%}
                 </a>
             </div>  
@@ -212,5 +222,44 @@
 </div>
 </body>
 <script>
+
+$("#backupFile").change(function()
+{
+    document.getElementById("btn-import").submit();
+}); 
+
+function restoreBD()
+    {
+        if(confirm('{% trans "Estás seguro de restablecer la base de datos desde la última copia de seguridad? Perderás todos los datos actuales" %}'))
+        {
+            document.getElementById("btn-reset").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-reset").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'Restaurando BD' %}...";
+          
+            jQuery.ajax({
+                url: '{% url "fevama:restore_database" %}',
+                data: {},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if(data['code'] == 200){
+                        document.getElementById("btn-reset").className = "btn btn-success btn btn-block btnBootstrapping";
+                        document.getElementById("btn-reset").innerHTML="Restauración completada"; 
+                    } 
+                    if(data['code'] == 404){
+                        document.getElementById("btn-reset").className = "btn btn-danger btn btn-block btnBootstrapping";
+                        document.getElementById("btn-reset").innerHTML="Necesitas ejecutar/importar una copia de seguridad manual antes de realizar la restauración"; 
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    document.getElementById("btn-reset").className = "btn btn-danger btn btn-block btnBootstrapping";
+                    document.getElementById("btn-reset").innerHTML="Error";                   
+                }
+            });
+            return false;
+        }
+    }
+
 </script>
 {% endblock %}

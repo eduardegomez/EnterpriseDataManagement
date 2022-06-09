@@ -1,4 +1,5 @@
 from ast import Or
+import mimetypes
 from sre_constants import SUCCESS
 from typing import final
 from unicodedata import name
@@ -11,6 +12,8 @@ import json
 
 from django.urls import reverse_lazy
 from .models import *
+import os
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here. 
 
@@ -1076,6 +1079,37 @@ def bd_index(request):
 
 def BDconfiguration_index(request):
     return render(request, 'fevama/BDconfiguration.html')
+
+def execute_backup(request):
+    os.system('./backupDatabase.sh')
+    filename = 'backup.gz'
+    filepath = '/home/ubuntu/app/backups/' + filename
+    path = open(filepath, 'rb')
+    mime_type, _ = mimetypes.guess_type(filepath)
+    response = HttpResponse(path, content_type=mime_type)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+
+    return response
+
+def backup_upload(request):
+    if request.method == 'POST' and 'backupFile' in  request.FILES and request.FILES['backupFile']:
+        myFile = request.FILES['backupFile']
+        fs = FileSystemStorage()
+        if fs.exists("backup.gz"):
+            fs.delete("backup.gz")
+        fs.save("backup.gz", myFile)
+        return redirect('/fevama/BDconfiguration_index')
+    return redirect('/fevama/BDconfiguration_index')
+
+def restore_database(request):
+    response = {'code': 404}
+    if (os.path.isfile("/home/ubuntu/app/media/backup.gz")):
+
+        # Ejecutamos la restauración
+        os.system('./restoreDatabase.sh')
+        response = {'code': 200}
+
+    return JsonResponse(response)
 
 #### PARAMETROS ####
 def parametros_index(request):

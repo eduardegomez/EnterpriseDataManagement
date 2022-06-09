@@ -140,6 +140,10 @@ urlpatterns = [
     # -------- BASE DE DATOS -------- #
     path('bd_index/', views.bd_index, name="bd_index"),
     path('BDconfiguration_index/', views.BDconfiguration_index, name="BDconfiguration_index"),
+    path('execute_backup/', views.execute_backup, name="execute_backup"),
+    path('backup_upload/', views.backup_upload, name="backup_upload"),
+    path('restore_database/', views.restore_database, name="restore_database"),
+    
 
     # -------- PARAMETROS -------- #
     path('parametros_index/', views.parametros_index, name="parametros_index"),
