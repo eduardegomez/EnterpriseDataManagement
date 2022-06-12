@@ -143,6 +143,11 @@ urlpatterns = [
     path('execute_backup/', views.execute_backup, name="execute_backup"),
     path('backup_upload/', views.backup_upload, name="backup_upload"),
     path('restore_database/', views.restore_database, name="restore_database"),
+    path('modify_bdconfig/', views.modify_bdconfig, name="modify_bdconfig"),
+    path('change_bcfile/', views.change_bcfile, name="change_bcfile"),
+    path('last_backup/', views.last_backup, name="last_backup"),
+    path('last_economicData/', views.last_economicData, name="last_economicData"),
+    path('last_contacts/', views.last_contacts, name="last_contacts"),
     
 
     # -------- PARAMETROS -------- #

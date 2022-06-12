@@ -1,4 +1,5 @@
 from ast import Or
+import datetime
 import mimetypes
 from sre_constants import SUCCESS
 from typing import final
@@ -14,6 +15,7 @@ from django.urls import reverse_lazy
 from .models import *
 import os
 from django.core.files.storage import FileSystemStorage
+from django.views.decorators.csrf import csrf_protect
 
 # Create your views here. 
 
@@ -1078,7 +1080,168 @@ def bd_index(request):
     return render(request, 'fevama/bd_index.html')
 
 def BDconfiguration_index(request):
-    return render(request, 'fevama/BDconfiguration.html')
+    NextBackupTimePeriod_selected = ConfigParameters.objects.filter(address="NextBackupTimePeriod").first()
+    if not NextBackupTimePeriod_selected:
+        ConfigParameters.objects.create_configParameter("NextBackupTimePeriod", "12")
+        NextBackupTimePeriod_selected = "12"
+    NextBackupTimePeriod = ConfigParameters.objects.filter(address="NextBackupTime").first()
+    if not NextBackupTimePeriod:
+        now = datetime.datetime.now()
+        timestamp = int(round(now.timestamp()))
+        date = timestamp + 31556926
+        ConfigParameters.objects.create_configParameter("NextBackupTime", date)
+        date = datetime.datetime.fromtimestamp(int(date))
+    else:
+        date = datetime.datetime.fromtimestamp(int(NextBackupTimePeriod.value))
+
+    # Backup Files
+    files = os.listdir("/home/ubuntu/app/databaseBackups/compressed/")
+    list_backup_files = []
+    if files != []:
+        for file in files:
+            list_backup_files.append(file)
+    else:
+        list_backup_files = ["Esperando primera copia de seguridad..."]
+
+    backup_file = ConfigParameters.objects.filter(address="backupFile").first()
+    if backup_file == "None":
+        backup_file.value = list_backup_files[0]
+        backup_file.save()
+
+    # Contact files
+    files = os.listdir("/home/ubuntu/app/csv/Contacts/")
+    list_contact_files = []
+    if files != []:
+        for file in files:
+            list_contact_files.append(file)
+    else:
+        list_contact_files = ["Esperando primera copia de seguridad..."]
+
+    contact_file = ConfigParameters.objects.filter(address="contact_file").first()
+    if contact_file == "None":
+        contact_file.value = list_contact_files[0]
+        contact_file.save()
+
+    # Economic data files
+    files = os.listdir("/home/ubuntu/app/csv/EconomicData/")
+    list_economic_files = []
+    if files != []:
+        for file in files:
+            list_economic_files.append(file)
+    else:
+        list_economic_files = ["Esperando primera copia de seguridad..."]
+
+    economic_file = ConfigParameters.objects.filter(address="economic_file").first()
+    if economic_file == "None":
+        economic_file.value = list_economic_files[0]
+        economic_file.save()
+
+    # Selected files
+    backup_file = ConfigParameters.objects.filter(address="backupFile").first()
+    if backup_file:
+        backup_file = backup_file.value
+    else:
+        ConfigParameters.objects.create_configParameter("backupFile", "none")
+        
+    economic_file = ConfigParameters.objects.filter(address="economic_file").first()
+    if economic_file:
+        economic_file = economic_file.value
+    else:
+        ConfigParameters.objects.create_configParameter("economic_file", "none")
+
+    contact_file = ConfigParameters.objects.filter(address="contact_file").first()
+    if contact_file:
+        contact_file = contact_file.value
+    else:
+        ConfigParameters.objects.create_configParameter("contact_file", "none")
+
+    return render(request, 'fevama/BDconfiguration.html', {
+        'NextBackupTimePeriod_selected': NextBackupTimePeriod_selected.value,
+        'date': date,
+        'list_economic_files': list_economic_files,
+        'list_contact_files': list_contact_files,
+        'list_backup_files': list_backup_files,
+        'backup_file': backup_file,
+        'economic_file': economic_file,
+        'contact_file': contact_file
+    })
+
+@csrf_protect
+def change_bcfile(request):
+    """
+    Modify Backup file
+    :param request:
+    """
+    print("CHANGE BC FILE")
+    # Contact file
+    contact_file = ConfigParameters.objects.filter(address="contact_file").first()
+    contact_file.value = request.GET['contactFile']
+    contact_file.save()
+    # Economic file
+    economic_file = ConfigParameters.objects.filter(address="economic_file").first()
+    economic_file.value = request.GET['economicFile']
+    economic_file.save()
+    # Backup file
+    backup_file = ConfigParameters.objects.filter(address="backupFile").first()
+    backup_file.value = request.GET['backupFile']
+    backup_file.save()
+
+    return redirect('/fevama/BDconfiguration_index')
+
+def last_backup(request):
+    """
+    Download data from the last automatic backup
+    :param request:
+    """
+
+    file = ConfigParameters.objects.filter(address="backupFile").first()
+    filename = file.value
+    filepath = '/home/ubuntu/app/databaseBackups/compressed/' + filename
+    if (os.path.isfile(filepath)):
+        path = open(filepath, 'rb')
+        mime_type, _ = mimetypes.guess_type(filepath)
+        response = HttpResponse(path, content_type=mime_type)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
+
+    return redirect('/fevama/BDconfiguration_index')
+
+def last_economicData(request):
+    """
+    Download data from the last automatic economic data
+    :param request:
+    """
+
+    file = ConfigParameters.objects.filter(address="economic_file").first()
+    filename = file.value
+    filepath = '/home/ubuntu/app/csv/EconomicData/' + filename
+    if (os.path.isfile(filepath)):
+        path = open(filepath, 'rb')
+        mime_type, _ = mimetypes.guess_type(filepath)
+        response = HttpResponse(path, content_type=mime_type)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
+
+    return redirect('/fevama/BDconfiguration_index')
+
+def last_contacts(request):
+    """
+    Download data from the last automatic contact data
+    :param request:
+    """
+
+    file = ConfigParameters.objects.filter(address="contact_file").first()
+    filename = file.value
+    filepath = '/home/ubuntu/app/csv/Contacts/' + filename
+    if (os.path.isfile(filepath)):
+        path = open(filepath, 'rb')
+        mime_type, _ = mimetypes.guess_type(filepath)
+        response = HttpResponse(path, content_type=mime_type)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        return response
+
+    return redirect('/fevama/BDconfiguration_index')
+    
 
 def execute_backup(request):
     os.system('./backupDatabase.sh')
@@ -1109,6 +1272,32 @@ def restore_database(request):
         os.system('./restoreDatabase.sh')
         response = {'code': 200}
 
+    return JsonResponse(response)
+
+def modify_bdconfig(request):
+    """
+    Modify BDD
+    :param request:
+    """
+
+    postContent = request.GET
+    aux = postContent['NextBackupTimePeriod']
+    now = datetime.datetime.now()
+    timestamp = int(round(now.timestamp()))
+
+    if (aux == "12"):
+        timestamp = timestamp + 31556926
+    elif (aux == "6"):
+        timestamp = timestamp + 6*2629743
+    elif (aux == "3"):
+        timestamp = timestamp + 3*2629743
+    elif (aux == "1"):
+        timestamp = timestamp + 2629743
+
+    ConfigParameters.objects.update_config_parameter('NextBackupTimePeriod', postContent['NextBackupTimePeriod'])
+    ConfigParameters.objects.update_config_parameter('NextBackupTime', timestamp)
+
+    response = {'code': 200}
     return JsonResponse(response)
 
 #### PARAMETROS ####

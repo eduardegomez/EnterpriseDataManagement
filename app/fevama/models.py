@@ -210,3 +210,26 @@ class Project(models.Model):
 
     objects = ProjectManager()
 # ---------- END PROJECT ----------------- # 
+
+# --- START CONFIGURATION PARAMETERS ----- # 
+# ConfigParameters Manager
+class ConfigParametersManager(models.Manager):
+    def create_configParameter(self, address, value):
+        parameter = self.create(address=address, value=value)
+        return parameter
+
+    @staticmethod
+    def update_config_parameter(pAddress,pValue):
+        configParameter = ConfigParameters.objects.filter(address=pAddress).first()
+        if configParameter:
+            configParameter.value = pValue
+            configParameter.save(update_fields=["value"])
+        return configParameter
+
+# ConfigParameters Model
+class ConfigParameters(models.Model):
+    address = models.CharField(max_length=200)
+    value = models.CharField(max_length=200)
+
+    objects = ConfigParametersManager()
+# --- END CONFIGURATION PARAMETERS ----- # 

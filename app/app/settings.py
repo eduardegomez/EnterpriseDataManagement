@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     # ICONS
     'fontawesome_5',
 
+    #EXTRA
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

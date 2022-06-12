@@ -88,7 +88,7 @@
             </a>
         </div>
         <div class="col-md-2" style="margin-top: 5px;">
-            <a id="btn-update" class="btn btn-outline-success" href="">
+            <a id="btn-update" class="btn btn-outline-success" onclick="updateAutoConfig()">
                 {% fa5_icon 'update' 'fas' %} {% trans 'Actualizar configuración' %}
             </a>
         </div>
@@ -113,12 +113,11 @@
                 <label style="margin-top: 5px;">{% trans 'Tiempo para la próxima copia de seguridad:' %} </label>
             </div>
             <div class="col-md-8">
-                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center;">
-                    <option value="">1 Mes</option>
-                    <option value="">3 Meses</option>
-                    <option value="">6 Meses</option>
-                    <option value="">9 Meses</option>
-                    <option value="">12 Meses</option>
+                <select id="NextBackupTimePeriod" class="form-control text-center" name="NextBackupTime" style="text-align: center;">
+                    <option value="1" {% if NextBackupTimePeriod_selected == "1" %} selected {% endif %}>1 Mes</option>
+                    <option value="3" {% if NextBackupTimePeriod_selected == "3" %} selected {% endif %}>3 Meses</option>
+                    <option value="6" {% if NextBackupTimePeriod_selected == "6" %} selected {% endif %}>6 Meses</option>
+                    <option value="12"{% if NextBackupTimePeriod_selected == "12" %} selected {% endif %}>12 Meses</option>
                 </select>
             </div>  
         </div>
@@ -133,43 +132,47 @@
             </div>
             <div class="col-md-8">
                 <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center;" disabled>
-                    <option value="">8 de Junio de 2023</option>
+                    <option value="{{date}}">{{date}}</option>
                 </select>
             </div>  
         </div>
     </div>
 
     <div class="col-md-12" style="display: flex;" >
+        {% csrf_token %}
         <div class="col-md-2" style= 'padding: 40px;'>
         </div>
         <div class="col-md-8" style= 'background-color: #e3e3e3; padding: 20px; display: flex;'>
             <div class="col-md-4" style="text-align: center;">
                 <label style="margin-top: 5px;">{% trans 'Últimas copias de seguridad:' %} </label>
-                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center; margin-left: -10px;margin-top: 10px;">
-                    <option value="">Esperando la primera copia de seguridad...</option>
-                    <option value="">Copia de seguridad 1</option>
+                <select id="backupFile" class="form-control text-center" name="backupFile" style="text-align: center; margin-left: -10px;margin-top: 10px;" onchange="reload()">
+                    {% for bc in list_backup_files %}
+                    <option value="{{ bc }}" {% if bc == backup_file %} selected {% endif %}>{{ bc }}</option>
+                    {% endfor %}
                 </select>
-                <a id="btn-export_node" class="btn btn-outline-success" href='' style="margin-top: 5px;margin-left: -10px;" >
+                <a id="btn-export_node" class="btn btn-outline-success" href='{% url "fevama:last_backup" %}' onclick="reload()" style="margin-top: 5px;margin-left: -10px;" >
                     {% fa5_icon 'download' 'fas' %} {% trans 'Download (.gz)' %}
                 </a>
             </div>
             <div class="col-md-4" style="text-align: center;">
                 <label style="margin-top: 5px;">{% trans 'Últimos datos económicos:' %} </label>
-                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center;margin-top: 10px;">
-                    <option value="">Esperando la primera copia de seguridad...</option>
-                    <option value="">Datos 1</option>
+                <select id="economicFile" class="form-control text-center" name="economicFile" style="text-align: center;margin-top: 10px;" onchange="reload()">
+                    {% for bc in list_economic_files %}
+                    <option value="{{ bc }}" {% if bc == economic_file %} selected {% endif %}>{{ bc }}</option>
+                    {% endfor %}
                 </select>
-                <a id="btn-export_node" class="btn btn-outline-success" href='' style="margin-top: 5px;">
+                <a id="btn-export_node" class="btn btn-outline-success" href='{% url "fevama:last_economicData" %}' onclick="reload()" style="margin-top: 5px;">
                     {% fa5_icon 'download' 'fas' %} {% trans 'Download (.csv)' %}
                 </a>
             </div>
             <div class="col-md-4" style="text-align: center;">
                 <label style="margin-top: 5px;">{% trans 'Últimos contactos:' %} </label>
-                <select id="NextBackupTime" class="form-control text-center" name="NextBackupTime" style="text-align: center; margin-left: 10px;margin-top: 10px;">
-                    <option value="">Esperando la primera copia de seguridad...</option>
-                    <option value="">Contactos 1</option>
+                <select id="contactFile" class="form-control text-center" name="contactFile" style="text-align: center; margin-left: 10px;margin-top: 10px;" onchange="reload()">
+                    {% for bc in list_contact_files %}
+                    <option value="{{ bc }}" {% if bc == contact_file %} selected {% endif %}>{{ bc }}</option>
+                    {% endfor %}
                 </select>
-                <a id="btn-export_node" class="btn btn-outline-success" href='' style="margin-top: 5px;margin-left: 10px;">
+                <a id="btn-export_node" class="btn btn-outline-success" href='{% url "fevama:last_contacts" %}' onclick="reload()" style="margin-top: 5px;margin-left: 10px;">
                     {% fa5_icon 'download' 'fas' %} {% trans 'Download (.csv)' %}
                 </a>
             </div>  
@@ -228,6 +231,27 @@ $("#backupFile").change(function()
     document.getElementById("btn-import").submit();
 }); 
 
+function reload()
+    {
+        $.ajax({
+            url: '{% url "fevama:change_bcfile" %}',
+            data: {
+                'backupFile': document.getElementById("backupFile").value,
+                'economicFile': document.getElementById("economicFile").value,
+                'contactFile': document.getElementById("contactFile").value
+            },
+            success: function (data) {
+                console.log('Submission was successful.');
+                console.log(data);
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+
+    }
+
 function restoreBD()
     {
         if(confirm('{% trans "Estás seguro de restablecer la base de datos desde la última copia de seguridad? Perderás todos los datos actuales" %}'))
@@ -261,5 +285,32 @@ function restoreBD()
         }
     }
 
+    function updateAutoConfig(){
+        if(confirm('{% trans "Estás seguro de actualizar la configuración automática?" %}'))
+        {
+            document.getElementById("btn-update").className = "btn btn-warning btn btn-block btnBootstrapping";
+            document.getElementById("btn-update").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'Actualizando configuración' %}...";
+          
+            jQuery.ajax({
+                url: '{% url "fevama:modify_bdconfig" %}',
+                data: {
+                    "NextBackupTimePeriod": document.getElementById("NextBackupTimePeriod").value,
+                    "NextBackupTime": document.getElementById("NextBackupTime").value,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    document.getElementById("btn-update").className = "btn btn-success btn btn-block btnBootstrapping";
+                    document.getElementById("btn-update").innerHTML="Configuración actualizada"; 
+                    location.reload()
+                },
+                error: function (data) {
+                    console.log(data);
+                    document.getElementById("btn-update").className = "btn btn-danger btn btn-block btnBootstrapping";
+                    document.getElementById("btn-update").innerHTML="Error actualizando configuración";                   
+                }
+            });
+            return false;
+        } 
+    }
 </script>
 {% endblock %}
