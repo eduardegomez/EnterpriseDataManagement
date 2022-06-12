@@ -616,6 +616,12 @@ def assistance_index(request):
         'object_list': object_list
     })
 
+def assistance_details(request, id):
+    assistance = Assistance.objects.filter(id=id).first()
+    return render(request, 'fevama/assistance_details.html', {
+        'assistance': assistance
+    })
+
 def assistance_deleteItem(request):
     id = request.GET['data']
     check = Assistance.objects.filter(id=id).first()

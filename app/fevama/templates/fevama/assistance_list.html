@@ -115,7 +115,7 @@
                     <td>
                         <a class="btn btn-primary btn-sm" href="{% url 'fevama:assistance_modify' a.id %}"> EDITAR </a>
                         <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{a.id}})"> ELIMINAR </a>
-                        <a class="btn btn-primary btn-sm" href=""> VER DETALLES </a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'fevama:assistance_details' a.id %}"> VER DETALLES </a>
                     </td>
                 </tr>
                 {% endfor %}

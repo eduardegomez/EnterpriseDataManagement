@@ -81,6 +81,8 @@ urlpatterns = [
     path('assistance_createItem/', views.assistance_createItem, name="assistance_createItem"),
     path('assistance_modify/<id>', views.assistance_modify, name="assistance_modify"),
     path('assistance_modifyItem/', views.assistance_modifyItem, name="assistance_modifyItem"),
+    path('assistance_details/<id>', views.assistance_details, name="assistance_details"),
+    
 
     # LINEA DE AYUDAS
     path('line_index/', views.line_index, name="line_index"),
