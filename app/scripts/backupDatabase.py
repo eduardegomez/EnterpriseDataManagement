@@ -48,7 +48,7 @@ def run():
         create_csv(objects, "contact", path2, nameContacts)
 
         # Ejecutar backup y actualizar campos para el siguiente programado
-        os.system('sudo ./backupDatabaseCompressed.sh')
+        os.system('cd /home/ubuntu/app && sudo ./backupDatabaseCompressed.sh')
         print("Backup done")
 
         timestamp = int(datetime.now().timestamp())

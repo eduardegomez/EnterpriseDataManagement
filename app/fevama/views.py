@@ -1252,7 +1252,7 @@ def last_contacts(request):
 def execute_backup(request):
     os.system('./backupDatabase.sh')
     filename = 'backup.gz'
-    filepath = '/home/ubuntu/app/backups/' + filename
+    filepath = '/home/ubuntu/app/media/' + filename
     path = open(filepath, 'rb')
     mime_type, _ = mimetypes.guess_type(filepath)
     response = HttpResponse(path, content_type=mime_type)
