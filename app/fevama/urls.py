@@ -54,6 +54,7 @@ urlpatterns = [
     path('empresa_getdatagraph/', views.empresa_getdatagraph, name="empresa_getdatagraph"),
     path('empresa_compare/', views.empresa_compare, name="empresa_compare"),
 
+    path('anualdata_graphs/', views.anualdata_graphs, name="anualdata_graphs"),
 
     # -------- SUBVENCIONES -------- #
     path('ayudas_index/', views.ayudas_index, name="ayudas_index"),

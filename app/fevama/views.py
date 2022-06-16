@@ -16,6 +16,7 @@ from .models import *
 import os
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_protect
+from django.db.models import Q
 
 # Create your views here. 
 
@@ -454,6 +455,34 @@ def empresa_compare(request):
 
 # ----------- END GRAPHS----------------------------- #
 
+# ----------- ANUAL DATA GRAPHS ------------------------ #
+def anualdata_graphs(request):
+    situation_aprobada = Situation.objects.filter(situation="APROBADA").first()
+    situation_justificada = Situation.objects.filter(situation="JUSTIFICADA").first()
+    situation_renunciada = Situation.objects.filter(situation="RENUNCIADA").first()
+    situation_denegada = Situation.objects.filter(situation="DENEGADA").first()
+    assistance_ok = Assistance.objects.filter(Q(situation=situation_aprobada)| Q(situation=situation_justificada)| Q(situation=situation_renunciada)).all()
+    assistance_ko = Assistance.objects.filter(Q(situation=situation_aprobada)| Q(situation=situation_justificada)| Q(situation=situation_renunciada) | Q(situation=situation_denegada)).all()
+    projects_list = Project.objects.all()
+    project_num = len(projects_list)
+    cont_ok = 0
+    cont_total = 0
+
+    for p in projects_list:
+        if p.assistance in assistance_ok:
+            cont_ok += 1
+    
+    for p in projects_list:
+        if p.assistance in assistance_ko:
+            cont_total += 1
+
+    total_ok = int((cont_ok/cont_total)*100)
+    return render(request, 'fevama/anualdata_graphs.html', {
+        'project_num': project_num,
+        'total_ok': total_ok,
+    })
+
+# ----------- END GRAPHS----------------------------- #
 #### SUBVENCIONES ####
 def ayudas_index(request):
     return render(request, 'fevama/ayudas_index.html')
@@ -468,7 +497,7 @@ def project_index(request):
 def project_create(request):
     empresas_list = Empresa.objects.all()
     invoice_list = Invoice.objects.all()
-    assistance_list = Assistance.objects.all()
+    assistance_list = Assistance.objects.filter(project_check="0").all()
     return render(request, 'fevama/project_create.html', {
         'empresas_list': empresas_list,
         'invoice_list': invoice_list,
@@ -487,8 +516,10 @@ def project_createItem(request):
     else:
         empresa = Empresa.objects.filter(id=empresa).first()
         assistance = Assistance.objects.filter(id=assistance).first()
+        assistance.project_check="1"
+        assistance.save()
         invoice = Invoice.objects.filter(id=invoice).first()
-        Project.objects.create_project(empresa, assistance, invoice)
+        Project.objects.create_project(empresa, assistance.id, invoice)
     
     response = { 'code': 200}
     return JsonResponse(response)
@@ -496,6 +527,11 @@ def project_createItem(request):
 def project_deleteItem(request):
     id = request.GET['data']
     check = Project.objects.filter(id=id).first()
+    assistance = check.assistance_id
+    if assistance != "POR DEFINIR":
+        assistance = Assistance.objects.filter(id=assistance).first()
+        assistance.project_check="0"
+        assistance.save()
     if check:
         check.delete()
     
@@ -506,7 +542,7 @@ def project_modify(request, id):
     project = Project.objects.filter(id=id).first()
     empresas_list = Empresa.objects.all()
     invoice_list = Invoice.objects.all()
-    assistance_list = Assistance.objects.all()
+    assistance_list = Assistance.objects.filter(project_check="0").all()
     return render(request, 'fevama/project_modify.html', {
         'project': project,
         'empresas_list': empresas_list,
@@ -530,7 +566,9 @@ def project_modifyItem(request):
 
     check = Project.objects.filter(id=id).first()
     if check:
-        check.assistance = assistance
+        assistance.project_check="1"
+        assistance.save()
+        check.assistance_id = assistance.id
         check.invoice = invoice
         check.empresa = empresa
         check.save()
@@ -625,7 +663,11 @@ def assistance_details(request, id):
 def assistance_deleteItem(request):
     id = request.GET['data']
     check = Assistance.objects.filter(id=id).first()
+    projects_list = Project.objects.filter(assistance_id=id).first()
     if check:
+        if projects_list:
+            projects_list.assistance_id = "POR DEFINIR"
+            projects_list.save()
         check.delete()
     
     response = { 'code': 200}

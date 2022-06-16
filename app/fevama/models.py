@@ -172,6 +172,7 @@ class Assistance(models.Model):
     requested = models.IntegerField(default=0)
     applied = models.IntegerField(default=0)
     date = models.CharField(max_length=200)
+    project_check = models.IntegerField(default=0)
     payment = models.CharField(max_length=200)
     
     objects = AssistanceManager()
@@ -198,14 +199,14 @@ class Invoice(models.Model):
 # ---------- START PROJECT ----------------- # 
 # Porject Manager
 class ProjectManager(models.Manager):
-    def create_project(self, empresa, assistance, invoice):
-        project = self.create(empresa=empresa, assistance=assistance, invoice=invoice)
+    def create_project(self, empresa, assistance_id, invoice):
+        project = self.create(empresa=empresa, assistance_id=assistance_id, invoice=invoice)
         return project
 
 # Project Model
 class Project(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    assistance = models.ForeignKey(Assistance, on_delete=models.CASCADE, default=0)
+    assistance_id = models.CharField(max_length=200, default="None")
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, default=0)
 
     objects = ProjectManager()

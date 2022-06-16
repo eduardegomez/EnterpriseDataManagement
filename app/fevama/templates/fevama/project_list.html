@@ -96,7 +96,7 @@
         <thead>
             <tr style="background-color: rgb(133, 172, 172);">
                 <td><b>ID</b></td>
-                <td><b>AYUDA</b></td>
+                <td><b>ID AYUDA</b></td>
                 <td><b>EMPRESA</b></td>
                 <td><b>FACTURA</b></td>
                 <td><b>ACCIONES</b></td>
@@ -107,7 +107,7 @@
                 {% for pro in object_list %}
                 <tr>
                     <td>{{pro.id}}</td>
-                    <td>{{pro.assistance.management}}</td>
+                    <td>{{pro.assistance_id}}</td>
                     <td>{{pro.empresa.name}}</td>
                     <td>{{pro.invoice.number}}</td>
                     <td>
