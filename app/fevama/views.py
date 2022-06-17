@@ -496,30 +496,21 @@ def project_index(request):
 
 def project_create(request):
     empresas_list = Empresa.objects.all()
-    invoice_list = Invoice.objects.all()
-    assistance_list = Assistance.objects.filter(project_check="0").all()
     return render(request, 'fevama/project_create.html', {
         'empresas_list': empresas_list,
-        'invoice_list': invoice_list,
-        'assistance_list': assistance_list
     })
 
 def project_createItem(request):
-    assistance = request.GET['assistance']
+    project_name = request.GET['project_name']
     empresa = request.GET['empresa']
-    invoice = request.GET['invoice']
     
-    check = Project.objects.filter(assistance_id=assistance, empresa_id=empresa, invoice_id=invoice).first()
+    check = Project.objects.filter(project_name=project_name, empresa_id=empresa).first()
     if check:
         response = { 'code': 404 }
         return JsonResponse(response)
     else:
         empresa = Empresa.objects.filter(id=empresa).first()
-        assistance = Assistance.objects.filter(id=assistance).first()
-        assistance.project_check="1"
-        assistance.save()
-        invoice = Invoice.objects.filter(id=invoice).first()
-        Project.objects.create_project(empresa, assistance.id, invoice)
+        Project.objects.create_project(empresa, project_name)
     
     response = { 'code': 200}
     return JsonResponse(response)
@@ -527,11 +518,6 @@ def project_createItem(request):
 def project_deleteItem(request):
     id = request.GET['data']
     check = Project.objects.filter(id=id).first()
-    assistance = check.assistance_id
-    if assistance != "POR DEFINIR":
-        assistance = Assistance.objects.filter(id=assistance).first()
-        assistance.project_check="0"
-        assistance.save()
     if check:
         check.delete()
     
@@ -541,35 +527,27 @@ def project_deleteItem(request):
 def project_modify(request, id):
     project = Project.objects.filter(id=id).first()
     empresas_list = Empresa.objects.all()
-    invoice_list = Invoice.objects.all()
-    assistance_list = Assistance.objects.filter(project_check="0").all()
+    project_name = project.project_name
     return render(request, 'fevama/project_modify.html', {
         'project': project,
         'empresas_list': empresas_list,
-        'invoice_list': invoice_list,
-        'assistance_list': assistance_list
+        'project_name': project_name
     })
 
 def project_modifyItem(request):
     id = request.GET['id']
-    assistance = request.GET['assistance']
-    invoice = request.GET['invoice']
+    project_name = request.GET['project_name']
     empresa = request.GET['empresa']
     empresa = Empresa.objects.filter(id=empresa).first()
-    invoice = Invoice.objects.filter(id=invoice).first()
-    assistance = Assistance.objects.filter(id=assistance).first()
     projects = Project.objects.all()
     for p in projects:
-        if p.assistance == assistance and p.empresa == empresa and p.invoice == invoice:
+        if p.empresa == empresa and p.project_name == project_name:
             response = { 'code': 404 }
             return JsonResponse(response)
 
     check = Project.objects.filter(id=id).first()
     if check:
-        assistance.project_check="1"
-        assistance.save()
-        check.assistance_id = assistance.id
-        check.invoice = invoice
+        check.project_name = project_name
         check.empresa = empresa
         check.save()
     
@@ -585,13 +563,19 @@ def invoice_index(request):
     })
 
 def invoice_create(request):
+    project_list = Project.objects.filter(invoice_check="0").all()
     return render(request, 'fevama/invoice_create.html', {
+        'project_list': project_list
     })
 
 def invoice_deleteItem(request):
     id = request.GET['data']
     check = Invoice.objects.filter(id=id).first()
     if check:
+        project_id = check.project_id
+        project = Project.objects.filter(id=project_id).first()
+        project.invoice_check = "0"
+        project.save()
         check.delete()
     
     response = { 'code': 200}
@@ -603,13 +587,17 @@ def invoice_createItem(request):
     year = request.GET['year']
     amount = request.GET['amount']
     date = request.GET['date']
+    project_id = request.GET['project']
     
+    project = Project.objects.filter(id=project_id).first()
     check = Invoice.objects.filter(number=number).first()
     if check:
         response = { 'code': 404 }
         return JsonResponse(response)
     else:
-        Invoice.objects.create_invoice(number, invoice, year, amount, date)
+        Invoice.objects.create_invoice(number, invoice, year, amount, date, project)
+        project.invoice_check = "1"
+        project.save()
     
     response = { 'code': 200}
     return JsonResponse(response)
@@ -617,7 +605,7 @@ def invoice_createItem(request):
 def invoice_modify(request, id):
     invoice = Invoice.objects.filter(id=id).first()
     return render(request, 'fevama/invoice_modify.html', {
-        'invoice': invoice
+        'invoice': invoice,
     })
 
 def invoice_modifyItem(request):

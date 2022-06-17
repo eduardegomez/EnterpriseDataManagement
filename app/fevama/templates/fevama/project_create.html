@@ -37,14 +37,10 @@
                 <tbody>
                     <tr>
                         <td style="text-align:center; vertical-align: middle;">
-                                <label> {% trans 'Ayuda:'%}</label>
+                            <label> {% trans 'Nombre del proyecto:'%}</label>
                         </td>
                         <td style="text-align:center; vertical-align: middle;">
-                            <select id="assistance" class="form-control text-center" name="empresa" style="text-align: center;">
-                                {% for a in assistance_list %}
-                                <option value="{{ a.id }}">{{ a.line.line }}</option>
-                                {% endfor %}
-                            </select>
+                            <input id="project_name" type="text" placeholder="Indica el nombre" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
                         </td>
                     </tr>
                     <tr>
@@ -55,18 +51,6 @@
                             <select id="empresa" class="form-control text-center" name="empresa" style="text-align: center;">
                                 {% for e in empresas_list %}
                                 <option value="{{ e.id }}">{{ e.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center; vertical-align: middle;">
-                            <label> {% trans 'Factura:'%}</label>
-                        </td>
-                        <td style="text-align:center; vertical-align: middle;">
-                            <select id="invoice" class="form-control text-center" name="empresa" style="text-align: center;">
-                                {% for i in invoice_list %}
-                                <option value="{{ i.id }}">{{ i.id }}</option>
                                 {% endfor %}
                             </select>
                         </td>
@@ -152,9 +136,8 @@
             document.getElementById("btn-create").className = "btn btn-warning btn btn-block btnBootstrapping";
             document.getElementById("btn-create").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'CREANDO' %}";
             var empresa = document.getElementById("empresa").value;
-            var assistance = document.getElementById("assistance").value;
-            var invoice = document.getElementById("invoice").value;
-            if (empresa == ""){
+            var project_name = document.getElementById("project_name").value;
+            if (project_name == "" || empresa == ""){
                 document.getElementById("btn-create").className = "btn btn-outline-success";
                 document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                 createAutoClosingAlert('#valueKO', 5000);
@@ -163,8 +146,7 @@
                     url: '{% url "fevama:project_createItem" %}',
                     data:  {
                         'empresa': empresa,
-                        'assistance': assistance,
-                        'invoice': invoice,
+                        'project_name': project_name,
                     },
                     dataType: 'json',
                     success: function (data) {
@@ -173,8 +155,7 @@
                             document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                             createAutoClosingAlert('#created', 5000);
                             document.getElementById("empresa").value = "";
-                            document.getElementById("assistance").value = "";
-                            document.getElementById("invoice").value = "";
+                            document.getElementById("project_name").value = "";
                             location.reload(true);
                         }
                         if(data['code'] == 404){

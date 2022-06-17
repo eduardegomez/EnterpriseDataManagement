@@ -53,6 +53,18 @@
                     </tr>
                     <tr>
                         <td style="text-align:center; vertical-align: middle;">
+                            <label> {% trans 'Projecto:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="project" class="form-control text-center" name="project" style="text-align: center;">
+                                {% for e in project_list %}
+                                <option value="{{ e.id }}">{{ e.project_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
                             <label> {% trans 'Año:'%}</label>
                         </td>
                         <td style="text-align:center; vertical-align: middle;">
@@ -161,6 +173,7 @@
             var year = document.getElementById("year").value;
             var amount = document.getElementById("amount").value;
             var date = document.getElementById("date").value;
+            var project = document.getElementById("project").value;
             if (number == ""){
                 document.getElementById("btn-create").className = "btn btn-outline-success";
                 document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
@@ -173,7 +186,8 @@
                         'invoice': invoice,
                         'year': year,
                         'amount': amount,
-                        'date' : date
+                        'date' : date,
+                        'project': project
                     },
                     dataType: 'json',
                     success: function (data) {
@@ -186,6 +200,7 @@
                             document.getElementById("year").value = "";
                             document.getElementById("amount").value = "";
                             document.getElementById("date").value = "";
+                            document.getElementById("project").value = "";
                         }
                         if(data['code'] == 404){
                             document.getElementById("btn-create").className = "btn btn-outline-success";

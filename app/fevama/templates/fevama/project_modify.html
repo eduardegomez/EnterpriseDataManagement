@@ -37,14 +37,10 @@
                 <tbody>
                     <tr>
                         <td style="text-align:center; vertical-align: middle;">
-                                <label> {% trans 'Ayuda:'%}</label>
+                                <label> {% trans 'Nombre del proyecto:'%}</label>
                         </td>
                         <td style="text-align:center; vertical-align: middle;">
-                            <select id="assistance" class="form-control text-center" name="assistance" style="text-align: center;">
-                                {% for <a href=""></a> in assistance_list %}
-                                <option value="{{ a.id }}" {% if a.id == project.assistance.id %} selected {% endif %}>{{ a.name }}</option>
-                                {% endfor %}
-                            </select>
+                            <input id="project_name" type="text" value="{{project_name}}" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
                         </td>
                     </tr>
                     <tr>
@@ -55,18 +51,6 @@
                             <select id="empresa" class="form-control text-center" name="empresa" style="text-align: center;">
                                 {% for e in empresas_list %}
                                 <option value="{{ e.id }}" {% if e.id == project.empresa.id %} selected {% endif %}>{{ e.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center; vertical-align: middle;">
-                                <label> {% trans 'Factura:'%}</label>
-                        </td>
-                        <td style="text-align:center; vertical-align: middle;">
-                            <select id="invoice" class="form-control text-center" name="invoice" style="text-align: center;">
-                                {% for i in invoice_list %}
-                                <option value="{{ i.id }}" {% if i.id == project.invoice.id %} selected {% endif %}>{{ i.name }}</option>
                                 {% endfor %}
                             </select>
                         </td>
@@ -151,11 +135,10 @@
         {
             document.getElementById("btn-modify").className = "btn btn-warning btn btn-block btnBootstrapping";
             document.getElementById("btn-modify").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'MODIFICANDO' %}";
-            var assistance = document.getElementById("assistance").value;
-            var invoice = document.getElementById("invoice").value;
+            var project_name = document.getElementById("project_name").value;
             var empresa = document.getElementById("empresa").value;
             var id = {{ project.id}}
-            if (empresa == ""){
+            if (empresa == "" || project_name == ""){
                 document.getElementById("btn-modify").className = "btn btn-outline-success";
                 document.getElementById("btn-modify").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'MODIFICAR' %}";
                 createAutoClosingAlert('#valueKO', 5000);
@@ -164,8 +147,7 @@
                     url: '{% url "fevama:project_modifyItem" %}',
                     data:  {
                         'id': id,
-                        'assistance': assistance,
-                        'invoice': invoice,
+                        'project_name': project_name,
                         'empresa': empresa,
                     },
                     dataType: 'json',

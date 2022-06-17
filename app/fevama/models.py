@@ -168,6 +168,7 @@ class Assistance(models.Model):
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, default=0)
     situation = models.ForeignKey(Situation, on_delete=models.CASCADE, default=0)
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, default=0)
+    
     management = models.CharField(max_length=200)
     requested = models.IntegerField(default=0)
     applied = models.IntegerField(default=0)
@@ -178,11 +179,27 @@ class Assistance(models.Model):
     objects = AssistanceManager()
 # ---------- END ASSISTANCE ----------------- #
 
+# ---------- START PROJECT ----------------- # 
+# Porject Manager
+class ProjectManager(models.Manager):
+    def create_project(self, empresa, project_name):
+        project = self.create(empresa=empresa, project_name=project_name)
+        return project
+
+# Project Model
+class Project(models.Model):
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
+    project_name = models.CharField(max_length=200, default="None")
+    invoice_check = models.CharField(max_length=200, default=0)
+
+    objects = ProjectManager()
+# ---------- END PROJECT ----------------- # 
+
 # ---------- START INVOICE ----------------- # 
 # Invoice Manager
 class InvoiceManager(models.Manager):
-    def create_invoice(self, number, invoice, year, amount, date):
-        invoice = self.create(number=number, invoice=invoice, year=year, amount=amount, date=date)
+    def create_invoice(self, number, invoice, year, amount, date, project):
+        invoice = self.create(number=number, invoice=invoice, year=year, amount=amount, date=date, project=project)
         return invoice
 
 # Invoice Model
@@ -192,25 +209,10 @@ class Invoice(models.Model):
     year = models.IntegerField(default=0)
     amount = models.IntegerField(default=0)
     date = models.CharField(max_length=200)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=0)
 
     objects = InvoiceManager()
 # ---------- END INVOICE ----------------- # 
-
-# ---------- START PROJECT ----------------- # 
-# Porject Manager
-class ProjectManager(models.Manager):
-    def create_project(self, empresa, assistance_id, invoice):
-        project = self.create(empresa=empresa, assistance_id=assistance_id, invoice=invoice)
-        return project
-
-# Project Model
-class Project(models.Model):
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    assistance_id = models.CharField(max_length=200, default="None")
-    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, default=0)
-
-    objects = ProjectManager()
-# ---------- END PROJECT ----------------- # 
 
 # --- START CONFIGURATION PARAMETERS ----- # 
 # ConfigParameters Manager

@@ -53,6 +53,16 @@
                     </tr>
                     <tr>
                         <td style="text-align:center; vertical-align: middle;">
+                            <label> {% trans 'Projecto:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="project" class="form-control text-center" name="project" style="text-align: center;">
+                                <option value="{{ invoice.project.id }}" disabled selected>{{ invoice.project.project_name }}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center; vertical-align: middle;">
                             <label> {% trans 'Año:'%}</label>
                         </td>
                         <td style="text-align:center; vertical-align: middle;">
@@ -178,7 +188,7 @@
                         'year': year,
                         'amount': amount,
                         'date': date,
-                        'id' : id
+                        'id' : id,
                     },
                     dataType: 'json',
                     success: function (data) {
