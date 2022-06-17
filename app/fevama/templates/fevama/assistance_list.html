@@ -96,6 +96,7 @@
         <thead>
             <tr style="background-color: rgb(133, 172, 172);">
                 <td><b>ID</b></td>
+                <td><b>PROYECTO</b></td>
                 <td><b>LINEA DE AYUDA</b></td>
                 <td><b>ACTUACIÓN</b></td>
                 <td><b>ORGANISMO</b></td>
@@ -108,6 +109,7 @@
                 {% for a in object_list %}
                 <tr>
                     <td>{{a.id}}</td>
+                    <td>{{a.project.project_name}}</td>
                     <td>{{a.line.line}}</td>
                     <td>{{a.act.name}}</td>
                     <td>{{a.organism.name}}</td>

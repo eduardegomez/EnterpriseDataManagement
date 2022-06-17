@@ -153,32 +153,6 @@ class Applicant(models.Model):
     objects = ApplicantManager()
 # ---------- END APPLICANT----------------- #
 
-# ---------- START ASSISTANCE ----------------- # 
-# Assistance Manager
-class AssistanceManager(models.Manager):
-    def create_assistance(self, line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment):
-        assistance = self.create(line=line, act=act, organism=organism, announcement=announcement, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment)
-        return assistance
-
-# Assistance Model
-class Assistance(models.Model):
-    line = models.ForeignKey(Line, on_delete=models.CASCADE, default=0)
-    act = models.ForeignKey(Act, on_delete=models.CASCADE, default=0)
-    organism = models.ForeignKey(Organism, on_delete=models.CASCADE, default=0)
-    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, default=0)
-    situation = models.ForeignKey(Situation, on_delete=models.CASCADE, default=0)
-    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, default=0)
-    
-    management = models.CharField(max_length=200)
-    requested = models.IntegerField(default=0)
-    applied = models.IntegerField(default=0)
-    date = models.CharField(max_length=200)
-    project_check = models.IntegerField(default=0)
-    payment = models.CharField(max_length=200)
-    
-    objects = AssistanceManager()
-# ---------- END ASSISTANCE ----------------- #
-
 # ---------- START PROJECT ----------------- # 
 # Porject Manager
 class ProjectManager(models.Manager):
@@ -191,9 +165,35 @@ class Project(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
     project_name = models.CharField(max_length=200, default="None")
     invoice_check = models.CharField(max_length=200, default=0)
+    assistance_check = models.CharField(max_length=200, default=0)
 
     objects = ProjectManager()
 # ---------- END PROJECT ----------------- # 
+
+# ---------- START ASSISTANCE ----------------- # 
+# Assistance Manager
+class AssistanceManager(models.Manager):
+    def create_assistance(self, project, line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment):
+        assistance = self.create(line=line, project=project, act=act, organism=organism, announcement=announcement, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment)
+        return assistance
+
+# Assistance Model
+class Assistance(models.Model):
+    line = models.ForeignKey(Line, on_delete=models.CASCADE, default=0)
+    act = models.ForeignKey(Act, on_delete=models.CASCADE, default=0)
+    organism = models.ForeignKey(Organism, on_delete=models.CASCADE, default=0)
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, default=0)
+    situation = models.ForeignKey(Situation, on_delete=models.CASCADE, default=0)
+    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, default=0)  
+    management = models.CharField(max_length=200)
+    requested = models.IntegerField(default=0)
+    applied = models.IntegerField(default=0)
+    date = models.CharField(max_length=200)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=0)
+    payment = models.CharField(max_length=200)
+    
+    objects = AssistanceManager()
+# ---------- END ASSISTANCE ----------------- #
 
 # ---------- START INVOICE ----------------- # 
 # Invoice Manager

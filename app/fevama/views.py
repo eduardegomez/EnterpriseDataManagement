@@ -651,10 +651,10 @@ def assistance_details(request, id):
 def assistance_deleteItem(request):
     id = request.GET['data']
     check = Assistance.objects.filter(id=id).first()
-    projects_list = Project.objects.filter(assistance_id=id).first()
+    projects_list = Project.objects.filter(id=check.project.id).first()
     if check:
         if projects_list:
-            projects_list.assistance_id = "POR DEFINIR"
+            projects_list.assistance_check = "0"
             projects_list.save()
         check.delete()
     
@@ -668,13 +668,15 @@ def assistance_create(request):
     situation_list = Situation.objects.all()
     applicant_list = Applicant.objects.all()
     announcement_list = Announcement.objects.all()
+    project_list = Project.objects.filter(assistance_check="0").all()
     return render(request, 'fevama/assistance_create.html', {
         'line_list': line_list,
         'act_list': act_list,
         'organism_list': organism_list,
         'situation_list': situation_list,
         'applicant_list': applicant_list,
-        'announcement_list': announcement_list
+        'announcement_list': announcement_list,
+        'project_list': project_list
     })
 
 def assistance_createItem(request):
@@ -695,12 +697,16 @@ def assistance_createItem(request):
     applied = request.GET['applied']
     date = request.GET['date']
     payment = request.GET['payment']
-    check = Assistance.objects.filter(line=line, act=act, organism=organism, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment).first()
+    project_id = request.GET['project']
+    project = Project.objects.filter(id=project_id).first()
+    check = Assistance.objects.filter(project=project, line=line, act=act, organism=organism, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment).first()
     if check:
         response = { 'code': 404 }
         return JsonResponse(response)
     else:
-        Assistance.objects.create_assistance(line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment)
+        Assistance.objects.create_assistance(project, line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment)
+        project.assistance_check = "1"
+        project.save()
     
     response = { 'code': 200}
     return JsonResponse(response)
