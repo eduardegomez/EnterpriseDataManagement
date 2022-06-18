@@ -82,7 +82,7 @@
                             <label> {% trans 'Fecha cobro:'%}</label>
                         </td>
                         <td style="text-align:center; vertical-align: middle;">
-                            <input id="date" type="text" value="{{invoice.date}}" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
+                            <input id="date" type="date" value="{{invoice.date}}" style="width: 100%;text-align: center; border-radius: 5px; border: 0px; height: 35px;"/>
                         </td>
                     </tr>
                     <tr>
@@ -92,52 +92,53 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Ya existe esta Factura' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Debes rellenar los campos' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Factura modificada correctamente' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
     </div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Ya existe esta Factura' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Debes rellenar los campos' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Factura modificada correctamente' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
+    
 
 </div>
 </body>

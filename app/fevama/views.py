@@ -55,6 +55,10 @@ def password_success(request):
 def projects_index(request):
     return render(request, 'fevama/projects_index.html')
 
+### CUADROS DE MANDO ###
+def management_index(request):
+    return render(request, 'fevama/management_index.html')
+
 # ----------- START EMPRESA ---------------------#
 def empresas_index(request):
     object_list = Empresa.objects.all()
@@ -586,7 +590,7 @@ def invoice_createItem(request):
     invoice = request.GET['invoice']
     year = request.GET['year']
     amount = request.GET['amount']
-    date = request.GET['date']
+    date = str(request.GET['date'])
     project_id = request.GET['project']
     
     project = Project.objects.filter(id=project_id).first()

@@ -1,0 +1,62 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load fontawesome_5 %}
+{% load static %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<style>
+    .index-button
+    {
+        width:95%;
+        border-radius: 25%;
+        background-color:#FFFFFF;
+        border: 2px solid #000000;
+        padding: 30px 30px;
+        margin:5px 5px 5px 5px;
+    }
+    .index-button:hover
+    {
+        width:95%;
+        border-radius: 25%;
+        background-color:#d4d0d0;
+        border: 2px solid #b6a9a9;
+        padding: 30px 30px;
+        margin:5px 5px 5px 5px;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/dashboard.css' %}">
+<body style="background-color: #efefef;">
+    <div id="content" style="margin-left: 20px; margin-right: 20px;">
+        <legend style="margin-top: 20px;">
+            <i class="fas fa-chart-bar"></i> {% trans 'Cuadros de mando' %}
+        </legend>
+        <hr/>
+        <table class="table-responsive">
+            <tr>
+            </tr>
+            <tr>
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:graphs_index' %}" title="{% trans 'Cuadro empresas' %}">
+                        {% fa5_icon 'chart-line' 'fas fa-3x' %}
+                    </a>
+                </td>
+                <td height="75" width="140">
+                <a class="btn btn-block btn-default index-button" href="{% url 'fevama:anualdata_graphs' %}" title="{% trans 'Cuadro proyectos' %}">
+                    {% fa5_icon 'chart-bar' 'fas fa-3x' %}
+                </a>
+                </td>   
+                <td height="75" width="140">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:anualdata_graphs' %}" title="{% trans 'Cuadro lineas de ayuda' %}">
+                        {% fa5_icon 'chart-pie' 'fas fa-3x' %}
+                    </a> 
+                </td>         
+            </tr>
+                <td align="center">{% trans "Empresas" %}</td>
+                <td align="center">{% trans "Proyectos" %}</td>
+                <td align="center">{% trans "Lineas de ayuda" %}</td>
+            <tr>
+        </table>
+    </div>
+</body>
+{% endblock %}

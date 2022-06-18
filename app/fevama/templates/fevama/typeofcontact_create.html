@@ -50,54 +50,52 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Ya existe este tipo de contacto' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'No puedes dejar el tipo vacio' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Registro creado correctamente' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
     </div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Ya existe este tipo de contacto' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'No puedes dejar el tipo vacio' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Registro creado correctamente' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-
-</div>
 </body>
 <script>
     function createAutoClosingAlert(selector, delay)

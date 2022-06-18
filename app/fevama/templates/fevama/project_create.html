@@ -62,54 +62,52 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Ya existe un proyecto con estos datos' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Debes rellenar los campos' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                        <p>
+                            {% trans 'Proyecto creado correctamente' %}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="help-block"></div>
+                </div>
+            </div>
     </div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="exists"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Ya existe un proyecto con estos datos' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="valueKO"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Debes rellenar los campos' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-		<div class="col-md-6">
-			<div id="created"  class="alert alert-success success" data-alert="alert" style="width:95%; display: none; text-align: center;">
-				<p>
-					{% trans 'Proyecto creado correctamente' %}
-				</p>
-			</div>
-        </div>
-		<div class="col-md-2">
-            <div class="help-block"></div>
-        </div>
-	</div>
-
-</div>
 </body>
 <script>
     function createAutoClosingAlert(selector, delay)
@@ -156,7 +154,6 @@
                             createAutoClosingAlert('#created', 5000);
                             document.getElementById("empresa").value = "";
                             document.getElementById("project_name").value = "";
-                            location.reload(true);
                         }
                         if(data['code'] == 404){
                             document.getElementById("btn-create").className = "btn btn-outline-success";
