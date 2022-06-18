@@ -134,6 +134,7 @@
         <div class="col-md-2" style="text-align: center; margin-top: 5px;">
             <label>{% trans 'Situación: ' %} </label>
             <select id="situation" class="text-center" name="situation" style="text-align: center;">
+                <option value="ALL">{% trans 'TODAS' %}</option>
                 {% for s in situation_list %}
                 <option value="{{ s.id }}">{{ s.situation }}</option>
                 {% endfor %}
@@ -168,7 +169,7 @@
             <div class="help-block"></div>
         </div>
     </div>
-    <div id="first" class="centrado">
+    <div id="first" class="centrado" style="display: none;">
         <hr/>
     </div>
     <figure class="highcharts-figure">
@@ -177,12 +178,32 @@
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-4"></div>
         <div id="btn-csv1" class="col-md-2" style="text-align: center;display: none;" >
-            <a class="btn btn-outline-secondary" onclick="getCSV()">
+            <a class="btn btn-outline-secondary" onclick="getCSV1()">
                 {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
             </a>
         </div>
         <div id="btn-png1" class="col-md-2" style="text-align: center; display: none;">
-            <a class="btn btn-outline-secondary" onclick="getPNG()">
+            <a class="btn btn-outline-secondary" onclick="getPNG1()">
+                {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
+            </a>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div id="second" class="centrado" style="display: none;">
+        <hr/>
+    </div>
+    <figure class="highcharts-figure">
+        <div id="container2" style="display: none;"></div>
+    </figure>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-4"></div>
+        <div id="btn-csv2" class="col-md-2" style="text-align: center;display: none;" >
+            <a class="btn btn-outline-secondary" onclick="getCSV2()">
+                {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
+            </a>
+        </div>
+        <div id="btn-png2" class="col-md-2" style="text-align: center; display: none;">
+            <a class="btn btn-outline-secondary" onclick="getPNG2()">
                 {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
             </a>
         </div>
@@ -191,6 +212,26 @@
 </body>
 
 <script>
+function getCSV1(){
+    var chart = $('#container1').highcharts();
+    chart.downloadCSV();
+}
+
+function getCSV2(){
+    var chart = $('#container2').highcharts();
+    chart.downloadCSV();
+}
+
+function getPNG1(){
+    var chart = $('#container1').highcharts();
+    chart.exportChart();
+}
+
+function getPNG2(){
+    var chart = $('#container2').highcharts();
+    chart.exportChart();
+}
+
 function loadData(){
 
 document.getElementById("btn-load").className = "btn btn-warning btn btn-block btnBootstrapping";
@@ -230,6 +271,30 @@ if (situation == "" | fromDate == "" | endDate ==""){
         plotOptions: { series: { dataGrouping: { enabled: false } } }
     };
 
+    var AssistanceCompare = {
+        chart: { renderTo: 'container2', type: 'column' },
+        legend: {enabled: true},
+        title: {text: '{% trans "Importe de ayudas por convocatoria (€)" %}'},
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [],
+            crosshair: true 
+        },
+        yAxis: { 
+            min: 0,
+            title: {
+                text: 'Suma importe (€)'
+            } 
+        },
+        rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+        scrollbar: { enabled: false },
+        series: [{},{}],
+        colors: ['rgb(133, 172, 172)', 'rgb(41 48 48)'],
+        plotOptions: { series: { dataGrouping: { enabled: false } } }
+    };
+
     var request = $.ajax({
         type: "GET",
         url: "{% url "fevama:anualdata_getdatagraph" %}",
@@ -240,24 +305,41 @@ if (situation == "" | fromDate == "" | endDate ==""){
         },
         async: true
     }).done(function(data){
-        console.log(data)
-        console.log("ESTOY AQUÍ")
         if(data['code'] == 404){
             console.log("ERROR")
             createAutoClosingAlert('#error', 5000);
         }
         else{
-            console.log("DATOS CORRECTOS")
 
-            // Mostramos los divs y botones
+            // Mostramos los separadores
+            document.getElementById("first").style.display = "block";
+            document.getElementById("second").style.display = "block";
+
+            // Mostramos los divs y botones del primer gráfico
             document.getElementById("container1").style.display = "block";
             document.getElementById("btn-png1").style.display = "block";
             document.getElementById("btn-csv1").style.display = "block";
 
-            // Cargar datos en la gráfica
+            // Mostramos los divs y botones del segundo gráfico
+            document.getElementById("container2").style.display = "block";
+            document.getElementById("btn-png2").style.display = "block";
+            document.getElementById("btn-csv2").style.display = "block";
+
+            // Cargar datos en la gráfica 1
             anualData.series[0].name = '{% trans "Número de proyectos" %}';
             anualData.series[0].data = data['chart_data'][1]['count_projects'];
             var chart = new Highcharts.Chart(anualData);
+            chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+
+            // Cargar datos en la gráfica 2
+            AssistanceCompare.series[0].name = '{% trans "Ayudas solicitadas" %}' + " (€)";;
+            AssistanceCompare.series[0].data = data['chart_data'][2]['count_assistances_sol'];
+            var chart = new Highcharts.Chart(AssistanceCompare);
+            chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+
+            AssistanceCompare.series[1].name = '{% trans "Ayudas obtenidas" %}' + " (€)";;
+            AssistanceCompare.series[1].data = data['chart_data'][3]['count_assistances_done'];
+            var chart = new Highcharts.Chart(AssistanceCompare);
             chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
 
             // Volvemos a poner bien el botón
@@ -271,9 +353,6 @@ if (situation == "" | fromDate == "" | endDate ==""){
         console.log( "Request failed: " + textStatus );
     });
 }
-
-
-
 }
 function createAutoClosingAlert(selector, delay)
     {

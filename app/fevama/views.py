@@ -519,15 +519,22 @@ def anualdata_getdatagraph(request):
         count_a_sol = 0
         count_a_done = 0
         year.append(an.year)
-        assistance_list = Assistance.objects.filter(situation_id=situation, announcement=an).all()
+        assistance_list = Assistance.objects.filter(announcement=an).all()
         for a in assistance_list:
             if str(a.applied) != "0":
-                count_a_sol += 1
-                count_a_done += 1
+                count_a_sol += int(a.requested)
+                count_a_done += int(a.applied)
             else:
-                count_a_sol += 1
+                count_a_sol += int(a.requested)
         projects = Project.objects.filter(announcement=an).all()
-        count_p = len(projects)
+        if situation != "ALL":
+            for p in projects:
+                assistance = Assistance.objects.filter(project_id=p.id).first()
+                if assistance:
+                    if str(assistance.situation.id) == str(situation):
+                        count_p +=1
+        else:
+            count_p = len(projects)
 
         count_projects.append(count_p)
         count_assistances_sol.append(count_a_sol)
