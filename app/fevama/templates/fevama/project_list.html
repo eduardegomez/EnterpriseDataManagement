@@ -98,6 +98,7 @@
                 <td><b>ID</b></td>
                 <td><b>NOMBRE PROYECTO</b></td>
                 <td><b>EMPRESA</b></td>
+                <td><b>CONVOCATORIA</b></td>
                 <td><b>ACCIONES</b></td>
             </tr>
         </thead>
@@ -108,6 +109,7 @@
                     <td>{{pro.id}}</td>
                     <td>{{pro.project_name}}</td>
                     <td>{{pro.empresa.name}}</td>
+                    <td>{{pro.announcement.year}}</td>
                     <td>
                         <a class="btn btn-primary btn-sm" href="{% url 'fevama:project_modify' pro.id %}"> EDITAR </a>
                         <a id="btn-delete" class="btn btn-danger btn-sm" onclick="deleteItem({{pro.id}})"> ELIMINAR </a>

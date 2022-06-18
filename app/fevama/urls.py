@@ -58,6 +58,8 @@ urlpatterns = [
     path('empresa_compare/', views.empresa_compare, name="empresa_compare"),
 
     path('anualdata_graphs/', views.anualdata_graphs, name="anualdata_graphs"),
+    path('anualdata_getdatagraph/', views.anualdata_getdatagraph, name="anualdata_getdatagraph"),
+    
 
     # -------- SUBVENCIONES -------- #
     path('ayudas_index/', views.ayudas_index, name="ayudas_index"),

@@ -465,26 +465,77 @@ def anualdata_graphs(request):
     situation_justificada = Situation.objects.filter(situation="JUSTIFICADA").first()
     situation_renunciada = Situation.objects.filter(situation="RENUNCIADA").first()
     situation_denegada = Situation.objects.filter(situation="DENEGADA").first()
+    situation_list = Situation.objects.all()
+    currentDateTime = datetime.datetime.now()
+    date = currentDateTime.date()
+    year = date.strftime("%Y")
+    last_year = int(year) - 1
+    last_year = str(last_year)
+    last_year = Announcement.objects.filter(year=last_year).first()
+
+    # TOTAL
     assistance_ok = Assistance.objects.filter(Q(situation=situation_aprobada)| Q(situation=situation_justificada)| Q(situation=situation_renunciada)).all()
     assistance_ko = Assistance.objects.filter(Q(situation=situation_aprobada)| Q(situation=situation_justificada)| Q(situation=situation_renunciada) | Q(situation=situation_denegada)).all()
     projects_list = Project.objects.all()
     project_num = len(projects_list)
-    cont_ok = 0
-    cont_total = 0
-
-    for p in projects_list:
-        if p.assistance in assistance_ok:
-            cont_ok += 1
-    
-    for p in projects_list:
-        if p.assistance in assistance_ko:
-            cont_total += 1
-
+    cont_ok = len(assistance_ok)
+    cont_total = len(assistance_ko)
     total_ok = int((cont_ok/cont_total)*100)
+
+    # LAST YEAR
+    assistance_ok = Assistance.objects.filter((Q(situation=situation_aprobada) | Q(situation=situation_justificada) | Q(situation=situation_renunciada))).filter(announcement=last_year).all()
+    assistance_ko = Assistance.objects.filter((Q(situation=situation_aprobada) | Q(situation=situation_justificada) | Q(situation=situation_renunciada) | Q(situation=situation_denegada))).filter(announcement=last_year).all()
+    print(str(assistance_ok))
+    print(str(assistance_ko))
+    cont_ok = len(assistance_ok)
+    cont_total = len(assistance_ko)
+    total_ok_last = int((cont_ok/cont_total)*100)
+
     return render(request, 'fevama/anualdata_graphs.html', {
         'project_num': project_num,
         'total_ok': total_ok,
+        'total_ok_last': total_ok_last,
+        'situation_list': situation_list
     })
+
+def anualdata_getdatagraph(request):
+
+    data = dict()
+    final_data = {}
+    year = []
+    count_projects = []
+    count_assistances_sol = []
+    count_assistances_done = []
+    situation = request.GET["situation"]
+    fromDate = request.GET["fromDate"]
+    endDate = request.GET["endDate"]
+    fromDate = fromDate.split("-")
+    fromDate = fromDate[0]
+    endDate = endDate.split("-")
+    endDate = endDate[0]
+    announcement_list = Announcement.objects.filter(year__range=[fromDate,endDate]).order_by('year')
+    for an in announcement_list:
+        count_p = 0
+        count_a_sol = 0
+        count_a_done = 0
+        year.append(an.year)
+        assistance_list = Assistance.objects.filter(situation_id=situation, announcement=an).all()
+        for a in assistance_list:
+            if str(a.applied) != "0":
+                count_a_sol += 1
+                count_a_done += 1
+            else:
+                count_a_sol += 1
+        projects = Project.objects.filter(announcement=an).all()
+        count_p = len(projects)
+
+        count_projects.append(count_p)
+        count_assistances_sol.append(count_a_sol)
+        count_assistances_done.append(count_a_done)
+
+    final_data['chart_data'] = [{'year': year}, {'count_projects': count_projects}, {'count_assistances_sol': count_assistances_sol}, {'count_assistances_done': count_assistances_done}]
+    data = final_data
+    return HttpResponse(json.dumps(data), content_type='aplication/json')    
 
 # ----------- END GRAPHS----------------------------- #
 #### SUBVENCIONES ####
@@ -500,21 +551,25 @@ def project_index(request):
 
 def project_create(request):
     empresas_list = Empresa.objects.all()
+    announcement_list = Announcement.objects.order_by('year')
     return render(request, 'fevama/project_create.html', {
         'empresas_list': empresas_list,
+        'announcement_list': announcement_list
     })
 
 def project_createItem(request):
     project_name = request.GET['project_name']
     empresa = request.GET['empresa']
+    announcement = request.GET['announcement']
     
-    check = Project.objects.filter(project_name=project_name, empresa_id=empresa).first()
+    check = Project.objects.filter(project_name=project_name, empresa_id=empresa, announcement_id=announcement).first()
     if check:
         response = { 'code': 404 }
         return JsonResponse(response)
     else:
         empresa = Empresa.objects.filter(id=empresa).first()
-        Project.objects.create_project(empresa, project_name)
+        announcement = Announcement.objects.filter(id=announcement).first()
+        Project.objects.create_project(empresa, project_name, announcement)
     
     response = { 'code': 200}
     return JsonResponse(response)
@@ -532,27 +587,32 @@ def project_modify(request, id):
     project = Project.objects.filter(id=id).first()
     empresas_list = Empresa.objects.all()
     project_name = project.project_name
+    announcement_list = Announcement.objects.order_by('year')
     return render(request, 'fevama/project_modify.html', {
         'project': project,
         'empresas_list': empresas_list,
-        'project_name': project_name
+        'project_name': project_name,
+        'announcement_list': announcement_list
     })
 
 def project_modifyItem(request):
     id = request.GET['id']
     project_name = request.GET['project_name']
     empresa = request.GET['empresa']
+    announcement = request.GET['announcement']
     empresa = Empresa.objects.filter(id=empresa).first()
     projects = Project.objects.all()
     for p in projects:
-        if p.empresa == empresa and p.project_name == project_name:
+        if p.empresa == empresa and p.project_name == project_name and p.announcement.id == announcement:
             response = { 'code': 404 }
             return JsonResponse(response)
 
     check = Project.objects.filter(id=id).first()
     if check:
+        announcement = Announcement.objects.filter(id=announcement).first()
         check.project_name = project_name
         check.empresa = empresa
+        check.announcement = announcement
         check.save()
     
     response = { 'code': 200}
@@ -671,7 +731,7 @@ def assistance_create(request):
     organism_list = Organism.objects.all()
     situation_list = Situation.objects.all()
     applicant_list = Applicant.objects.all()
-    announcement_list = Announcement.objects.all()
+    announcement_list = Announcement.objects.order_by('year')
     project_list = Project.objects.filter(assistance_check="0").all()
     return render(request, 'fevama/assistance_create.html', {
         'line_list': line_list,
@@ -699,6 +759,10 @@ def assistance_createItem(request):
     management = request.GET['management']
     requested = request.GET['requested']
     applied = request.GET['applied']
+    if applied != "":
+        applied = applied
+    else:
+        applied = 0
     date = request.GET['date']
     payment = request.GET['payment']
     project_id = request.GET['project']
@@ -722,7 +786,7 @@ def assistance_modify(request, id):
     organism_list = Organism.objects.all()
     situation_list = Situation.objects.all()
     applicant_list = Applicant.objects.all()
-    announcement_list = Announcement.objects.all()
+    announcement_list = Announcement.objects.order_by('year')
     return render(request, 'fevama/assistance_modify.html', {
         'assistance': assistance,
         'line_list': line_list,
@@ -750,9 +814,13 @@ def assistance_modifyItem(request):
     management = request.GET['management']
     requested = request.GET['requested']
     applied = request.GET['applied']
+    if applied != "":
+        applied = applied
+    else:
+        applied = 0
     date = request.GET['date']
     payment = request.GET['payment']
-    check = Assistance.objects.filter(line=line, act=act, organism=organism, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment).first()
+    check = Assistance.objects.filter(line=line, act=act, organism=organism, situation=situation, applicant=applicant, management=management, requested=requested, applied=applied, date=date, payment=payment, announcement=announcement).first()
     if check:
         response = { 'code': 404 }
         return JsonResponse(response)
@@ -769,6 +837,7 @@ def assistance_modifyItem(request):
         check.applied = applied
         check.date = date
         check.payment = payment
+        check.announcement = announcement
         check.save()
 
     response = { 'code': 200}

@@ -156,14 +156,15 @@ class Applicant(models.Model):
 # ---------- START PROJECT ----------------- # 
 # Porject Manager
 class ProjectManager(models.Manager):
-    def create_project(self, empresa, project_name):
-        project = self.create(empresa=empresa, project_name=project_name)
+    def create_project(self, empresa, project_name, announcement):
+        project = self.create(empresa=empresa, project_name=project_name, announcement=announcement)
         return project
 
 # Project Model
 class Project(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
     project_name = models.CharField(max_length=200, default="None")
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, default=0)
     invoice_check = models.CharField(max_length=200, default=0)
     assistance_check = models.CharField(max_length=200, default=0)
 

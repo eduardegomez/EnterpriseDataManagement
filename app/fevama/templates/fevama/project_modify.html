@@ -56,6 +56,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <td style="text-align:center; vertical-align: middle;">
+                                <label> {% trans 'Convocatoria:'%}</label>
+                        </td>
+                        <td style="text-align:center; vertical-align: middle;">
+                            <select id="announcement" class="form-control text-center" name="announcement" style="text-align: center;">
+                                {% for a in announcement_list %}
+                                <option value="{{ a.id }}" {% if a.id == project.announcement.id %} selected {% endif %}>{{ a.year }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td style="text-align:center; vertical-align: middle;" colspan="2">
                                 <a id="btn-modify" class="btn btn-outline-success" onclick="modify()"> {% fa5_icon 'arrow-rotate-right' 'fas' %} {% trans 'MODIFICAR' %}</a>
                         </td>
@@ -135,6 +147,7 @@
             document.getElementById("btn-modify").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'MODIFICANDO' %}";
             var project_name = document.getElementById("project_name").value;
             var empresa = document.getElementById("empresa").value;
+            var announcement = document.getElementById("announcement").value;
             var id = {{ project.id}}
             if (empresa == "" || project_name == ""){
                 document.getElementById("btn-modify").className = "btn btn-outline-success";
@@ -147,6 +160,7 @@
                         'id': id,
                         'project_name': project_name,
                         'empresa': empresa,
+                        'announcement': announcement
                     },
                     dataType: 'json',
                     success: function (data) {

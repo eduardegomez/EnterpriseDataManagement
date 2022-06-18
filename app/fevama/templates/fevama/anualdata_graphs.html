@@ -105,7 +105,7 @@
             <thead style="background-color: rgb(133, 172, 172);">
                 <tr>
                     <td style="text-align:center; vertical-align: middle;" colspan="2">
-                        <label><b>{% trans '% DE ÉXITO EN LA GESTIÓN DE PROYECTOS'%}</b></label>
+                        <label><b>{% trans 'ÉXITO EN LA GESTIÓN DE PROYECTOS'%}</b></label>
                     </td>
                 </tr>
             </thead>
@@ -123,7 +123,7 @@
                         <p>{{total_ok}}%</p>
                     </td>
                     <td style="text-align:center; vertical-align: middle; align-items: center;" align="center">
-                        <p>73%</p>
+                        <p>{{total_ok_last}}%</p>
                     </td>
                 </tr>
             </tbody>
@@ -131,35 +131,150 @@
     </div>
     <div class="col-md-12" style="display: flex;">
         <div class="col-md-2"></div>
-        <div class="col-md-2" style="text-align: center;">
+        <div class="col-md-2" style="text-align: center; margin-top: 5px;">
             <label>{% trans 'Situación: ' %} </label>
-            <select id="management" class="text-center" name="management" style="text-align: center;">
-                <option value="FEVAMA">{% trans 'Aprobado' %}</option>
-                <option value="ELLOS">{% trans 'Renunciado' %}</option>
-                <option value="A MEDIAS">{% trans 'Justificado' %}</option>
+            <select id="situation" class="text-center" name="situation" style="text-align: center;">
+                {% for s in situation_list %}
+                <option value="{{ s.id }}">{{ s.situation }}</option>
+                {% endfor %}
             </select>
         </div>
-        <div class="col-md-2" style="text-align: center;">
+        <div class="col-md-2" style="text-align: center; margin-top: 5px;">
             <label for="fromDate">{% trans 'Desde: ' %} </label>
-            <input id="fromDate" class="datepicker" >
+            <input id="fromDate" type="date" >
+        </div>
+        <div class="col-md-2" style="text-align: center; margin-top: 5px;">
+            <label for="endDate">{% trans 'Hasta: ' %} </label>
+            <input id="endDate" type="date" >
         </div>
         <div class="col-md-2" style="text-align: center;">
-            <label for="fromDate">{% trans 'Hasta: ' %} </label>
-            <input id="fromDate" class="datepicker" >
-        </div>
-        <div class="col-md-2" style="text-align: center;">
-            <button id="btn-refresh" onclick="" class="btn btn-primary btn-block">
+            <button id="btn-load" onclick="loadData()" class="btn btn-outline-success">
                 {% trans 'Cargar gráficas' %}
             </button>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+        <div class="col-md-2">
+            <div class="help-block"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="error"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                <p>
+                    {% trans 'Debes introducir correctamente los filtros' %}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="help-block"></div>
         </div>
     </div>
     <div id="first" class="centrado">
         <hr/>
     </div>
+    <figure class="highcharts-figure">
+        <div id="container1" style="display: none;"></div>
+    </figure>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-4"></div>
+        <div id="btn-csv1" class="col-md-2" style="text-align: center;display: none;" >
+            <a class="btn btn-outline-secondary" onclick="getCSV()">
+                {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
+            </a>
+        </div>
+        <div id="btn-png1" class="col-md-2" style="text-align: center; display: none;">
+            <a class="btn btn-outline-secondary" onclick="getPNG()">
+                {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
+            </a>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
 </body>
 
 <script>
+function loadData(){
 
+document.getElementById("btn-load").className = "btn btn-warning btn btn-block btnBootstrapping";
+document.getElementById("btn-load").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'Cargando gráficas' %}";
+
+situation = document.getElementById("situation").value;
+fromDate = document.getElementById("fromDate").value;
+endDate = document.getElementById("endDate").value;
+
+if (situation == "" | fromDate == "" | endDate ==""){
+    document.getElementById("btn-load").className = "btn btn-outline-success";
+    document.getElementById("btn-load").innerHTML="{% trans 'Cargar gráficas' %}";
+    createAutoClosingAlert('#error', 5000);
+} else {
+
+    var anualData = {
+        chart: { renderTo: 'container1', type: 'column' },
+        legend: {enabled: true},
+        title: {text: '{% trans "Número de proyectos por convocatoria" %}'},
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            categories: [],
+            crosshair: true 
+        },
+        yAxis: { 
+            min: 0,
+            title: {
+                text: 'Número de proyectos'
+            } 
+        },
+        rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+        scrollbar: { enabled: false },
+        series: [{}],
+        colors: ['rgb(133, 172, 172)'],
+        plotOptions: { series: { dataGrouping: { enabled: false } } }
+    };
+
+    var request = $.ajax({
+        type: "GET",
+        url: "{% url "fevama:anualdata_getdatagraph" %}",
+        data: {
+            'situation': situation,
+            'fromDate': fromDate,
+            'endDate': endDate
+        },
+        async: true
+    }).done(function(data){
+        console.log(data)
+        console.log("ESTOY AQUÍ")
+        if(data['code'] == 404){
+            console.log("ERROR")
+            createAutoClosingAlert('#error', 5000);
+        }
+        else{
+            console.log("DATOS CORRECTOS")
+
+            // Mostramos los divs y botones
+            document.getElementById("container1").style.display = "block";
+            document.getElementById("btn-png1").style.display = "block";
+            document.getElementById("btn-csv1").style.display = "block";
+
+            // Cargar datos en la gráfica
+            anualData.series[0].name = '{% trans "Número de proyectos" %}';
+            anualData.series[0].data = data['chart_data'][1]['count_projects'];
+            var chart = new Highcharts.Chart(anualData);
+            chart.xAxis[0].setCategories(data['chart_data'][0]['year'], true);
+
+            // Volvemos a poner bien el botón
+            document.getElementById("btn-load").className = "btn btn-outline-success";
+            document.getElementById("btn-load").innerHTML="{% trans 'Cargar gráficas' %}";
+
+        }
+
+
+    }).fail(function(jqXHR, textStatus) {
+        console.log( "Request failed: " + textStatus );
+    });
+}
+
+
+
+}
 function createAutoClosingAlert(selector, delay)
     {
         if(delay == 0)
