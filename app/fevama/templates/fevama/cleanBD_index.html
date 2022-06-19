@@ -1,0 +1,152 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+.search-box{
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+.input-search{
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all .5s ease-in-out;
+  background-color:  #d7dadd;
+  padding-right: 40px;
+  color:rgb(12, 12, 12);
+}
+.input-search::placeholder{
+  color:rgb(7, 7, 7);
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+.btn-search{
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color:#070707 ;
+  background-color:transparent;
+  pointer-events: painted;  
+}
+.btn-search:focus ~ .input-search{
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid rgba(0, 0, 0, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+.input-search:focus{
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom:1px solid rgba(88, 87, 87, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+</style>
+<body style="background-color: #efefef;">
+<div class="centrado">
+    <legend style="margin-top: 20px; text-align: center;">
+        <i class="fas fa-eraser"></i> {% trans 'Limpieza base de datos' %}
+    </legend>
+    <hr/>
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1" style="margin-top: 5px;">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:bd_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="centrado" style="margin-top: 40px;width: 50%;margin: 0 auto;">
+    <table class="table table-hover table-condensed" style="background-color: #d7dadd; border-radius: 15px; table-layout: fixed;">
+        <thead style="background-color: rgb(133, 172, 172);">
+            <tr>
+                <td style="text-align:center; vertical-align: middle;">
+                    <label><b>{% trans 'Selecciona los datos a eliminar'%}</b></label>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align:center; vertical-align: middle; align-items: center;" align="center">
+                    <select id="delete_option" class="form-control text-center" name="delete_option">
+                        <option value="ALL">{% trans 'TODO' %}</option>
+                        <option value="projects">{% trans 'PROYECTOS' %}</option>
+                        <option value="assistance">{% trans 'AYUDAS' %}</option>
+                        <option value="invoice">{% trans 'FACTURAS' %}</option>
+                        <option value="empresas">{% trans 'EMPRESAS' %}</option>
+                        <option value="contacts">{% trans 'CONTACTOS' %}</option>
+                        <option value="economicdata">{% trans 'DATOS ECONÓMICOS' %}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center; vertical-align: middle;">
+                    <a id="btn-clear" class="btn btn-outline-success" onclick="cleanData()">{% trans 'Eliminar datos' %}</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+
+function cleanData()
+    {
+        document.getElementById("btn-clear").className = "btn btn-warning btn btn-block btnBootstrapping";
+        document.getElementById("btn-clear").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'Eliminando datos' %}";
+        var option = document.getElementById("delete_option").value;
+        $.ajax({
+            url: '{% url "fevama:cleanData" %}',
+            data: {
+                'option': option
+            },
+            success: function (data) {
+                console.log('Submission was successful.');
+                console.log(data);
+
+                // Volvemos a poner bien el botón
+                document.getElementById("btn-clear").className = "btn btn-outline-success";
+                document.getElementById("btn-clear").innerHTML="{% trans 'Eliminar datos' %}";
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+
+    }
+</script>
+{% endblock %}

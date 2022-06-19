@@ -1,6 +1,7 @@
 from ast import Or
 import datetime
 import mimetypes
+from optparse import Option
 from sre_constants import SUCCESS
 from typing import final
 from unicodedata import name
@@ -1473,6 +1474,41 @@ def modify_bdconfig(request):
 
     ConfigParameters.objects.update_config_parameter('NextBackupTimePeriod', postContent['NextBackupTimePeriod'])
     ConfigParameters.objects.update_config_parameter('NextBackupTime', timestamp)
+
+    response = {'code': 200}
+    return JsonResponse(response)
+
+def cleanBD_index(request):
+    return render(request, 'fevama/cleanBD_index.html')
+
+def cleanData(request):
+    """
+    cleanData
+    :param request:
+    """
+
+    postContent = request.GET
+    option = postContent['option']
+
+    if option == "ALL":
+        Project.objects.all().delete()
+        Assistance.objects.all().delete()
+        Invoice.objects.all().delete()
+        Empresa.objects.all().delete()
+        Contact.objects.all().delete()
+        EconomicData.objects.all().delete()
+    elif option == "projects":
+        Project.objects.all().delete()
+    elif option == "assistance": 
+        Assistance.objects.all().delete()
+    elif option == "invoice":
+        Invoice.objects.all().delete()
+    elif option == "empresas":
+        Empresa.objects.all().delete()
+    elif option == "contacts": 
+        Contact.objects.all().delete()
+    elif option == "economicdata":
+        EconomicData.objects.all().delete()
 
     response = {'code': 200}
     return JsonResponse(response)

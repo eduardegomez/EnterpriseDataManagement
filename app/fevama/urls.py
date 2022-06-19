@@ -159,6 +159,8 @@ urlpatterns = [
     path('last_economicData/', views.last_economicData, name="last_economicData"),
     path('last_contacts/', views.last_contacts, name="last_contacts"),
     
+    path('cleanBD_index/', views.cleanBD_index, name="cleanBD_index"),
+    path('cleanData/', views.cleanData, name="cleanData"),
 
     # -------- PARAMETROS -------- #
     path('parametros_index/', views.parametros_index, name="parametros_index"),
