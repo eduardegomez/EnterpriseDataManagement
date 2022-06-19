@@ -150,6 +150,12 @@ urlpatterns = [
     path('alerts_index/', views.alerts_index, name="alerts_index"),
     path('alert_deleteItem/', views.alert_deleteItem, name="alert_deleteItem"),
 
+    path('notifications_index/', views.notifications_index, name="notifications_index"),
+    path('notification_create/', views.notification_create, name="notification_create"),
+    path('notification_deleteItem/', views.notification_deleteItem, name="notification_deleteItem"),
+    
+    
+
     # -------- BASE DE DATOS -------- #
     path('bd_index/', views.bd_index, name="bd_index"),
     path('BDconfiguration_index/', views.BDconfiguration_index, name="BDconfiguration_index"),

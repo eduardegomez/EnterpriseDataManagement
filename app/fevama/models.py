@@ -1,4 +1,5 @@
 from datetime import date
+import email
 from django.db import models
 
 # Create your models here.
@@ -186,7 +187,22 @@ class Alert(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
 
     objects = AlertManager()
-# ---------- END PROJECT ----------------- # 
+# ---------- END ALERT ----------------- # 
+
+# ---------- START NOTIFICATION ----------------- # 
+# Notification Manager
+class NotificationManager(models.Manager):
+    def create_notification(self, email, type):
+        notification = self.create(type=type, email=email)
+        return notification
+
+# Notification Model
+class Notification(models.Model):
+    email = models.CharField(max_length=200, default=0)
+    type = models.CharField(max_length=200, default=0)
+
+    objects = NotificationManager()
+# ---------- END NOTIFICATION ----------------- # 
 
 # ---------- START ASSISTANCE ----------------- # 
 # Assistance Manager

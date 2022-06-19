@@ -1281,6 +1281,34 @@ def alert_deleteItem(request):
     response = { 'code': 200}
     return JsonResponse(response)
 
+def notifications_index(request):
+    object_list = Notification.objects.all()
+    return render(request, 'fevama/notifications_index.html', {
+        'object_list': object_list
+    })
+
+def notification_deleteItem(request):
+    id = request.GET['data']
+    check = Notification.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def notification_create(request):
+    email = request.GET['email']
+    type = request.GET['type']
+    check = Notification.objects.filter(email=email, type=type).first()
+    if check:
+        response = { 'code': 400}
+        return JsonResponse(response)
+    else:
+        Notification.objects.create_notification(email, type)
+    response = { 'code': 200}
+    return JsonResponse(response)
+  
+
 #### BASE DE DATOS ####
 def bd_index(request):
     return render(request, 'fevama/bd_index.html')
