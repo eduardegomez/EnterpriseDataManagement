@@ -545,6 +545,58 @@ def anualdata_getdatagraph(request):
     return HttpResponse(json.dumps(data), content_type='aplication/json')    
 
 # ----------- END GRAPHS----------------------------- #
+
+# ----------- LINE DATA GRAPHS ------------------------ #
+def line_graphs(request):
+    situation_list = Situation.objects.all()
+    return render(request, 'fevama/line_graphs.html', {
+        'situation_list' : situation_list
+    })
+
+def line_getdatagraph(request):
+
+    data = dict()
+    final_data = {}
+    line = []
+    count_projects = []
+    count_assistances_applied = []
+    situation = request.GET["situation"]
+    lines = Line.objects.all()
+    assistance = Assistance.objects.all()
+    assistance_list = Assistance.objects.all()
+    total = len(assistance)
+    for l in lines:
+        count_p = 0
+        count_assistance = 0
+        line.append(l.line)
+        projects = Project.objects.all()
+
+        for a in assistance_list:
+            if a.line == l:
+                count_assistance += int(a.applied)
+
+        for p in projects:
+            assistance = Assistance.objects.filter(project_id=p.id).first()
+            if assistance:
+                if situation != "ALL":
+                    if str(assistance.situation.id) == str(situation):
+                        if str(assistance.line.id) == str(l.id):
+                            count_p += 1
+                else:
+                    if str(assistance.line.id) == str(l.id):
+                            count_p += 1
+
+        count_p = (count_p/total) * 100
+        count_projects.append(count_p)
+        count_assistances_applied.append(count_assistance)
+
+    final_data['chart_data'] = [{'line': line}, {'count_projects': count_projects}, {'count_assistances_applied': count_assistances_applied}]
+    data = final_data
+    return HttpResponse(json.dumps(data), content_type='aplication/json')    
+
+# ----------- END GRAPHS----------------------------- #
+
+
 #### SUBVENCIONES ####
 def ayudas_index(request):
     return render(request, 'fevama/ayudas_index.html')

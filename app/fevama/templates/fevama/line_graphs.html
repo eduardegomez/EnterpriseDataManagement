@@ -1,0 +1,364 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load fontawesome_5 %}
+{% fontawesome_5_static %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<style>
+.centrado {
+  margin: 1rem;
+  padding: 1rem;
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.highcharts-figure,
+.highcharts-data-table table {
+    min-width: 360px;
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+}
+
+.highcharts-data-table td,
+.highcharts-data-table th,
+.highcharts-data-table caption {
+    padding: 0.5em;
+}
+
+.highcharts-data-table thead tr,
+.highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+</style>
+<body style="background-color: #efefef;">
+    <div class="centrado">
+        <legend style="margin-top: 20px; text-align: center;">
+            <i class="fas fa-chart-pie"></i> {% trans 'Lineas de ayuda' %}
+        </legend>
+        <hr/>
+    </div> 
+    <div class="col-md-12" style="display: flex;">
+        <div class="col-md-1"></div>
+        <div class="col-md-1" style="margin-top: 5px;">
+            <a id="btn-back" class="btn btn-outline-secondary" href="{% url 'fevama:management_index' %}">
+                {% fa5_icon 'long-arrow-alt-left' 'fas' %} {% trans 'Volver' %}
+            </a>
+        </div>
+    </div>
+    <div class="centrado" style="margin-top: 40px;width: 50%;margin: 0 auto;">
+        <table class="table table-hover table-condensed" style="background-color: #d7dadd; border-radius: 15px; table-layout: fixed;">
+            <thead style="background-color: rgb(133, 172, 172);">
+                <tr>
+                    <td style="text-align:center; vertical-align: middle;">
+                        <label><b>{% trans 'Selecciona una situation'%}</b></label>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align:center; vertical-align: middle; align-items: center;" align="center">
+                        <select id="situation" class="form-control text-center" name="situation">
+                            <option value="ALL">{% trans 'TODAS' %}</option>
+                            {% for e in situation_list %}
+                            <option value="{{ e.id }}">{{ e.situation }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center; vertical-align: middle;">
+                        <a id="btn-load" class="btn btn-outline-success" onclick="loadData()">{% trans 'Cargar gráficas' %}</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center col-md-12" style="margin-top: 10px;display: table-cell;">
+            <div class="col-md-2">
+                <div class="help-block"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="error"  class="alert alert-danger danger" data-alert="alert" style="width:95%; display: none; text-align: center;">
+                    <p>
+                        {% trans 'Debes introducir correctamente los filtros' %}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="help-block"></div>
+            </div>
+    </div>
+        </div>
+        <div id="first" class="centrado" style="display: none;">
+            <hr/>
+        </div>
+        <figure class="highcharts-figure">
+            <div id="container1" style="display: none;"></div>
+        </figure>
+        <div class="col-md-12" style="display: flex;">
+            <div class="col-md-4"></div>
+            <div id="btn-csv1" class="col-md-2" style="text-align: center;display: none;" >
+                <a class="btn btn-outline-secondary" onclick="getCSV1()">
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
+                </a>
+            </div>
+            <div id="btn-png1" class="col-md-2" style="text-align: center; display: none;">
+                <a class="btn btn-outline-secondary" onclick="getPNG1()">
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
+                </a>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <div id="second" class="centrado" style="display: none;">
+            <hr/>
+        </div>
+        <figure class="highcharts-figure">
+            <div id="container2" style="display: none;"></div>
+        </figure>
+        <div class="col-md-12" style="display: flex;">
+            <div class="col-md-4"></div>
+            <div id="btn-csv2" class="col-md-2" style="text-align: center;display: none;" >
+                <a class="btn btn-outline-secondary" onclick="getCSV2()">
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Descargar CSV' %}
+                </a>
+            </div>
+            <div id="btn-png2" class="col-md-2" style="text-align: center; display: none;">
+                <a class="btn btn-outline-secondary" onclick="getPNG2()">
+                    {% fa5_icon 'download' 'fas' %} {% trans 'Descargar PNG' %}
+                </a>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+</body>
+
+<script>
+
+function getCSV1(){
+    var chart = $('#container1').highcharts();
+    chart.downloadCSV();
+}
+
+function getCSV2(){
+    var chart = $('#container2').highcharts();
+    chart.downloadCSV();
+}
+
+function getPNG1(){
+    var chart = $('#container1').highcharts();
+    chart.exportChart();
+}
+
+function getPNG2(){
+    var chart = $('#container2').highcharts();
+    chart.exportChart();
+}
+
+function loadData(){
+
+document.getElementById("btn-load").className = "btn btn-warning btn btn-block btnBootstrapping";
+document.getElementById("btn-load").innerHTML="<i class='fa fa-spinner fa-spin'></i>&nbsp;{% trans 'Cargando gráficas' %}";
+
+situation = document.getElementById("situation").value;
+
+if (situation == ""){
+    document.getElementById("btn-load").className = "btn btn-outline-success";
+    document.getElementById("btn-load").innerHTML="{% trans 'Cargar gráficas' %}";
+    createAutoClosingAlert('#error', 5000);
+} else {
+    var request = $.ajax({
+        type: "GET",
+        url: "{% url "fevama:line_getdatagraph" %}",
+        data: {
+            'situation': situation,
+        },
+        async: true
+    }).done(function(data){
+        console.log(data)
+        if(data['code'] == 404){
+            console.log("ERROR")
+            createAutoClosingAlert('#error', 5000);
+        }
+        else{
+            values_list = data['chart_data']
+            var projects_line = {
+                chart: { renderTo: 'container1', type: 'pie', plotBackgroundColor: null, plotBorderWidth: null, plotShadow: false, },
+                legend: {enabled: true},
+                title: {text: '{% trans "Porcentaje de proyectos por linea de ayuda" %}'},
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },  
+                rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+                scrollbar: { enabled: false },
+                series: [{
+                    type: 'pie',
+                    name: 'Porcentaje proyectos',
+                    innerSize: '50%',
+                    data: []
+                }],
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                }
+            };
+
+            var assistances = {
+                chart: { renderTo: 'container2', type: 'pie', plotBackgroundColor: null, plotBorderWidth: null, plotShadow: false, },
+                legend: {enabled: true},
+                title: {text: '{% trans "Importe de ayudas obtenidas por línea" %}'},
+                accessibility: {
+                    point: {
+                        valueSuffix: '€'
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y} €</b>'
+                }, 
+                rangeSelector: { buttons: [], enabled: false, inputEnabled: false },
+                scrollbar: { enabled: false },
+                series: [{
+                    type: 'pie',
+                    name: 'Valor ayudas obtenidas',
+                    innerSize: '50%',
+                    data: []
+                }],
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.y} €'
+                        }
+                    }
+                }
+            };
+
+            // Mostramos los separadores
+            document.getElementById("first").style.display = "block";
+            document.getElementById("second").style.display = "block";
+
+            // Mostramos los divs y botones del primer gráfico
+            document.getElementById("container1").style.display = "block";
+            document.getElementById("btn-png1").style.display = "block";
+            document.getElementById("btn-csv1").style.display = "block";
+
+            // Mostramos los divs y botones del segundo gráfico
+            document.getElementById("container2").style.display = "block";
+            document.getElementById("btn-png2").style.display = "block";
+            document.getElementById("btn-csv2").style.display = "block";
+
+            // Añadimos los datos al primer gráfico
+            for (var i = 0; i < values_list[0].line.length; i++){
+                projects_line.series[0].data.push({
+                    name: values_list[0].line[i],
+                    y: values_list[1].count_projects[i]
+                });
+            }
+            var chart = new Highcharts.Chart(projects_line);
+
+            // Añadimos los datos al segundo gráfico
+            for (var i = 0; i < values_list[0].line.length; i++){
+                assistances.series[0].data.push({
+                    name: values_list[0].line[i],
+                    y: values_list[2].count_assistances_applied[i]
+                });
+            }
+            var chart = new Highcharts.Chart(assistances);
+
+            // Volvemos a poner bien el botón
+            document.getElementById("btn-load").className = "btn btn-outline-success";
+            document.getElementById("btn-load").innerHTML="{% trans 'Cargar gráficas' %}";
+
+        }
+    }).fail(function(jqXHR, textStatus) {
+        console.log( "Request failed: " + textStatus );
+    });
+}
+}
+function createAutoClosingAlert(selector, delay)
+    {
+        if(delay == 0)
+        {
+            $(selector).show();
+        }
+        else if(delay == -1)
+        {
+            $(selector).hide();
+        }
+        else if(delay > 0)
+        {
+            $(selector).fadeIn("slow");
+            window.setTimeout(function() { $(selector).fadeOut("slow"); }, delay);
+        }
+    }
+
+</script>
+{% endblock %}
