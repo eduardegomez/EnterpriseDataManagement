@@ -54,13 +54,13 @@ def run():
         timestamp = int(datetime.now().timestamp())
 
         if (NextBackupTimePeriod_selected == "12"):
-            timestamp = timestamp + 31556926
-        elif (NextBackupTimePeriod_selected == "6"):
-            timestamp = timestamp + 6*2629743
-        elif (NextBackupTimePeriod_selected == "3"):
             timestamp = timestamp + 3*2629743
-        elif (NextBackupTimePeriod_selected == "1"):
+        elif (NextBackupTimePeriod_selected == "6"):
             timestamp = timestamp + 2629743
+        elif (NextBackupTimePeriod_selected == "3"):
+            timestamp = timestamp + 2*604800
+        elif (NextBackupTimePeriod_selected == "1"):
+            timestamp = timestamp + 604800
         
         ConfigParameters.objects.update_config_parameter('NextBackupTime', timestamp)
 

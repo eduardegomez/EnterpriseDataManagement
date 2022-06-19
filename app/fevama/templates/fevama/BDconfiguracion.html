@@ -114,10 +114,10 @@
             </div>
             <div class="col-md-8">
                 <select id="NextBackupTimePeriod" class="form-control text-center" name="NextBackupTime" style="text-align: center;">
-                    <option value="1" {% if NextBackupTimePeriod_selected == "1" %} selected {% endif %}>1 Mes</option>
-                    <option value="3" {% if NextBackupTimePeriod_selected == "3" %} selected {% endif %}>3 Meses</option>
-                    <option value="6" {% if NextBackupTimePeriod_selected == "6" %} selected {% endif %}>6 Meses</option>
-                    <option value="12"{% if NextBackupTimePeriod_selected == "12" %} selected {% endif %}>12 Meses</option>
+                    <option value="1" {% if NextBackupTimePeriod_selected == "1" %} selected {% endif %}>1 Semana</option>
+                    <option value="3" {% if NextBackupTimePeriod_selected == "3" %} selected {% endif %}>2 Semanas</option>
+                    <option value="6" {% if NextBackupTimePeriod_selected == "6" %} selected {% endif %}>1 Mes</option>
+                    <option value="12"{% if NextBackupTimePeriod_selected == "12" %} selected {% endif %}>3 Meses</option>
                 </select>
             </div>  
         </div>
@@ -210,8 +210,8 @@
             <div class="col-md-4" style="text-align: center;">
                 <form id="btn-import" method="post" enctype="multipart/form-data" action="{% url 'fevama:backup_upload' %}" >
                     {% csrf_token %}
-                    <input type="file" name="backupFile" id="backupFile" class="inputfile"/>
-                    <label for="backupFile" class="btn btn-outline-secondary" style="text-align: center;">{% fa5_icon 'upload' 'fas' %} {% trans 'Importar copia de seguridad' %}</label>
+                    <input type="file" name="backupFile_input" id="backupFile_input" class="inputfile"/>
+                    <label for="backupFile_input" class="btn btn-outline-secondary" style="text-align: center;">{% fa5_icon 'upload' 'fas' %} {% trans 'Importar copia de seguridad' %}</label>
                 </form>
             </div>
             <div class="col-md-4" style="text-align: center;">
@@ -226,7 +226,7 @@
 </body>
 <script>
 
-$("#backupFile").change(function()
+$("#backupFile_input").change(function()
 {
     document.getElementById("btn-import").submit();
 }); 

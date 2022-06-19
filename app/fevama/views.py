@@ -1429,8 +1429,11 @@ def execute_backup(request):
     return response
 
 def backup_upload(request):
-    if request.method == 'POST' and 'backupFile' in  request.FILES and request.FILES['backupFile']:
-        myFile = request.FILES['backupFile']
+    print("UPLOAD")
+    print(request)
+    if request.method == 'POST' and 'backup' in  request.FILES and request.FILES['backupFile_input']:
+        print("VOY A GUARDARLO")
+        myFile = request.FILES['backupFile_input']
         fs = FileSystemStorage()
         if fs.exists("backup.gz"):
             fs.delete("backup.gz")
@@ -1460,13 +1463,13 @@ def modify_bdconfig(request):
     timestamp = int(round(now.timestamp()))
 
     if (aux == "12"):
-        timestamp = timestamp + 31556926
-    elif (aux == "6"):
-        timestamp = timestamp + 6*2629743
-    elif (aux == "3"):
         timestamp = timestamp + 3*2629743
-    elif (aux == "1"):
+    elif (aux == "6"):
         timestamp = timestamp + 2629743
+    elif (aux == "3"):
+        timestamp = timestamp + 2*604800
+    elif (aux == "1"):
+        timestamp = timestamp + 604800
 
     ConfigParameters.objects.update_config_parameter('NextBackupTimePeriod', postContent['NextBackupTimePeriod'])
     ConfigParameters.objects.update_config_parameter('NextBackupTime', timestamp)
