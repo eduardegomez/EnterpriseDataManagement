@@ -147,6 +147,9 @@ urlpatterns = [
     # -------- NOTIFICACIONES -------- #
     path('notificaciones_index/', views.notificaciones_index, name="notificaciones_index"),
 
+    path('alerts_index/', views.alerts_index, name="alerts_index"),
+    path('alert_deleteItem/', views.alert_deleteItem, name="alert_deleteItem"),
+
     # -------- BASE DE DATOS -------- #
     path('bd_index/', views.bd_index, name="bd_index"),
     path('BDconfiguration_index/', views.BDconfiguration_index, name="BDconfiguration_index"),

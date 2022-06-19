@@ -14,6 +14,15 @@
         padding: 30px 30px;
         margin:5px 5px 5px 5px;
     }
+    .index-button:hover
+    {
+        width:95%;
+        border-radius: 25%;
+        background-color:#d4d0d0;
+        border: 2px solid #b6a9a9;
+        padding: 30px 30px;
+        margin:5px 5px 5px 5px;
+    }
 </style>
 <link rel="stylesheet" type="text/css" href="../../../../../static/admin/css/dashboard.css">
 <body style="background-color: #efefef;">
@@ -37,7 +46,7 @@
                     </a>
                 </td>    
                 <td height="75" width="140">
-                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Alertas' %}">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:alerts_index' %}" title="{% trans 'Alertas' %}">
                         <i class="fa fa-3x fa-list" aria-hidden="true"></i>
                     </a>
                 </td>         

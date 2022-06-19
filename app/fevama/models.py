@@ -171,6 +171,23 @@ class Project(models.Model):
     objects = ProjectManager()
 # ---------- END PROJECT ----------------- # 
 
+# ---------- START ALERT ----------------- # 
+# Alert Manager
+class AlertManager(models.Manager):
+    def create_alert(self, type, notify, project, empresa):
+        alert = self.create(type=type, notify=notify, project=project, empresa=empresa)
+        return alert
+
+# Alert Model
+class Alert(models.Model):
+    type = models.CharField(max_length=200, default=0)
+    notify = models.CharField(max_length=200, default=0)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=0)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
+
+    objects = AlertManager()
+# ---------- END PROJECT ----------------- # 
+
 # ---------- START ASSISTANCE ----------------- # 
 # Assistance Manager
 class AssistanceManager(models.Manager):

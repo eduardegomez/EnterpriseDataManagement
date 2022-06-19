@@ -835,6 +835,11 @@ def assistance_createItem(request):
         Assistance.objects.create_assistance(project, line, act, organism, announcement, situation, applicant, management, requested, applied, date, payment)
         project.assistance_check = "1"
         project.save()
+
+        # CREAMOS ALERTA
+        type = "NUEVA AYUDA " + str(situation.situation)
+        empresa = Empresa.objects.filter(id=project.empresa_id).first()
+        Alert.objects.create_alert(type, "0", project, empresa)
     
     response = { 'code': 200}
     return JsonResponse(response)
@@ -899,6 +904,17 @@ def assistance_modifyItem(request):
         check.payment = payment
         check.announcement = announcement
         check.save()
+
+        # CREAMOS ALERTA
+        project = Project.objects.filter(id=check.project_id).first()
+        type = "NUEVA AYUDA " + str(situation.situation)
+        empresa = Empresa.objects.filter(id=project.empresa_id).first()
+        check = Alert.objects.filter(project=project, empresa=empresa).first()
+        if check:
+            check.type = type
+            check.save()
+        else:    
+            Alert.objects.create_alert(type, "0", project, empresa)
 
     response = { 'code': 200}
     return JsonResponse(response)
@@ -1249,6 +1265,21 @@ def announcement_modifyItem(request):
 #### NOTIFICACIONES ####
 def notificaciones_index(request):
     return render(request, 'fevama/notificaciones_index.html')
+
+def alerts_index(request):
+    object_list = Alert.objects.all()
+    return render(request, 'fevama/alerts_index.html', {
+        'object_list': object_list
+    })
+
+def alert_deleteItem(request):
+    id = request.GET['data']
+    check = Alert.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
 
 #### BASE DE DATOS ####
 def bd_index(request):
