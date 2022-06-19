@@ -124,8 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = 'e.gomez@uvax.es'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'notificaciones_fevama@outlook.es'
+EMAIL_HOST_PASSWORD = 'notificaciones1234'
 EMAIL_PORT = 587
 
 # Internationalization
