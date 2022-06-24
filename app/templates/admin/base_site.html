@@ -26,9 +26,9 @@
     }
     .dropdown-submenu>.dropdown-menu {
         left: -100%;
+        margin-top: -25px;
         border-radius: 6px 0px 6px 6px;
         text-align: center;
-
     }
 </style>
 <body>
@@ -66,7 +66,7 @@
                                     {% fa5_icon 'comments' 'fas' %} {% trans 'Lenguaje' %}
                                 </a>
                                 <ul class="dropdown-menu pull-left menufevama" style="align-items: center;">
-                                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                                    <input name="next" type="hidden" value="{{ redirect_to }}" style="margin-top: -10px;" />
                                     {% get_current_language as LANGUAGE_CODE %}
                                     {% get_available_languages as LANGUAGES %}
                                     {% for lang in LANGUAGES %}
