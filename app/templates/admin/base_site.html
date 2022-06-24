@@ -52,7 +52,7 @@
                     <a href="{% url 'fevama:parametros_index' %}" class="nav-item nav-link"><i class="fas fa-user-cog"></i> {% trans 'Parámetros'%}</a>
                     <div class="dropdown" style="position:absolute;right: 40px;">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton"data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {% if user.is_active and user.is_staff %}
+                            {% if user.is_active%}
                             {% trans 'Bienvenido ' %}
                             {% firstof user.get_short_name user.get_username %}
                             {% endif %}

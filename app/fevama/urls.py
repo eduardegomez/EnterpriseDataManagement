@@ -173,5 +173,9 @@ urlpatterns = [
 
     # -------- PARAMETROS -------- #
     path('parametros_index/', views.parametros_index, name="parametros_index"),
+    path('users_index/', views.users_index, name="users_index"),
+    path('user_deleteItem/', views.user_deleteItem, name="user_deleteItem"),
+    path('user_create/', views.user_create, name="user_create"),
+    path('user_createItem/', views.user_createItem, name="user_createItem"),   
 ]
 

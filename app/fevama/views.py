@@ -11,6 +11,7 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse, HttpResponse
 import json
+from django.contrib.auth.models import User
 
 from django.urls import reverse_lazy
 from .models import *
@@ -912,6 +913,7 @@ def assistance_modifyItem(request):
         check = Alert.objects.filter(project=project, empresa=empresa).first()
         if check:
             check.type = type
+            check.notify = "0"
             check.save()
         else:    
             Alert.objects.create_alert(type, "0", project, empresa)
@@ -1575,4 +1577,33 @@ def cleanData(request):
 #### PARAMETROS ####
 def parametros_index(request):
     return render(request, 'fevama/parametros_index.html')
+
+def users_index(request):
+    object_list = User.objects.all()
+    return render(request, 'fevama/users_index.html', {
+        'object_list': object_list
+    })
+
+def user_deleteItem(request):
+    id = request.GET['data']
+    check = User.objects.filter(id=id).first()
+    if check:
+        check.delete()
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
+
+def user_create(request):
+    return render(request, 'fevama/user_create.html', {
+    })
+
+def user_createItem(request):
+    username = request.GET['username']
+    email = request.GET['email']
+    password = request.GET['password']
+
+    User.objects.create_user(username=username, email=email, password=password)
+    
+    response = { 'code': 200}
+    return JsonResponse(response)
  

@@ -4,6 +4,7 @@ from fevama.views import *
 from datetime import datetime
 
 def send_email_to(email, type, project_name):
+
     date = datetime.today().strftime('%Y-%m-%d')
     send_mail(
         'ALERTA FEVAMA',

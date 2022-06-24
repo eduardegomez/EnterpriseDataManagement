@@ -14,6 +14,15 @@
         padding: 30px 30px;
         margin:5px 5px 5px 5px;
     }
+    .index-button:hover
+    {
+        width:95%;
+        border-radius: 25%;
+        background-color:#d4d0d0;
+        border: 2px solid #b6a9a9;
+        padding: 30px 30px;
+        margin:5px 5px 5px 5px;
+    }
 </style>
 <link rel="stylesheet" type="text/css" href="../../../../../static/admin/css/dashboard.css">
 <body style="background-color: #efefef;">
@@ -27,18 +36,12 @@
             </tr>
             <tr>
                 <td height="75" width="140">
-                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Usuarios' %}">
+                    <a class="btn btn-block btn-default index-button" href="{% url 'fevama:users_index' %}" title="{% trans 'Usuarios' %}">
                         {% fa5_icon 'users' 'fas fa-3x' %}
                     </a>
-                </td>
-                <td height="75" width="140">
-                    <a class="btn btn-block btn-default index-button" href="" title="{% trans 'Configuración' %}">
-                        {% fa5_icon 'cog' 'fas fa-3x' %}
-                    </a>
-                </td>           
+                </td>         
             </tr>
                 <td align="center">{% trans "Usuarios" %}</td>
-                <td align="center">{% trans "Configuración" %}</td>
             <tr>
         </table>
     </div>
