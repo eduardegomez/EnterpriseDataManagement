@@ -1,0 +1,1620 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-24 20:43+0200\n"
+"PO-Revision-Date: 2022-06-24 21:25+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1\n"
+
+#: app/settings.py:136
+msgid "Spanish"
+msgstr "Spanish"
+
+#: app/settings.py:137
+msgid "English"
+msgstr "English"
+
+#: fevama/templates/fevama/BDconfiguration.html:80
+#: fevama/templates/fevama/bd_index.html:39
+#: fevama/templates/fevama/bd_index.html:49
+#: fevama/templates/fevama/index.html:208
+#: fevama/templates/fevama/index.html:218
+msgid "Copias de seguridad"
+msgstr "Backups"
+
+#: fevama/templates/fevama/BDconfiguration.html:87
+#: fevama/templates/fevama/act_create.html:24
+#: fevama/templates/fevama/act_list.html:79
+#: fevama/templates/fevama/act_modify.html:24
+#: fevama/templates/fevama/alerts_index.html:80
+#: fevama/templates/fevama/announcement_create.html:24
+#: fevama/templates/fevama/announcement_list.html:79
+#: fevama/templates/fevama/announcement_modify.html:24
+#: fevama/templates/fevama/anualdata_graphs.html:96
+#: fevama/templates/fevama/applicant_create.html:24
+#: fevama/templates/fevama/applicant_list.html:79
+#: fevama/templates/fevama/applicant_modify.html:24
+#: fevama/templates/fevama/assistance_create.html:24
+#: fevama/templates/fevama/assistance_details.html:24
+#: fevama/templates/fevama/assistance_list.html:79
+#: fevama/templates/fevama/assistance_modify.html:24
+#: fevama/templates/fevama/cleanBD_index.html:87
+#: fevama/templates/fevama/contact_create.html:24
+#: fevama/templates/fevama/contact_list.html:79
+#: fevama/templates/fevama/contact_modify.html:24
+#: fevama/templates/fevama/economicdata_create.html:24
+#: fevama/templates/fevama/economicdata_list.html:116
+#: fevama/templates/fevama/economicdata_modify.html:24
+#: fevama/templates/fevama/empresa_create.html:24
+#: fevama/templates/fevama/empresa_modify.html:24
+#: fevama/templates/fevama/empresas_list.html:79
+#: fevama/templates/fevama/graphs_index.html:96
+#: fevama/templates/fevama/invoice_create.html:24
+#: fevama/templates/fevama/invoice_list.html:79
+#: fevama/templates/fevama/invoice_modify.html:24
+#: fevama/templates/fevama/line_create.html:24
+#: fevama/templates/fevama/line_graphs.html:96
+#: fevama/templates/fevama/line_list.html:79
+#: fevama/templates/fevama/line_modify.html:24
+#: fevama/templates/fevama/notifications_index.html:80
+#: fevama/templates/fevama/organism_create.html:24
+#: fevama/templates/fevama/organism_list.html:79
+#: fevama/templates/fevama/organism_modify.html:24
+#: fevama/templates/fevama/project_create.html:24
+#: fevama/templates/fevama/project_list.html:79
+#: fevama/templates/fevama/project_modify.html:24
+#: fevama/templates/fevama/situation_create.html:24
+#: fevama/templates/fevama/situation_list.html:79
+#: fevama/templates/fevama/situation_modify.html:24
+#: fevama/templates/fevama/typeofcontact_create.html:24
+#: fevama/templates/fevama/typeofcontact_list.html:79
+#: fevama/templates/fevama/typeofcontact_modify.html:24
+#: fevama/templates/fevama/user_create.html:24
+#: fevama/templates/fevama/users_index.html:79
+msgid "Volver"
+msgstr "Return"
+
+#: fevama/templates/fevama/BDconfiguration.html:92
+msgid "Actualizar configuración"
+msgstr "Update configuration"
+
+#: fevama/templates/fevama/BDconfiguration.html:102
+msgid "Configuración automática"
+msgstr "Automatic configuration"
+
+#: fevama/templates/fevama/BDconfiguration.html:113
+msgid "Tiempo para la próxima copia de seguridad:"
+msgstr "Time for the next backup:"
+
+#: fevama/templates/fevama/BDconfiguration.html:131
+msgid "Fecha próxima copia de seguridad :"
+msgstr "Next backup date :"
+
+#: fevama/templates/fevama/BDconfiguration.html:147
+msgid "Últimas copias de seguridad:"
+msgstr "Latest backups:"
+
+#: fevama/templates/fevama/BDconfiguration.html:154
+msgid "Download (.gz)"
+msgstr "Download (.gz)"
+
+#: fevama/templates/fevama/BDconfiguration.html:158
+msgid "Últimos datos económicos:"
+msgstr "Latest economic data:"
+
+#: fevama/templates/fevama/BDconfiguration.html:165
+#: fevama/templates/fevama/BDconfiguration.html:176
+msgid "Download (.csv)"
+msgstr "Download (.csv)"
+
+#: fevama/templates/fevama/BDconfiguration.html:169
+msgid "Últimos contactos:"
+msgstr "Last contacts:"
+
+#: fevama/templates/fevama/BDconfiguration.html:195
+msgid "Configuración manual"
+msgstr "Manual configuration"
+
+#: fevama/templates/fevama/BDconfiguration.html:207
+msgid "Ejecutar copia de seguridad"
+msgstr "Execute backup"
+
+#: fevama/templates/fevama/BDconfiguration.html:214
+msgid "Importar copia de seguridad"
+msgstr "Import backup"
+
+#: fevama/templates/fevama/BDconfiguration.html:219
+msgid "Restablecer base de datos"
+msgstr "Restore database"
+
+#: fevama/templates/fevama/BDconfiguration.html:257
+msgid ""
+"Estás seguro de restablecer la base de datos desde la última copia de "
+"seguridad? Perderás todos los datos actuales"
+msgstr ""
+"Are you sure about restoring the database since the last backup? You will "
+"lose all current data"
+
+#: fevama/templates/fevama/BDconfiguration.html:260
+msgid "Restaurando BD"
+msgstr "Restoring BD"
+
+#: fevama/templates/fevama/BDconfiguration.html:289
+msgid "Estás seguro de actualizar la configuración automática?"
+msgstr "Are you sure to update the automatic configuration?"
+
+#: fevama/templates/fevama/BDconfiguration.html:292
+msgid "Actualizando configuración"
+msgstr "Updating configuration"
+
+#: fevama/templates/fevama/act_create.html:17
+#: fevama/templates/fevama/act_list.html:72
+#: fevama/templates/fevama/act_modify.html:17
+msgid "ACTUACIÓN"
+msgstr "ACTION"
+
+#: fevama/templates/fevama/act_create.html:33
+msgid "CREAR ACTUACIÓN"
+msgstr "CREATE PERFORMANCE"
+
+#: fevama/templates/fevama/act_create.html:40
+#: fevama/templates/fevama/act_modify.html:40
+msgid "Nombre de la actuación:"
+msgstr "Name of the performance:"
+
+#: fevama/templates/fevama/act_create.html:48
+#: fevama/templates/fevama/act_create.html:130
+#: fevama/templates/fevama/act_create.html:142
+#: fevama/templates/fevama/act_create.html:148
+#: fevama/templates/fevama/announcement_create.html:48
+#: fevama/templates/fevama/announcement_create.html:128
+#: fevama/templates/fevama/announcement_create.html:140
+#: fevama/templates/fevama/announcement_create.html:146
+#: fevama/templates/fevama/announcement_modify.html:143
+#: fevama/templates/fevama/announcement_modify.html:148
+#: fevama/templates/fevama/applicant_create.html:48
+#: fevama/templates/fevama/applicant_create.html:128
+#: fevama/templates/fevama/applicant_create.html:140
+#: fevama/templates/fevama/applicant_create.html:146
+#: fevama/templates/fevama/applicant_modify.html:143
+#: fevama/templates/fevama/applicant_modify.html:148
+#: fevama/templates/fevama/assistance_create.html:168
+#: fevama/templates/fevama/assistance_create.html:260
+#: fevama/templates/fevama/assistance_create.html:264
+#: fevama/templates/fevama/assistance_create.html:268
+#: fevama/templates/fevama/assistance_create.html:272
+#: fevama/templates/fevama/assistance_create.html:295
+#: fevama/templates/fevama/assistance_create.html:313
+#: fevama/templates/fevama/assistance_modify.html:257
+#: fevama/templates/fevama/assistance_modify.html:261
+#: fevama/templates/fevama/assistance_modify.html:265
+#: fevama/templates/fevama/assistance_modify.html:269
+#: fevama/templates/fevama/contact_create.html:80
+#: fevama/templates/fevama/contact_create.html:165
+#: fevama/templates/fevama/contact_create.html:169
+#: fevama/templates/fevama/contact_create.html:173
+#: fevama/templates/fevama/contact_create.html:177
+#: fevama/templates/fevama/contact_create.html:192
+#: fevama/templates/fevama/contact_create.html:201
+#: fevama/templates/fevama/contact_modify.html:180
+#: fevama/templates/fevama/contact_modify.html:185
+#: fevama/templates/fevama/economicdata_create.html:76
+#: fevama/templates/fevama/economicdata_create.html:158
+#: fevama/templates/fevama/economicdata_create.html:162
+#: fevama/templates/fevama/economicdata_create.html:166
+#: fevama/templates/fevama/economicdata_create.html:170
+#: fevama/templates/fevama/economicdata_create.html:185
+#: fevama/templates/fevama/economicdata_create.html:195
+#: fevama/templates/fevama/economicdata_modify.html:161
+#: fevama/templates/fevama/economicdata_modify.html:165
+#: fevama/templates/fevama/economicdata_modify.html:169
+#: fevama/templates/fevama/economicdata_modify.html:173
+#: fevama/templates/fevama/economicdata_modify.html:189
+#: fevama/templates/fevama/economicdata_modify.html:194
+#: fevama/templates/fevama/empresa_create.html:80
+#: fevama/templates/fevama/empresa_create.html:166
+#: fevama/templates/fevama/empresa_create.html:182
+#: fevama/templates/fevama/empresa_create.html:192
+#: fevama/templates/fevama/empresa_modify.html:189
+#: fevama/templates/fevama/empresa_modify.html:194
+#: fevama/templates/fevama/invoice_create.html:92
+#: fevama/templates/fevama/invoice_create.html:179
+#: fevama/templates/fevama/invoice_create.html:196
+#: fevama/templates/fevama/invoice_create.html:207
+#: fevama/templates/fevama/invoice_modify.html:199
+#: fevama/templates/fevama/invoice_modify.html:204
+#: fevama/templates/fevama/line_create.html:48
+#: fevama/templates/fevama/line_create.html:130
+#: fevama/templates/fevama/line_create.html:142
+#: fevama/templates/fevama/line_create.html:148
+#: fevama/templates/fevama/line_modify.html:149
+#: fevama/templates/fevama/line_modify.html:154
+#: fevama/templates/fevama/organism_create.html:48
+#: fevama/templates/fevama/organism_create.html:128
+#: fevama/templates/fevama/organism_create.html:140
+#: fevama/templates/fevama/organism_create.html:146
+#: fevama/templates/fevama/organism_modify.html:143
+#: fevama/templates/fevama/organism_modify.html:148
+#: fevama/templates/fevama/project_create.html:72
+#: fevama/templates/fevama/project_create.html:153
+#: fevama/templates/fevama/project_create.html:167
+#: fevama/templates/fevama/project_create.html:176
+#: fevama/templates/fevama/situation_create.html:48
+#: fevama/templates/fevama/situation_create.html:128
+#: fevama/templates/fevama/situation_create.html:140
+#: fevama/templates/fevama/situation_create.html:146
+#: fevama/templates/fevama/situation_modify.html:143
+#: fevama/templates/fevama/situation_modify.html:148
+#: fevama/templates/fevama/typeofcontact_create.html:48
+#: fevama/templates/fevama/typeofcontact_create.html:127
+#: fevama/templates/fevama/typeofcontact_create.html:139
+#: fevama/templates/fevama/typeofcontact_create.html:145
+#: fevama/templates/fevama/typeofcontact_modify.html:142
+#: fevama/templates/fevama/typeofcontact_modify.html:147
+#: fevama/templates/fevama/user_create.html:64
+#: fevama/templates/fevama/user_create.html:148
+#: fevama/templates/fevama/user_create.html:152
+#: fevama/templates/fevama/user_create.html:156
+#: fevama/templates/fevama/user_create.html:170
+#: fevama/templates/fevama/user_create.html:178
+msgid "CREAR"
+msgstr "CREATE"
+
+#: fevama/templates/fevama/act_create.html:60
+msgid "Ya existe una actuación con ese nombre"
+msgstr "There is already a performance under that name"
+
+#: fevama/templates/fevama/act_create.html:75
+#: fevama/templates/fevama/act_modify.html:75
+#: fevama/templates/fevama/invoice_create.html:119
+#: fevama/templates/fevama/invoice_modify.html:117
+#: fevama/templates/fevama/line_create.html:75
+#: fevama/templates/fevama/line_modify.html:75
+#: fevama/templates/fevama/project_create.html:99
+msgid "Debes rellenar los campos"
+msgstr "You must fill in the fields"
+
+#: fevama/templates/fevama/act_create.html:90
+msgid "Actuación creada correctamente"
+msgstr "Successfully created performance"
+
+#: fevama/templates/fevama/act_create.html:123
+msgid "Estás seguro de crear esta actuación?"
+msgstr "Are you sure you want to create this performance?"
+
+#: fevama/templates/fevama/act_create.html:126
+#: fevama/templates/fevama/announcement_create.html:124
+#: fevama/templates/fevama/applicant_create.html:124
+#: fevama/templates/fevama/assistance_create.html:244
+#: fevama/templates/fevama/contact_create.html:158
+#: fevama/templates/fevama/economicdata_create.html:151
+#: fevama/templates/fevama/empresa_create.html:158
+#: fevama/templates/fevama/invoice_create.html:170
+#: fevama/templates/fevama/line_create.html:126
+#: fevama/templates/fevama/organism_create.html:124
+#: fevama/templates/fevama/project_create.html:147
+#: fevama/templates/fevama/situation_create.html:124
+#: fevama/templates/fevama/typeofcontact_create.html:123
+#: fevama/templates/fevama/user_create.html:142
+msgid "CREANDO"
+msgstr "CREATING"
+
+#: fevama/templates/fevama/act_list.html:84
+msgid "Crear nueva Actuación"
+msgstr "Create new Action"
+
+#: fevama/templates/fevama/act_list.html:135
+msgid "Estás seguro de eliminar esta actuación?"
+msgstr "Are you sure to eliminate this performance?"
+
+#: fevama/templates/fevama/act_modify.html:33
+msgid "MODIFICAR ACTUACIÓN"
+msgstr "CHANGE PERFORMANCE"
+
+#: fevama/templates/fevama/act_modify.html:48
+#: fevama/templates/fevama/act_modify.html:131
+#: fevama/templates/fevama/act_modify.html:135
+#: fevama/templates/fevama/act_modify.html:149
+#: fevama/templates/fevama/act_modify.html:154
+#: fevama/templates/fevama/announcement_modify.html:48
+#: fevama/templates/fevama/announcement_modify.html:129
+#: fevama/templates/fevama/applicant_modify.html:48
+#: fevama/templates/fevama/applicant_modify.html:129
+#: fevama/templates/fevama/assistance_modify.html:166
+#: fevama/templates/fevama/assistance_modify.html:293
+#: fevama/templates/fevama/assistance_modify.html:298
+#: fevama/templates/fevama/contact_modify.html:80
+#: fevama/templates/fevama/contact_modify.html:163
+#: fevama/templates/fevama/economicdata_modify.html:76
+#: fevama/templates/fevama/empresa_modify.html:80
+#: fevama/templates/fevama/empresa_modify.html:167
+#: fevama/templates/fevama/empresa_modify.html:171
+#: fevama/templates/fevama/invoice_modify.html:90
+#: fevama/templates/fevama/invoice_modify.html:177
+#: fevama/templates/fevama/invoice_modify.html:181
+#: fevama/templates/fevama/line_modify.html:48
+#: fevama/templates/fevama/line_modify.html:131
+#: fevama/templates/fevama/line_modify.html:135
+#: fevama/templates/fevama/organism_modify.html:48
+#: fevama/templates/fevama/organism_modify.html:129
+#: fevama/templates/fevama/project_modify.html:72
+#: fevama/templates/fevama/project_modify.html:154
+#: fevama/templates/fevama/project_modify.html:170
+#: fevama/templates/fevama/project_modify.html:175
+#: fevama/templates/fevama/situation_modify.html:48
+#: fevama/templates/fevama/situation_modify.html:129
+#: fevama/templates/fevama/typeofcontact_modify.html:48
+#: fevama/templates/fevama/typeofcontact_modify.html:128
+msgid "MODIFICAR"
+msgstr "MODIFY"
+
+#: fevama/templates/fevama/act_modify.html:60
+msgid "Ya existe esta actuación"
+msgstr "This performance already exists"
+
+#: fevama/templates/fevama/act_modify.html:90
+msgid "Actuación modificada correctamente"
+msgstr "Correctly modified performance"
+
+#: fevama/templates/fevama/act_modify.html:123
+#: fevama/templates/fevama/line_modify.html:123
+msgid "Estás seguro de modificar esta linea de ayuda?"
+msgstr "Are you sure you want to modify this help line?"
+
+#: fevama/templates/fevama/act_modify.html:126
+#: fevama/templates/fevama/announcement_modify.html:124
+#: fevama/templates/fevama/applicant_modify.html:124
+#: fevama/templates/fevama/assistance_modify.html:242
+#: fevama/templates/fevama/contact_modify.html:155
+#: fevama/templates/fevama/economicdata_modify.html:153
+#: fevama/templates/fevama/empresa_modify.html:158
+#: fevama/templates/fevama/invoice_modify.html:168
+#: fevama/templates/fevama/line_modify.html:126
+#: fevama/templates/fevama/organism_modify.html:124
+#: fevama/templates/fevama/project_modify.html:147
+#: fevama/templates/fevama/situation_modify.html:124
+#: fevama/templates/fevama/typeofcontact_modify.html:123
+msgid "MODIFICANDO"
+msgstr "MODIFYING"
+
+#: fevama/templates/fevama/alerts_index.html:73
+msgid "ALERTAS"
+msgstr "ALERTS"
+
+#: fevama/templates/fevama/alerts_index.html:158
+msgid "Estás seguro de eliminar esta alerta?"
+msgstr "Are you sure you want to delete this alert?"
+
+#: fevama/templates/fevama/announcement_create.html:17
+#: fevama/templates/fevama/announcement_list.html:72
+#: fevama/templates/fevama/announcement_modify.html:17
+msgid "Convocatorias"
+msgstr "Announcements"
+
+#: fevama/templates/fevama/announcement_create.html:33
+msgid "CREAR NUEVA CONVOCATORIA"
+msgstr "CREATE NEW CALL"
+
+#: fevama/templates/fevama/announcement_create.html:40
+#: fevama/templates/fevama/announcement_modify.html:40
+#: fevama/templates/fevama/economicdata_create.html:52
+#: fevama/templates/fevama/economicdata_modify.html:52
+#: fevama/templates/fevama/invoice_create.html:68
+#: fevama/templates/fevama/invoice_modify.html:66
+msgid "Año:"
+msgstr "Year:"
+
+#: fevama/templates/fevama/announcement_create.html:60
+#: fevama/templates/fevama/announcement_modify.html:60
+msgid "Ya existe esta convocatoria"
+msgstr "This call for proposals already exists"
+
+#: fevama/templates/fevama/announcement_create.html:75
+#: fevama/templates/fevama/announcement_modify.html:75
+#: fevama/templates/fevama/applicant_create.html:75
+#: fevama/templates/fevama/applicant_modify.html:75
+#: fevama/templates/fevama/contact_modify.html:107
+#: fevama/templates/fevama/organism_create.html:75
+#: fevama/templates/fevama/organism_modify.html:75
+#: fevama/templates/fevama/project_modify.html:99
+#: fevama/templates/fevama/situation_create.html:75
+#: fevama/templates/fevama/situation_modify.html:75
+#: fevama/templates/fevama/typeofcontact_modify.html:75
+msgid "No puedes dejar el campo vacio"
+msgstr "You can't leave the field empty"
+
+#: fevama/templates/fevama/announcement_create.html:90
+#: fevama/templates/fevama/applicant_create.html:90
+#: fevama/templates/fevama/economicdata_create.html:118
+#: fevama/templates/fevama/organism_create.html:90
+#: fevama/templates/fevama/situation_create.html:90
+#: fevama/templates/fevama/typeofcontact_create.html:90
+msgid "Registro creado correctamente"
+msgstr "Registration successfully created"
+
+#: fevama/templates/fevama/announcement_create.html:121
+msgid "Estás seguro de crear esta convocatoria?"
+msgstr "Are you sure you want to create this call?"
+
+#: fevama/templates/fevama/announcement_list.html:84
+msgid "Crear nueva Convocatoria"
+msgstr "Create new Call"
+
+#: fevama/templates/fevama/announcement_list.html:135
+msgid "Estás seguro de eliminar esta convocatoria?"
+msgstr "Are you sure to delete this call?"
+
+#: fevama/templates/fevama/announcement_modify.html:33
+msgid "MODIFICAR AÑO CONVOCATORIA"
+msgstr "CHANGE YEAR CALL FOR PROPOSALS"
+
+#: fevama/templates/fevama/announcement_modify.html:90
+#: fevama/templates/fevama/applicant_modify.html:90
+#: fevama/templates/fevama/economicdata_modify.html:119
+#: fevama/templates/fevama/organism_modify.html:90
+#: fevama/templates/fevama/situation_modify.html:90
+#: fevama/templates/fevama/typeofcontact_modify.html:90
+msgid "Registro modificado correctamente"
+msgstr "Record successfully modified"
+
+#: fevama/templates/fevama/announcement_modify.html:121
+msgid "Estás seguro de modificar esta convocatoria?"
+msgstr "Are you sure you want to modify this call?"
+
+#: fevama/templates/fevama/anualdata_graphs.html:88
+msgid "Valores anuales"
+msgstr "Annual values"
+
+#: fevama/templates/fevama/anualdata_graphs.html:108
+msgid "ÉXITO EN LA GESTIÓN DE PROYECTOS"
+msgstr "SUCCESS IN PROJECT MANAGEMENT"
+
+#: fevama/templates/fevama/anualdata_graphs.html:135
+msgid "Situación: "
+msgstr "Situation: "
+
+#: fevama/templates/fevama/anualdata_graphs.html:137
+#: fevama/templates/fevama/line_graphs.html:113
+#: fevama/templates/fevama/notifications_index.html:103
+msgid "TODAS"
+msgstr "ALL"
+
+#: fevama/templates/fevama/anualdata_graphs.html:144
+msgid "Desde: "
+msgstr "From: "
+
+#: fevama/templates/fevama/anualdata_graphs.html:148
+msgid "Hasta: "
+msgstr "Until: "
+
+#: fevama/templates/fevama/anualdata_graphs.html:153
+#: fevama/templates/fevama/anualdata_graphs.html:246
+#: fevama/templates/fevama/anualdata_graphs.html:347
+#: fevama/templates/fevama/graphs_index.html:131
+#: fevama/templates/fevama/line_graphs.html:122
+#: fevama/templates/fevama/line_graphs.html:216
+#: fevama/templates/fevama/line_graphs.html:338
+msgid "Cargar gráficas"
+msgstr "Load graphs"
+
+#: fevama/templates/fevama/anualdata_graphs.html:164
+#: fevama/templates/fevama/line_graphs.html:134
+msgid "Debes introducir correctamente los filtros"
+msgstr "You must correctly enter the filters"
+
+#: fevama/templates/fevama/anualdata_graphs.html:182
+#: fevama/templates/fevama/anualdata_graphs.html:202
+#: fevama/templates/fevama/graphs_index.html:162
+#: fevama/templates/fevama/graphs_index.html:183
+#: fevama/templates/fevama/graphs_index.html:204
+#: fevama/templates/fevama/graphs_index.html:224
+#: fevama/templates/fevama/line_graphs.html:153
+#: fevama/templates/fevama/line_graphs.html:173
+msgid "Descargar CSV"
+msgstr "Download CSV"
+
+#: fevama/templates/fevama/anualdata_graphs.html:187
+#: fevama/templates/fevama/anualdata_graphs.html:207
+#: fevama/templates/fevama/graphs_index.html:167
+#: fevama/templates/fevama/graphs_index.html:188
+#: fevama/templates/fevama/graphs_index.html:209
+#: fevama/templates/fevama/graphs_index.html:229
+#: fevama/templates/fevama/line_graphs.html:158
+#: fevama/templates/fevama/line_graphs.html:178
+msgid "Descargar PNG"
+msgstr "Download PNG"
+
+#: fevama/templates/fevama/anualdata_graphs.html:238
+#: fevama/templates/fevama/line_graphs.html:210
+msgid "Cargando gráficas"
+msgstr "Loading graphs"
+
+#: fevama/templates/fevama/anualdata_graphs.html:253
+msgid "Número de proyectos por convocatoria"
+msgstr "Number of projects per call"
+
+#: fevama/templates/fevama/anualdata_graphs.html:277
+msgid "Importe de ayudas por convocatoria (€)"
+msgstr "Amount of aid per call (€)"
+
+#: fevama/templates/fevama/anualdata_graphs.html:329
+msgid "Número de proyectos"
+msgstr "Number of projects"
+
+#: fevama/templates/fevama/anualdata_graphs.html:335
+msgid "Ayudas solicitadas"
+msgstr "Grants requested"
+
+#: fevama/templates/fevama/anualdata_graphs.html:340
+msgid "Ayudas obtenidas"
+msgstr ""
+
+#: fevama/templates/fevama/applicant_create.html:17
+#: fevama/templates/fevama/applicant_list.html:72
+#: fevama/templates/fevama/applicant_modify.html:17
+msgid "Solicitantes"
+msgstr "Applicants"
+
+#: fevama/templates/fevama/applicant_create.html:33
+msgid "CREAR NUEVO SOLICITANTE"
+msgstr "CREATE NEW APPLICANT"
+
+#: fevama/templates/fevama/applicant_create.html:40
+#: fevama/templates/fevama/applicant_modify.html:40
+#: fevama/templates/fevama/assistance_create.html:100
+#: fevama/templates/fevama/assistance_details.html:90
+#: fevama/templates/fevama/assistance_modify.html:98
+msgid "Solicitante:"
+msgstr "Applicant:"
+
+#: fevama/templates/fevama/applicant_create.html:60
+#: fevama/templates/fevama/applicant_modify.html:60
+msgid "Ya existe este solicitante"
+msgstr "This applicant already exists"
+
+#: fevama/templates/fevama/applicant_create.html:121
+msgid "Estás seguro de crear este solicitante?"
+msgstr "Are you sure you want to create this applicant?"
+
+#: fevama/templates/fevama/applicant_list.html:84
+msgid "Crear nuevo Solicitante"
+msgstr "Create new Applicant"
+
+#: fevama/templates/fevama/applicant_list.html:136
+msgid "Estás seguro de eliminar este solicitante?"
+msgstr "Are you sure to remove this applicant?"
+
+#: fevama/templates/fevama/applicant_modify.html:33
+msgid "MODIFICAR NOMBRE DEL SOLICITANTE"
+msgstr "CHANGE APPLICANT'S NAME"
+
+#: fevama/templates/fevama/applicant_modify.html:121
+#: fevama/templates/fevama/organism_modify.html:121
+msgid "Estás seguro de modificar este solicitante?"
+msgstr "Are you sure you want to modify this applicant?"
+
+#: fevama/templates/fevama/assistance_create.html:17
+#: fevama/templates/fevama/assistance_details.html:17
+#: fevama/templates/fevama/assistance_list.html:72
+#: fevama/templates/fevama/assistance_modify.html:17
+#: fevama/templates/fevama/ayudas_index.html:50
+#: fevama/templates/fevama/ayudas_index.html:67
+#: fevama/templates/fevama/index.html:116
+#: fevama/templates/fevama/index.html:133
+msgid "Ayudas"
+msgstr "Help"
+
+#: fevama/templates/fevama/assistance_create.html:33
+msgid "CREAR AYUDA"
+msgstr "CREATE HELP"
+
+#: fevama/templates/fevama/assistance_create.html:40
+#: fevama/templates/fevama/assistance_modify.html:40
+#: fevama/templates/fevama/invoice_create.html:56
+#: fevama/templates/fevama/invoice_modify.html:56
+msgid "Projecto:"
+msgstr "Projecto:"
+
+#: fevama/templates/fevama/assistance_create.html:52
+#: fevama/templates/fevama/assistance_details.html:50
+#: fevama/templates/fevama/assistance_modify.html:50
+msgid "Linea de ayuda:"
+msgstr "Helpline:"
+
+#: fevama/templates/fevama/assistance_create.html:64
+#: fevama/templates/fevama/assistance_details.html:60
+#: fevama/templates/fevama/assistance_modify.html:62
+msgid "Actuación:"
+msgstr "Performance:"
+
+#: fevama/templates/fevama/assistance_create.html:76
+#: fevama/templates/fevama/assistance_details.html:70
+#: fevama/templates/fevama/assistance_modify.html:74
+#: fevama/templates/fevama/organism_create.html:40
+#: fevama/templates/fevama/organism_modify.html:40
+msgid "Organismo:"
+msgstr "Organism:"
+
+#: fevama/templates/fevama/assistance_create.html:88
+#: fevama/templates/fevama/assistance_details.html:80
+#: fevama/templates/fevama/assistance_modify.html:86
+#: fevama/templates/fevama/situation_create.html:40
+#: fevama/templates/fevama/situation_modify.html:40
+msgid "Situación:"
+msgstr "Situation:"
+
+#: fevama/templates/fevama/assistance_create.html:112
+#: fevama/templates/fevama/assistance_details.html:100
+#: fevama/templates/fevama/assistance_modify.html:110
+msgid "Gestionado por:"
+msgstr "Managed by:"
+
+#: fevama/templates/fevama/assistance_create.html:116
+#: fevama/templates/fevama/assistance_modify.html:114
+msgid "FEVAMA"
+msgstr "FEVAMA"
+
+#: fevama/templates/fevama/assistance_create.html:117
+#: fevama/templates/fevama/assistance_modify.html:115
+msgid "ELLOS"
+msgstr "THEY"
+
+#: fevama/templates/fevama/assistance_create.html:118
+#: fevama/templates/fevama/assistance_modify.html:116
+msgid "A MEDIAS"
+msgstr "HALFWAYS"
+
+#: fevama/templates/fevama/assistance_create.html:124
+#: fevama/templates/fevama/assistance_details.html:110
+#: fevama/templates/fevama/assistance_modify.html:122
+#: fevama/templates/fevama/project_create.html:60
+#: fevama/templates/fevama/project_modify.html:60
+msgid "Convocatoria:"
+msgstr "Call for applications:"
+
+#: fevama/templates/fevama/assistance_create.html:136
+#: fevama/templates/fevama/assistance_details.html:120
+#: fevama/templates/fevama/assistance_modify.html:134
+msgid "Subvención solicitada:"
+msgstr "Subsidy requested:"
+
+#: fevama/templates/fevama/assistance_create.html:144
+#: fevama/templates/fevama/assistance_details.html:128
+#: fevama/templates/fevama/assistance_modify.html:142
+msgid "Subvención aplicada:"
+msgstr "Subsidy applied:"
+
+#: fevama/templates/fevama/assistance_create.html:152
+#: fevama/templates/fevama/assistance_details.html:136
+#: fevama/templates/fevama/assistance_modify.html:150
+msgid "Fecha de resolución:"
+msgstr "Date of resolution:"
+
+#: fevama/templates/fevama/assistance_create.html:160
+#: fevama/templates/fevama/assistance_details.html:144
+#: fevama/templates/fevama/assistance_modify.html:158
+msgid "Fecha de cobro subvención:"
+msgstr "Date of grant payment:"
+
+#: fevama/templates/fevama/assistance_create.html:180
+msgid "Ya existe una ayuda con los mismos datos"
+msgstr "There is already a help with the same data"
+
+#: fevama/templates/fevama/assistance_create.html:195
+msgid "No puedes dejar estos campos sin rellenar"
+msgstr "You cannot leave these fields blank"
+
+#: fevama/templates/fevama/assistance_create.html:210
+msgid "Ayuda creado correctamente"
+msgstr "Help successfully created"
+
+#: fevama/templates/fevama/assistance_create.html:241
+msgid "Estás seguro de crear esta ayuda?"
+msgstr "Are you sure you want to create this help?"
+
+#: fevama/templates/fevama/assistance_details.html:33
+msgid "INFORMACIÓN AYUDA"
+msgstr "INFORMATION HELP"
+
+#: fevama/templates/fevama/assistance_details.html:40
+msgid "Proyecto:"
+msgstr "Project:"
+
+#: fevama/templates/fevama/assistance_list.html:84
+msgid "Crear nueva Ayuda"
+msgstr "Create new Help"
+
+#: fevama/templates/fevama/assistance_list.html:144
+msgid "Estás seguro de eliminar esta ayuda?"
+msgstr "Are you sure to remove this help?"
+
+#: fevama/templates/fevama/assistance_modify.html:33
+msgid "MODIFICAR AYUDA"
+msgstr "MODIFY HELP"
+
+#: fevama/templates/fevama/assistance_modify.html:178
+msgid "Ya existe esta ayuda"
+msgstr "This support already exists"
+
+#: fevama/templates/fevama/assistance_modify.html:193
+msgid "No puedes dejar este campo vacio"
+msgstr "You cannot leave this field empty"
+
+#: fevama/templates/fevama/assistance_modify.html:208
+msgid "Ayuda modificada correctamente"
+msgstr "Correctly modified help"
+
+#: fevama/templates/fevama/assistance_modify.html:239
+msgid "Estás seguro de modificar esta ayuda?"
+msgstr "Are you sure you want to modify this help?"
+
+#: fevama/templates/fevama/ayudas_index.html:32
+#: fevama/templates/fevama/index.html:98 templates/admin/base_site.html:48
+msgid "Subvenciones"
+msgstr "Subsidies"
+
+#: fevama/templates/fevama/ayudas_index.html:40
+#: fevama/templates/fevama/ayudas_index.html:65
+#: fevama/templates/fevama/index.html:56 fevama/templates/fevama/index.html:106
+#: fevama/templates/fevama/index.html:131
+#: fevama/templates/fevama/management_index.html:56
+#: fevama/templates/fevama/project_create.html:17
+#: fevama/templates/fevama/project_list.html:72
+#: fevama/templates/fevama/project_modify.html:17
+msgid "Proyectos"
+msgstr "Projects"
+
+#: fevama/templates/fevama/ayudas_index.html:45
+#: fevama/templates/fevama/ayudas_index.html:66
+#: fevama/templates/fevama/index.html:111
+#: fevama/templates/fevama/index.html:132
+#: fevama/templates/fevama/invoice_create.html:17
+#: fevama/templates/fevama/invoice_list.html:72
+#: fevama/templates/fevama/invoice_modify.html:17
+msgid "Facturas"
+msgstr "Invoices"
+
+#: fevama/templates/fevama/ayudas_index.html:55
+#: fevama/templates/fevama/ayudas_index.html:68
+#: fevama/templates/fevama/index.html:121
+#: fevama/templates/fevama/index.html:134
+msgid "Linea ayudas"
+msgstr "Line aids"
+
+#: fevama/templates/fevama/ayudas_index.html:60
+#: fevama/templates/fevama/ayudas_index.html:69
+#: fevama/templates/fevama/index.html:126
+#: fevama/templates/fevama/index.html:135
+msgid "Actuación"
+msgstr "Performance"
+
+#: fevama/templates/fevama/bd_index.html:31
+#: fevama/templates/fevama/index.html:200
+msgid "Configuración Base de Datos"
+msgstr "Database Configuration"
+
+#: fevama/templates/fevama/bd_index.html:44
+#: fevama/templates/fevama/bd_index.html:50
+#: fevama/templates/fevama/index.html:213
+#: fevama/templates/fevama/index.html:219
+msgid "Limpieza"
+msgstr "Cleaning"
+
+#: fevama/templates/fevama/change-password.html:21
+msgid "CAMBIAR CONTRASEÑA"
+msgstr "CHANGE PASSWORD"
+
+#: fevama/templates/fevama/change-password.html:30
+msgid "Cambiar contraseña"
+msgstr "Change password"
+
+#: fevama/templates/fevama/cleanBD_index.html:80
+msgid "Limpieza base de datos"
+msgstr "Database cleaning"
+
+#: fevama/templates/fevama/cleanBD_index.html:97
+msgid "Selecciona los datos a eliminar"
+msgstr "Select the data to be deleted"
+
+#: fevama/templates/fevama/cleanBD_index.html:105
+msgid "TODO"
+msgstr "TODO"
+
+#: fevama/templates/fevama/cleanBD_index.html:106
+msgid "PROYECTOS"
+msgstr "PROJECTS"
+
+#: fevama/templates/fevama/cleanBD_index.html:107
+msgid "AYUDAS"
+msgstr "AID"
+
+#: fevama/templates/fevama/cleanBD_index.html:108
+msgid "FACTURAS"
+msgstr "INVOICES"
+
+#: fevama/templates/fevama/cleanBD_index.html:109
+msgid "EMPRESAS"
+msgstr "COMPANIES"
+
+#: fevama/templates/fevama/cleanBD_index.html:110
+msgid "CONTACTOS"
+msgstr "CONTACTS"
+
+#: fevama/templates/fevama/cleanBD_index.html:111
+msgid "DATOS ECONÓMICOS"
+msgstr "ECONOMIC DATA"
+
+#: fevama/templates/fevama/cleanBD_index.html:117
+#: fevama/templates/fevama/cleanBD_index.html:142
+msgid "Eliminar datos"
+msgstr "Delete data"
+
+#: fevama/templates/fevama/cleanBD_index.html:129
+msgid "Eliminando datos"
+msgstr "Deleting data"
+
+#: fevama/templates/fevama/contact_create.html:17
+#: fevama/templates/fevama/contact_list.html:72
+#: fevama/templates/fevama/contact_modify.html:17
+#: fevama/templates/fevama/index.html:75 fevama/templates/fevama/index.html:91
+#: fevama/templates/fevama/projects_index.html:45
+#: fevama/templates/fevama/projects_index.html:61
+msgid "Contactos"
+msgstr "Contacts"
+
+#: fevama/templates/fevama/contact_create.html:33
+msgid "CREAR CONTACTO"
+msgstr "CREATE CONTACT"
+
+#: fevama/templates/fevama/contact_create.html:40
+#: fevama/templates/fevama/contact_modify.html:40
+#: fevama/templates/fevama/empresa_create.html:40
+#: fevama/templates/fevama/empresa_modify.html:40
+msgid "Nombre:"
+msgstr "Name:"
+
+#: fevama/templates/fevama/contact_create.html:48
+#: fevama/templates/fevama/contact_modify.html:48
+#: fevama/templates/fevama/user_create.html:48
+msgid "Email:"
+msgstr "Email:"
+
+#: fevama/templates/fevama/contact_create.html:56
+#: fevama/templates/fevama/contact_modify.html:56
+#: fevama/templates/fevama/economicdata_create.html:40
+#: fevama/templates/fevama/economicdata_modify.html:40
+#: fevama/templates/fevama/project_create.html:48
+#: fevama/templates/fevama/project_modify.html:48
+msgid "Empresa:"
+msgstr "Company:"
+
+#: fevama/templates/fevama/contact_create.html:68
+#: fevama/templates/fevama/contact_modify.html:68
+#: fevama/templates/fevama/typeofcontact_create.html:40
+#: fevama/templates/fevama/typeofcontact_modify.html:40
+msgid "Tipo:"
+msgstr "Type:"
+
+#: fevama/templates/fevama/contact_create.html:92
+msgid "Ya existe un contacto con los mismos datos"
+msgstr "There is already a contact with the same data"
+
+#: fevama/templates/fevama/contact_create.html:107
+#: fevama/templates/fevama/economicdata_create.html:103
+#: fevama/templates/fevama/economicdata_modify.html:104
+#: fevama/templates/fevama/user_create.html:91
+msgid "No puedes dejar sin rellenar ningún campo"
+msgstr "No field can be left blank"
+
+#: fevama/templates/fevama/contact_create.html:122
+msgid "Contacto creado correctamente"
+msgstr "Contact successfully created"
+
+#: fevama/templates/fevama/contact_create.html:155
+msgid "Estás seguro de crear este contacto?"
+msgstr "Are you sure you want to create this contact?"
+
+#: fevama/templates/fevama/contact_list.html:84
+msgid "Crear nuevo contacto"
+msgstr "Create new contact"
+
+#: fevama/templates/fevama/contact_list.html:142
+msgid "Estás seguro de eliminar este contacto?"
+msgstr "Are you sure you want to delete this contact?"
+
+#: fevama/templates/fevama/contact_list.html:145
+#: fevama/templates/fevama/empresas_list.html:147
+#: fevama/templates/fevama/typeofcontact_list.html:147
+msgid "ELIMINANDO"
+msgstr "ELIMINATING"
+
+#: fevama/templates/fevama/contact_modify.html:33
+msgid "MODIFICAR CONTACTO"
+msgstr "CHANGE CONTACT"
+
+#: fevama/templates/fevama/contact_modify.html:92
+msgid "Ya existe este contacto"
+msgstr "This contact already exists"
+
+#: fevama/templates/fevama/contact_modify.html:122
+msgid "Contacto modificado correctamente"
+msgstr "Correctly modified contact"
+
+#: fevama/templates/fevama/contact_modify.html:152
+msgid "Estás seguro de modificar este contacto?"
+msgstr "Are you sure to modify this contact?"
+
+#: fevama/templates/fevama/economicdata_create.html:17
+#: fevama/templates/fevama/economicdata_list.html:109
+#: fevama/templates/fevama/economicdata_modify.html:17
+msgid "Datos Económicos"
+msgstr "Economic Data"
+
+#: fevama/templates/fevama/economicdata_create.html:33
+msgid "CREAR NUEVO REGISTRO ECONÓMICO"
+msgstr "CREATE NEW ECONOMIC REGISTRY"
+
+#: fevama/templates/fevama/economicdata_create.html:60
+#: fevama/templates/fevama/economicdata_modify.html:60
+msgid "Trabajadores:"
+msgstr "Workers:"
+
+#: fevama/templates/fevama/economicdata_create.html:68
+#: fevama/templates/fevama/economicdata_modify.html:68
+msgid "Cifra negocio (€):"
+msgstr "Turnover (€):"
+
+#: fevama/templates/fevama/economicdata_create.html:88
+#: fevama/templates/fevama/economicdata_modify.html:89
+msgid "Ya existe un registro para esta empresa en el año especificado"
+msgstr ""
+"There is already a registration for this company in the specified year."
+
+#: fevama/templates/fevama/economicdata_create.html:148
+msgid "Estás seguro de crear este registro económico?"
+msgstr "Are you sure you want to create this economic register?"
+
+#: fevama/templates/fevama/economicdata_list.html:121
+msgid "Crear nuevo registro"
+msgstr "Create new record"
+
+#: fevama/templates/fevama/economicdata_list.html:168
+#: fevama/templates/fevama/typeofcontact_list.html:122
+msgid "Mostrar más"
+msgstr "Show more"
+
+#: fevama/templates/fevama/economicdata_list.html:218
+msgid "Estás seguro de eliminar este registro?"
+msgstr "Are you sure you want to delete this record?"
+
+#: fevama/templates/fevama/economicdata_list.html:259
+#: fevama/templates/fevama/typeofcontact_list.html:144
+#: fevama/templates/fevama/typeofcontact_list.html:190
+msgid ""
+"Estás seguro de eliminar este tipo de contacto? Se eliminarán todos los "
+"contactos que tengan este tipo"
+msgstr ""
+"Are you sure you want to delete this type of contact? All contacts with this "
+"type of contact will be deleted."
+
+#: fevama/templates/fevama/economicdata_modify.html:33
+msgid "MODIFICAR REGISTRO ECONÓMICO"
+msgstr "CHANGE ECONOMIC RECORD"
+
+#: fevama/templates/fevama/economicdata_modify.html:150
+msgid "Estás seguro de modificar este registro económico?"
+msgstr "Are you sure you want to modify this economic record?"
+
+#: fevama/templates/fevama/empresa_create.html:17
+#: fevama/templates/fevama/empresa_modify.html:17
+#: fevama/templates/fevama/empresas_list.html:72
+#: fevama/templates/fevama/index.html:55 fevama/templates/fevama/index.html:62
+#: fevama/templates/fevama/index.html:70 fevama/templates/fevama/index.html:90
+#: fevama/templates/fevama/management_index.html:55
+#: fevama/templates/fevama/projects_index.html:32
+#: fevama/templates/fevama/projects_index.html:40
+#: fevama/templates/fevama/projects_index.html:60
+#: templates/admin/base_site.html:47
+msgid "Empresas"
+msgstr "Companies"
+
+#: fevama/templates/fevama/empresa_create.html:33
+msgid "CREAR EMPRESA"
+msgstr "CREATE COMPANY"
+
+#: fevama/templates/fevama/empresa_create.html:48
+#: fevama/templates/fevama/empresa_modify.html:48
+msgid "CIF:"
+msgstr "CIF:"
+
+#: fevama/templates/fevama/empresa_create.html:56
+#: fevama/templates/fevama/empresa_modify.html:56
+msgid "CNAE:"
+msgstr "CNAE:"
+
+#: fevama/templates/fevama/empresa_create.html:64
+msgid "Telefono:"
+msgstr "Phone:"
+
+#: fevama/templates/fevama/empresa_create.html:72
+msgid "Observaciones:"
+msgstr "Remarks:"
+
+#: fevama/templates/fevama/empresa_create.html:92
+msgid "Ya existe una empresa con este nombre y CIF"
+msgstr "A company with this name and VAT number already exists."
+
+#: fevama/templates/fevama/empresa_create.html:107
+msgid "Debes indicar el CIF y el nombre de la empresa"
+msgstr "You must indicate the VAT number and the name of the company."
+
+#: fevama/templates/fevama/empresa_create.html:122
+msgid "Empresa creada correctamente"
+msgstr "Company created correctly"
+
+#: fevama/templates/fevama/empresa_create.html:155
+msgid "Estás seguro de crear esta empresa?"
+msgstr "Are you sure you want to create this company?"
+
+#: fevama/templates/fevama/empresa_modify.html:33
+msgid "MODIFICAR EMPRESA"
+msgstr "CHANGE COMPANY"
+
+#: fevama/templates/fevama/empresa_modify.html:64
+msgid "TELEFONO:"
+msgstr "TELEPHONE:"
+
+#: fevama/templates/fevama/empresa_modify.html:72
+msgid "OBSERVACIONES:"
+msgstr "REMARKS:"
+
+#: fevama/templates/fevama/empresa_modify.html:92
+msgid "Ya existe esta empresa"
+msgstr "This company already exists"
+
+#: fevama/templates/fevama/empresa_modify.html:107
+msgid "Debes rellenar el nombre y el CIF"
+msgstr "You must fill in your name and VAT number"
+
+#: fevama/templates/fevama/empresa_modify.html:122
+msgid "Empresa modificada correctamente"
+msgstr "Company successfully modified"
+
+#: fevama/templates/fevama/empresa_modify.html:155
+msgid "Estás seguro de modificar esta empresa?"
+msgstr "Are you sure to modify this company?"
+
+#: fevama/templates/fevama/empresas_list.html:84
+msgid "Crear nueva Empresa"
+msgstr "Create new company"
+
+#: fevama/templates/fevama/empresas_list.html:144
+msgid "Estás seguro de eliminar esta empresa?"
+msgstr "Are you sure to eliminate this company?"
+
+#: fevama/templates/fevama/graphs_index.html:88
+msgid "Gráficos empresas"
+msgstr "Company charts"
+
+#: fevama/templates/fevama/graphs_index.html:105
+msgid "Selecciona una empresa"
+msgstr "Select a company"
+
+#: fevama/templates/fevama/graphs_index.html:121
+msgid "Fecha inicio"
+msgstr "Start date"
+
+#: fevama/templates/fevama/graphs_index.html:125
+msgid "Fecha fin"
+msgstr "End date"
+
+#: fevama/templates/fevama/graphs_index.html:134
+#: fevama/templates/fevama/graphs_index.html:271
+msgid "Comparar"
+msgstr "Compare"
+
+#: fevama/templates/fevama/graphs_index.html:146
+msgid "Revisa el rango de fechas especificado"
+msgstr "Check the specified date range"
+
+#: fevama/templates/fevama/graphs_index.html:248
+msgid "Empresas a comparar:"
+msgstr "Companies to compare:"
+
+#: fevama/templates/fevama/graphs_index.html:330
+#: fevama/templates/fevama/graphs_index.html:444
+msgid "Valor anual facturación"
+msgstr "Annual value invoiced"
+
+#: fevama/templates/fevama/graphs_index.html:354
+#: fevama/templates/fevama/graphs_index.html:468
+msgid "Número de empleados anuales registrados por empresa"
+msgstr "Number of annual employees registered per company"
+
+#: fevama/templates/fevama/graphs_index.html:396
+msgid "Valor anual"
+msgstr "Annual value"
+
+#: fevama/templates/fevama/graphs_index.html:408
+msgid "Número de empleados"
+msgstr "Number of employees"
+
+#: fevama/templates/fevama/index.html:32
+#: fevama/templates/fevama/management_index.html:32
+#: templates/admin/base_site.html:46
+msgid "Cuadros de mando"
+msgstr "Control panels"
+
+#: fevama/templates/fevama/index.html:40
+#: fevama/templates/fevama/management_index.html:40
+msgid "Cuadro empresas"
+msgstr "Company chart"
+
+#: fevama/templates/fevama/index.html:45
+#: fevama/templates/fevama/management_index.html:45
+msgid "Cuadro proyectos"
+msgstr "Table of projects"
+
+#: fevama/templates/fevama/index.html:50
+#: fevama/templates/fevama/management_index.html:50
+msgid "Cuadro lineas de ayuda"
+msgstr "Helpline Chart"
+
+#: fevama/templates/fevama/index.html:57
+#: fevama/templates/fevama/line_graphs.html:88
+#: fevama/templates/fevama/management_index.html:57
+msgid "Lineas de ayuda"
+msgstr "Helplines"
+
+#: fevama/templates/fevama/index.html:80
+#: fevama/templates/fevama/projects_index.html:50
+msgid "Tipos de Contactos"
+msgstr "Contact Types"
+
+#: fevama/templates/fevama/index.html:85 fevama/templates/fevama/index.html:93
+#: fevama/templates/fevama/projects_index.html:55
+#: fevama/templates/fevama/projects_index.html:63
+msgid "Datos económicos"
+msgstr "Financial data"
+
+#: fevama/templates/fevama/index.html:92
+#: fevama/templates/fevama/projects_index.html:62
+#: fevama/templates/fevama/typeofcontact_create.html:17
+#: fevama/templates/fevama/typeofcontact_list.html:72
+#: fevama/templates/fevama/typeofcontact_modify.html:17
+msgid "Tipos de Contacto"
+msgstr "Contact Types"
+
+#: fevama/templates/fevama/index.html:140
+#: fevama/templates/fevama/planificacion_index.html:31
+#: templates/admin/base_site.html:49
+msgid "Recursos humanos"
+msgstr "Human Resources"
+
+#: fevama/templates/fevama/index.html:148
+#: fevama/templates/fevama/index.html:168
+#: fevama/templates/fevama/planificacion_index.html:39
+#: fevama/templates/fevama/planificacion_index.html:59
+msgid "Solicitante"
+msgstr "Applicant"
+
+#: fevama/templates/fevama/index.html:153
+#: fevama/templates/fevama/index.html:169
+#: fevama/templates/fevama/planificacion_index.html:44
+#: fevama/templates/fevama/planificacion_index.html:60
+msgid "Organismo"
+msgstr "Agency"
+
+#: fevama/templates/fevama/index.html:158
+#: fevama/templates/fevama/index.html:170
+#: fevama/templates/fevama/planificacion_index.html:49
+#: fevama/templates/fevama/planificacion_index.html:61
+#: fevama/templates/fevama/situation_create.html:17
+#: fevama/templates/fevama/situation_list.html:72
+#: fevama/templates/fevama/situation_modify.html:17
+msgid "Situación"
+msgstr "Situation"
+
+#: fevama/templates/fevama/index.html:163
+#: fevama/templates/fevama/index.html:171
+#: fevama/templates/fevama/planificacion_index.html:54
+#: fevama/templates/fevama/planificacion_index.html:62
+msgid "Convocatoria"
+msgstr "Call for applications"
+
+#: fevama/templates/fevama/index.html:176
+#: fevama/templates/fevama/index.html:184
+#: fevama/templates/fevama/index.html:194
+#: fevama/templates/fevama/notificaciones_index.html:31
+#: fevama/templates/fevama/notificaciones_index.html:39
+#: fevama/templates/fevama/notificaciones_index.html:49
+#: templates/admin/base_site.html:50
+msgid "Notificaciones"
+msgstr "Notifications"
+
+#: fevama/templates/fevama/index.html:189
+#: fevama/templates/fevama/index.html:195
+#: fevama/templates/fevama/notificaciones_index.html:44
+#: fevama/templates/fevama/notificaciones_index.html:50
+msgid "Alertas"
+msgstr "Alerts"
+
+#: fevama/templates/fevama/index.html:223
+#: fevama/templates/fevama/parametros_index.html:31
+#: templates/admin/base_site.html:52
+msgid "Parámetros"
+msgstr "Parameters"
+
+#: fevama/templates/fevama/index.html:231
+#: fevama/templates/fevama/index.html:236
+#: fevama/templates/fevama/parametros_index.html:39
+#: fevama/templates/fevama/parametros_index.html:44
+#: fevama/templates/fevama/user_create.html:17
+#: fevama/templates/fevama/users_index.html:72
+msgid "Usuarios"
+msgstr "Users"
+
+#: fevama/templates/fevama/invoice_create.html:33
+msgid "CREAR FACTURA"
+msgstr "CREATE INVOICE"
+
+#: fevama/templates/fevama/invoice_create.html:40
+#: fevama/templates/fevama/invoice_modify.html:40
+msgid "Número factura:"
+msgstr "Invoice number:"
+
+#: fevama/templates/fevama/invoice_create.html:48
+#: fevama/templates/fevama/invoice_modify.html:48
+msgid "Factura:"
+msgstr "Invoice:"
+
+#: fevama/templates/fevama/invoice_create.html:76
+#: fevama/templates/fevama/invoice_modify.html:74
+msgid "Importe:"
+msgstr "Amount:"
+
+#: fevama/templates/fevama/invoice_create.html:84
+#: fevama/templates/fevama/invoice_modify.html:82
+msgid "Fecha cobro:"
+msgstr "Collection date:"
+
+#: fevama/templates/fevama/invoice_create.html:104
+msgid "Ya existe una factura con estos datos"
+msgstr "An invoice with this data already exists"
+
+#: fevama/templates/fevama/invoice_create.html:134
+msgid "Factura creada correctamente"
+msgstr "Invoice created correctly"
+
+#: fevama/templates/fevama/invoice_create.html:167
+msgid "Estás seguro de crear esta factura?"
+msgstr "Are you sure you want to create this invoice?"
+
+#: fevama/templates/fevama/invoice_list.html:84
+msgid "Crear nueva Factura"
+msgstr "Create new Invoice"
+
+#: fevama/templates/fevama/invoice_list.html:146
+msgid "Estás seguro de eliminar esta factura?"
+msgstr "Are you sure you want to delete this invoice?"
+
+#: fevama/templates/fevama/invoice_modify.html:33
+msgid "MODIFICAR FACTURA"
+msgstr "CHANGE INVOICE"
+
+#: fevama/templates/fevama/invoice_modify.html:102
+msgid "Ya existe esta Factura"
+msgstr ""
+
+#: fevama/templates/fevama/invoice_modify.html:132
+msgid "Factura modificada correctamente"
+msgstr "Invoice successfully modified"
+
+#: fevama/templates/fevama/invoice_modify.html:165
+msgid "Estás seguro de modificar esta factura?"
+msgstr "Are you sure you want to modify this invoice?"
+
+#: fevama/templates/fevama/line_create.html:17
+#: fevama/templates/fevama/line_list.html:72
+#: fevama/templates/fevama/line_modify.html:17
+msgid "LINEAS DE AYUDA"
+msgstr "HELPLINES"
+
+#: fevama/templates/fevama/line_create.html:33
+msgid "CREAR LINEA DE AYUDA"
+msgstr "CREATE HELPLINE"
+
+#: fevama/templates/fevama/line_create.html:40
+#: fevama/templates/fevama/line_modify.html:40
+msgid "Nombre de la linea:"
+msgstr "Name of the line:"
+
+#: fevama/templates/fevama/line_create.html:60
+msgid "Ya existe una linea de ayuda con ese nombre"
+msgstr "There is already a helpline under that name"
+
+#: fevama/templates/fevama/line_create.html:90
+msgid "Linea de ayuda creada correctamente"
+msgstr "Helpline successfully created"
+
+#: fevama/templates/fevama/line_create.html:123
+msgid "Estás seguro de crear esta linea de ayuda?"
+msgstr "Are you sure you want to create this helpline?"
+
+#: fevama/templates/fevama/line_graphs.html:105
+msgid "Selecciona una situation"
+msgstr "Select a situation"
+
+#: fevama/templates/fevama/line_graphs.html:237
+msgid "Porcentaje de proyectos por linea de ayuda"
+msgstr "Percentage of projects per line of support"
+
+#: fevama/templates/fevama/line_graphs.html:272
+msgid "Importe de ayudas obtenidas por línea"
+msgstr "Amount of aid obtained per line"
+
+#: fevama/templates/fevama/line_list.html:84
+msgid "Crear nueva Linea de ayuda"
+msgstr "Create new Helpline"
+
+#: fevama/templates/fevama/line_list.html:136
+msgid "Estás seguro de eliminar esta linea de ayuda?"
+msgstr "Are you sure you want to delete this helpline?"
+
+#: fevama/templates/fevama/line_modify.html:33
+msgid "MODIFICAR LINEA DE AYUDA"
+msgstr "MODIFY HELPLINE"
+
+#: fevama/templates/fevama/line_modify.html:60
+msgid "Ya existe esta linea de ayuda"
+msgstr "This helpline already exists"
+
+#: fevama/templates/fevama/line_modify.html:90
+msgid "Linea de ayuda modificada correctamente"
+msgstr "Help line modified correctly"
+
+#: fevama/templates/fevama/notifications_index.html:73
+msgid "NOTIFICACIONES"
+msgstr "NOTIFICATIONS"
+
+#: fevama/templates/fevama/notifications_index.html:97
+msgid "Dirección de correo: "
+msgstr "Mailing address: "
+
+#: fevama/templates/fevama/notifications_index.html:101
+msgid "Tipo de alerta: "
+msgstr "Mailing address: "
+
+#: fevama/templates/fevama/notifications_index.html:104
+msgid "JUSTIFICADA"
+msgstr "JUSTIFIED"
+
+#: fevama/templates/fevama/notifications_index.html:105
+msgid "DENEGADA"
+msgstr "DENIED"
+
+#: fevama/templates/fevama/notifications_index.html:106
+msgid "RENUNCIADA"
+msgstr "WAIVED"
+
+#: fevama/templates/fevama/notifications_index.html:107
+msgid "APROBADA"
+msgstr "APPROVED"
+
+#: fevama/templates/fevama/notifications_index.html:112
+msgid "Añadir"
+msgstr "Add"
+
+#: fevama/templates/fevama/notifications_index.html:149
+msgid "Ya existe esta notificación"
+msgstr "This notification already exists"
+
+#: fevama/templates/fevama/notifications_index.html:176
+msgid "Estás seguro de eliminar esta notificación?"
+msgstr "Are you sure you want to remove this notification?"
+
+#: fevama/templates/fevama/notifications_index.html:199
+msgid "Añadiendo"
+msgstr "Adding"
+
+#: fevama/templates/fevama/organism_create.html:17
+#: fevama/templates/fevama/organism_list.html:72
+#: fevama/templates/fevama/organism_modify.html:17
+msgid "Organismos"
+msgstr "Organizations"
+
+#: fevama/templates/fevama/organism_create.html:33
+msgid "CREAR NUEVO ORGANISMO"
+msgstr "CREATE NEW ORGANIZATION"
+
+#: fevama/templates/fevama/organism_create.html:60
+#: fevama/templates/fevama/organism_modify.html:60
+msgid "Ya existe este organismo"
+msgstr "This organization already exists"
+
+#: fevama/templates/fevama/organism_create.html:121
+msgid "Estás seguro de crear este organismo?"
+msgstr "Are you sure you want to create this organism?"
+
+#: fevama/templates/fevama/organism_list.html:84
+msgid "Crear nuevo Organismo"
+msgstr "Create new Agency"
+
+#: fevama/templates/fevama/organism_list.html:135
+msgid "Estás seguro de eliminar este organismo?"
+msgstr "Are you sure to eliminate this organism?"
+
+#: fevama/templates/fevama/organism_modify.html:33
+msgid "MODIFICAR NOMBRE DEL ORGANISMO"
+msgstr "CHANGE THE NAME OF THE ORGANIZATION"
+
+#: fevama/templates/fevama/project_create.html:33
+msgid "CREAR PROYECTO"
+msgstr "CREATE PROJECT"
+
+#: fevama/templates/fevama/project_create.html:40
+#: fevama/templates/fevama/project_modify.html:40
+msgid "Nombre del proyecto:"
+msgstr "Name of the project:"
+
+#: fevama/templates/fevama/project_create.html:84
+msgid "Ya existe un proyecto con estos datos"
+msgstr "There is already a project with this data"
+
+#: fevama/templates/fevama/project_create.html:114
+msgid "Proyecto creado correctamente"
+msgstr "Project successfully created"
+
+#: fevama/templates/fevama/project_create.html:144
+msgid "Estás seguro de crear este proyecto?"
+msgstr "Are you sure you want to create this project?"
+
+#: fevama/templates/fevama/project_list.html:84
+msgid "Crear nuevo Proyecto"
+msgstr "Create new project"
+
+#: fevama/templates/fevama/project_list.html:139
+msgid "Estás seguro de eliminar este proyecto?"
+msgstr "Are you sure to delete this project?"
+
+#: fevama/templates/fevama/project_modify.html:33
+msgid "MODIFICAR PROYECTO"
+msgstr "MODIFY PROJECT"
+
+#: fevama/templates/fevama/project_modify.html:84
+msgid "Ya existe este proyecto"
+msgstr "This project already exists"
+
+#: fevama/templates/fevama/project_modify.html:114
+msgid "Proyecto modificado correctamente"
+msgstr "Project successfully modified"
+
+#: fevama/templates/fevama/project_modify.html:144
+msgid "Estás seguro de modificar este proyecto?"
+msgstr "Are you sure you want to modify this project?"
+
+#: fevama/templates/fevama/situation_create.html:33
+msgid "CREAR NUEVA SITUACIÓN"
+msgstr "CREATE NEW SITUATION"
+
+#: fevama/templates/fevama/situation_create.html:60
+#: fevama/templates/fevama/situation_modify.html:60
+msgid "Ya existe esta situación"
+msgstr "This situation already exists"
+
+#: fevama/templates/fevama/situation_create.html:121
+msgid "Estás seguro de crear esta situación?"
+msgstr "Are you sure to create this situation?"
+
+#: fevama/templates/fevama/situation_list.html:84
+msgid "Crear nueva Situación"
+msgstr "Create new Situation"
+
+#: fevama/templates/fevama/situation_list.html:135
+msgid "Estás seguro de eliminar esta situación?"
+msgstr "Are you sure to eliminate this situation?"
+
+#: fevama/templates/fevama/situation_modify.html:33
+msgid "MODIFICAR SITUACIÓN"
+msgstr "CHANGE SITUATION"
+
+#: fevama/templates/fevama/situation_modify.html:121
+msgid "Estás seguro de modificar esta situación?"
+msgstr "Are you sure you can change this situation?"
+
+#: fevama/templates/fevama/typeofcontact_create.html:33
+msgid "CREAR TIPO DE CONTACTO"
+msgstr "CREATE CONTACT TYPE"
+
+#: fevama/templates/fevama/typeofcontact_create.html:60
+#: fevama/templates/fevama/typeofcontact_modify.html:60
+msgid "Ya existe este tipo de contacto"
+msgstr "This type of contact already exists"
+
+#: fevama/templates/fevama/typeofcontact_create.html:75
+msgid "No puedes dejar el tipo vacio"
+msgstr "You can't leave the type empty"
+
+#: fevama/templates/fevama/typeofcontact_create.html:120
+msgid "Estás seguro de crear este tipo de contacto?"
+msgstr "Are you sure you want to create this type of contact?"
+
+#: fevama/templates/fevama/typeofcontact_list.html:84
+msgid "Crear nuevo tipo"
+msgstr "Create new type"
+
+#: fevama/templates/fevama/typeofcontact_modify.html:33
+msgid "MODIFICAR TIPO DE CONTACTO"
+msgstr "CHANGE TYPE OF CONTACT"
+
+#: fevama/templates/fevama/typeofcontact_modify.html:120
+msgid "Estás seguro de modificar este tipo de contacto?"
+msgstr "Are you sure to modify this type of contact?"
+
+#: fevama/templates/fevama/user_create.html:33
+msgid "CREAR USUARIO"
+msgstr "CREATE USER"
+
+#: fevama/templates/fevama/user_create.html:40
+msgid "Nombre de usuarios:"
+msgstr "User name:"
+
+#: fevama/templates/fevama/user_create.html:56
+msgid "Contraseña:"
+msgstr "Password:"
+
+#: fevama/templates/fevama/user_create.html:76
+msgid "Ya existe este usuario"
+msgstr "This user already exists"
+
+#: fevama/templates/fevama/user_create.html:106
+msgid "Usuario creado correctamente"
+msgstr "User successfully created"
+
+#: fevama/templates/fevama/user_create.html:139
+msgid "Estás seguro de crear este usuario?"
+msgstr "Are you sure you want to create this user?"
+
+#: fevama/templates/fevama/users_index.html:85
+msgid "Crear nuevo Usuario"
+msgstr "Create new user"
+
+#: fevama/templates/fevama/users_index.html:145
+msgid "Estás seguro de eliminar este usuario?"
+msgstr "Are you sure you want to delete this user?"
+
+#: templates/admin/base_site.html:51
+msgid "Base de Datos"
+msgstr "Database"
+
+#: templates/admin/base_site.html:56
+msgid "Bienvenido "
+msgstr "Bienvenido "
+
+#: templates/admin/base_site.html:62
+msgid "Change password"
+msgstr "Change password"
+
+#: templates/admin/base_site.html:66
+msgid "Lenguaje"
+msgstr "Lenguaje"
+
+#: templates/admin/base_site.html:89
+msgid "Log out"
+msgstr "Log out"
+
+#: templates/admin/login.html:66
+msgid "Credenciales incorrectas, vuelve a intentarlo"
+msgstr "Incorrect credentials, try again"
