@@ -54,6 +54,9 @@ INSTALLED_APPS = [
 
     #EXTRA
     'django_extensions',
+
+    #Token API
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +90,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
+#REST FRAMEWORK
+APPEND_SLASH = True
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
