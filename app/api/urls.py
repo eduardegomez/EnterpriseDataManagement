@@ -8,4 +8,9 @@ urlpatterns = [
     # ------------------ AUTH --------------------------- #
     path('api-token-auth/', authviews.obtain_auth_token),
 
+    # ------------------ AUTH --------------------------- #
+    path('empresas/', views.empresas),
+    path('contacts/', views.contacts),
+    path('typeofcontacts/', views.typeofcontacts),
+
 ]

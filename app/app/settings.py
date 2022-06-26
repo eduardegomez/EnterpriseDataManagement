@@ -152,8 +152,8 @@ LANGUAGES = (
     ('en', _('English')),
 )
 
-LANGUAGE_CODE = 'en-us'
-#LANGUAGE_CODE = 'es-es'
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, "locale"),
