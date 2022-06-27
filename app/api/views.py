@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
+from rest_framework.parsers import JSONParser
 from fevama.views import *
 
 # Visalizar, modificar y borrar empresas
@@ -11,6 +12,7 @@ def empresas(request):
         if empresas:
             for e in empresas:
                 empresa_list = dict()
+                empresa_list["ID"] = e.id
                 empresa_list["Nombre"] = e.name
                 empresa_list["CIF"] = e.cif
                 empresa_list["CNAE"] = e.cnae
@@ -22,6 +24,65 @@ def empresas(request):
         
         else:
             return JsonResponse("No hay empresas registradas en el sistema", status=404, safe=False)
+
+    if request.method == 'PUT':
+        data = JSONParser().parse(request)
+        if "ID" in data:
+            id = data["ID"]
+        else:
+            return JsonResponse("No se ha encontrado la empresa", status=404, safe=False)
+
+        empresa = Empresa.objects.filter(id=id).first()
+        if empresa:
+            if "Nombre" in data:
+                empresa.name = data["Nombre"]
+            if "CIF" in data:
+                empresa.cif = data["CIF"]
+            if "CNAE" in data:
+                empresa.cnae = data["CNAE"]
+            if "Teléfono" in data:
+                empresa.phone = data["Teléfono"]
+            if "Observaciones" in data:
+                empresa.aux = data["Observaciones"]
+
+            empresa.save()
+            empresa_list = dict()
+            empresa_list["ID"] = empresa.id
+            empresa_list["Nombre"] = empresa.name
+            empresa_list["CIF"] = empresa.cif
+            empresa_list["CNAE"] = empresa.cnae
+            empresa_list["Teléfono"] = empresa.phone
+            empresa_list["Observaciones"] = empresa.aux
+
+            return JsonResponse(empresa_list, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No se ha encontrado la empresa", status=404, safe=False)
+
+
+    if request.method == 'DELETE':
+        data = JSONParser().parse(request)
+        print(data)
+        if "ID" in data:
+            id = data["ID"]
+        else:
+            return JsonResponse("No se ha encontrado la empresa", status=404, safe=False)
+
+        empresa = Empresa.objects.filter(id=id).first()
+        if empresa:
+            empresa_list = dict()
+            empresa_list["ID"] = empresa.id
+            empresa_list["Nombre"] = empresa.name
+            empresa_list["CIF"] = empresa.cif
+            empresa_list["CNAE"] = empresa.cnae
+            empresa_list["Teléfono"] = empresa.phone
+            empresa_list["Observaciones"] = empresa.aux
+            empresa.delete()
+
+            return JsonResponse(empresa_list, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No se ha encontrado la empresa", status=404, safe=False)
 
 # Visalizar, modificar y borrar contactos
 @api_view(['GET','PUT','DELETE'])
@@ -45,12 +106,12 @@ def contacts(request):
         else:
             return JsonResponse("No hay contactos registrados en el sistema", status=404, safe=False)
 
-# Visalizar, modificar y borrar tipos contactos
-@api_view(['GET','PUT','DELETE'])
+# Visalizar y borrar tipos contactos
+@api_view(['GET','DELETE'])
 def typeofcontacts(request):
     if request.method == 'GET':
         typeofcontacts_response = []
-        tipes = Contact.objects.all()
+        tipes = TypeOfContact.objects.all()
         if tipes:
             for t in tipes:
                 typecontact_list = dict()
@@ -63,3 +124,125 @@ def typeofcontacts(request):
         else:
             return JsonResponse("No hay tipos de contactos registrados en el sistema", status=404, safe=False)
 
+# Visalizar, modificar y borrar datos económicos
+@api_view(['GET','PUT','DELETE'])
+def economicdata(request):
+    if request.method == 'GET':
+        response = []
+        economic = EconomicData.objects.all()
+        if economic:
+            for e in economic:
+                data_list = dict()
+                data_list["ID"] = e.id
+                empresa = Empresa.objects.filter(id=e.empresa_id).first()
+                data_list["Empresa"] = empresa.name
+                data_list["Convocatoria"] = e.year
+                data_list["Trabajadores"] = e.workers
+                data_list["Valor anual"] = e.data
+                response.append(data_list)
+
+            return JsonResponse(response, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No hay datos económicos registrados en el sistema", status=404, safe=False)
+
+# Visalizar y borrar proyectos
+@api_view(['GET','DELETE'])
+def projects(request):
+    if request.method == 'GET':
+        response = []
+        projects = Project.objects.all()
+        if projects:
+            for p in projects:
+                data_list = dict()
+                data_list["ID"] = p.id
+                empresa = Empresa.objects.filter(id=p.empresa_id).first()
+                data_list["Empresa"] = empresa.name
+                data_list["Nombre proyecto"] = p.project_name
+                announcement = Announcement.objects.filter(id=p.announcement_id).first()
+                data_list["Convocatoria"] = announcement.year
+                response.append(data_list)
+
+            return JsonResponse(response, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No hay proyectos registrados en el sistema", status=404, safe=False)
+
+# Visalizar y borrar facturas
+@api_view(['GET','DELETE'])
+def invoices(request):
+    if request.method == 'GET':
+        response = []
+        invoices = Invoice.objects.all()
+        if invoices:
+            for p in invoices:
+                data_list = dict()
+                data_list["ID"] = p.id
+                data_list["Numero"] = p.number
+                data_list["Factura"] = p.invoice
+                data_list["Convocatoria"] = p.year
+                data_list["Cantidad"] = p.amount
+                project = Project.objects.filter(id=p.project_id).first()
+                data_list["Proyecto"] = project.projec_name
+                response.append(data_list)
+
+            return JsonResponse(response, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No hay facturas registradas en el sistema", status=404, safe=False)
+
+# Visalizar y borrar ayudas
+@api_view(['GET','DELETE'])
+def assistances(request):
+    if request.method == 'GET':
+        response = []
+        assistances = Assistance.objects.all()
+        if assistances:
+            for p in assistances:
+                data_list = dict()
+                data_list["ID"] = p.id
+                data_list["Gestionado"] = p.management
+                data_list["Solicitado"] = p.requested
+                data_list["Aplicado"] = p.applied
+                data_list["Fecha de resolución"] = p.date
+                data_list["Fecha de cobro"] = p.payment
+                act = Act.objects.filter(id=p.act_id).first()
+                data_list["Fecha de cobro"] = act.name
+                announcement = Announcement.objects.filter(id=p.announcement_id).first()
+                data_list["Convocatoria"] = announcement.year
+                project = Project.objects.filter(id=p.project_id).first()
+                data_list["Proyecto"] = project.project_name
+                applicant = Applicant.objects.filter(id=p.applicant_id).first()
+                data_list["Solicitante"] = applicant.name
+                line = Line.objects.filter(id=p.line_id).first()
+                data_list["Linea de ayuda"] = line.line
+                organism = Organism.objects.filter(id=p.organism_id).first()
+                data_list["Organismo"] = organism.name
+                situation = Situation.objects.filter(id=p.organism_id).first()
+                data_list["Situación"] = situation.situation
+
+                response.append(data_list)
+
+            return JsonResponse(response, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No hay ayudas registradas en el sistema", status=404, safe=False)
+
+# Visalizar y borrar linea de ayuda
+@api_view(['GET','DELETE'])
+def line(request):
+    if request.method == 'GET':
+        response = []
+        lines = Line.objects.all()
+        if lines:
+            for p in lines:
+                data_list = dict()
+                data_list["ID"] = p.id
+                data_list["Linea de ayuda"] = p.line
+
+                response.append(data_list)
+
+            return JsonResponse(response, status=200, safe=False)
+        
+        else:
+            return JsonResponse("No hay lineas de ayuda registradas en el sistema", status=404, safe=False)

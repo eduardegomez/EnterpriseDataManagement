@@ -8,9 +8,14 @@ urlpatterns = [
     # ------------------ AUTH --------------------------- #
     path('api-token-auth/', authviews.obtain_auth_token),
 
-    # ------------------ AUTH --------------------------- #
+    # ------------------ METHODS --------------------------- #
     path('empresas/', views.empresas),
     path('contacts/', views.contacts),
     path('typeofcontacts/', views.typeofcontacts),
+    path('economicdata/', views.economicdata),
+    path('projects/', views.projects),
+    path('invoices/', views.invoices),
+    path('assistances/', views.assistances),
+    path('line/', views.line),
 
 ]
