@@ -294,6 +294,7 @@
                             document.getElementById("btn-create").className = "btn btn-outline-success";
                             document.getElementById("btn-create").innerHTML="<i class='fa fa-plus'></i>&nbsp; {% trans 'CREAR' %}";
                             createAutoClosingAlert('#created', 5000);
+                            location.reload(true);
                             document.getElementById("line").value = "";
                             document.getElementById("act").value = "";
                             document.getElementById("organism").value = "";

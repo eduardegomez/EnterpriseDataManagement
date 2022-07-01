@@ -238,7 +238,7 @@ class InvoiceManager(models.Manager):
 
 # Invoice Model
 class Invoice(models.Model):
-    number = models.IntegerField(default=0)
+    number = models.CharField(max_length=200)
     invoice = models.IntegerField(default=0)
     year = models.IntegerField(default=0)
     amount = models.IntegerField(default=0)

@@ -290,7 +290,7 @@ def typeofcontact_modifyItem(request):
 
 # ----------- START ECONOMIC DATA --------------------- #
 def economicdata_index(request):
-    object_list = EconomicData.objects.all()
+    object_list = EconomicData.objects.all().order_by('year')
     return render(request, 'fevama/economicdata_list.html', {
         'object_list': object_list
     })
@@ -471,6 +471,10 @@ def anualdata_graphs(request):
     situation_justificada = Situation.objects.filter(situation="JUSTIFICADA").first()
     situation_renunciada = Situation.objects.filter(situation="RENUNCIADA").first()
     situation_denegada = Situation.objects.filter(situation="DENEGADA").first()
+    situation_prevista = Situation.objects.filter(situation="PREVISTA").first()
+    situation_asolicitar = Situation.objects.filter(situation="A SOLICITAR").first()
+    situation_solicitada = Situation.objects.filter(situation="SOLICITADA").first()
+    situation_inadmitida = Situation.objects.filter(situation="INADMITIDA").first()
     situation_list = Situation.objects.all()
     currentDateTime = datetime.datetime.now()
     date = currentDateTime.date()
@@ -481,7 +485,7 @@ def anualdata_graphs(request):
 
     # TOTAL
     assistance_ok = Assistance.objects.filter(Q(situation=situation_aprobada)| Q(situation=situation_justificada)| Q(situation=situation_renunciada)).all()
-    assistance_ko = Assistance.objects.filter(Q(situation=situation_aprobada)| Q(situation=situation_justificada)| Q(situation=situation_renunciada) | Q(situation=situation_denegada)).all()
+    assistance_ko = Assistance.objects.all()
     projects_list = Project.objects.all()
     project_num = len(projects_list)
     cont_ok = len(assistance_ok)
@@ -490,12 +494,15 @@ def anualdata_graphs(request):
 
     # LAST YEAR
     assistance_ok = Assistance.objects.filter((Q(situation=situation_aprobada) | Q(situation=situation_justificada) | Q(situation=situation_renunciada))).filter(announcement=last_year).all()
-    assistance_ko = Assistance.objects.filter((Q(situation=situation_aprobada) | Q(situation=situation_justificada) | Q(situation=situation_renunciada) | Q(situation=situation_denegada))).filter(announcement=last_year).all()
+    assistance_ko = Assistance.objects.filter(announcement=last_year).all()
     print(str(assistance_ok))
     print(str(assistance_ko))
     cont_ok = len(assistance_ok)
     cont_total = len(assistance_ko)
-    total_ok_last = int((cont_ok/cont_total)*100)
+    if cont_total != 0:
+        total_ok_last = int((cont_ok/cont_total)*100)
+    else:
+        total_ok_last = 0
 
     return render(request, 'fevama/anualdata_graphs.html', {
         'project_num': project_num,
