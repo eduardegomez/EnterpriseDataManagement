@@ -1,4 +1,4 @@
-# Ecosistema web para la gestión de datos de empresas
+# Ecosistema web para la gestión de datos empresariales
 
 Proyecto Fin de Máster para el Máster Universitario en Ingeniería Informática realizado en la Universidad Politécnica de Valencia (UPV).
 
